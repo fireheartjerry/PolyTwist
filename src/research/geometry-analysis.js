@@ -4,6 +4,7 @@ import { compilePuzzle } from '../core/puzzle-compiler.js';
 import { numericSummary, histogram } from './statistics.js';
 import { stableDigest } from './canonical.js';
 import { ENGINE_VERSION, PLATFORM_NAME } from '../version.js';
+import { verifyAffineGeometry } from '../geometry/affine-verifier.js';
 
 /** @typedef {import('../core/puzzle-compiler.js').PuzzleSpec} PuzzleSpec */
 /** @typedef {import('../core/puzzle-compiler.js').CompiledPuzzle} CompiledPuzzle */
@@ -146,6 +147,7 @@ export function analyzePuzzleGeometry(input, options = {}) {
   const meanVolume = values.volume.length ? values.volume.reduce((a, b) => a + b, 0) / values.volume.length : 0;
   const volumeDeviation = values.volume.reduce((sum, value) => sum + Math.abs(value - meanVolume), 0);
   const mechanism = puzzle.spec.mechanism;
+  const geometryVerification = verifyAffineGeometry(puzzle.geometry);
 
   const report = {
     schema: 'kinescope.geometry-analysis.v1',
@@ -160,7 +162,20 @@ export function analyzePuzzleGeometry(input, options = {}) {
       metadata: structuredClone(puzzle.spec.metadata ?? {}),
       specificationDigest: stableDigest(puzzle.spec, 'kinescope-spec'),
     },
-    compilation: structuredClone(puzzle.stats),
+    compilation: {
+      ...structuredClone(puzzle.stats),
+      canonicalGeometry: {
+        schema: puzzle.geometry.schema,
+        exactness: structuredClone(puzzle.geometry.exactness),
+        hashes: structuredClone(puzzle.geometry.hashes),
+        atomicCellCount: puzzle.geometry.atomicCells.length,
+        physicalPieceCount: puzzle.geometry.physicalPieces.length,
+        adjacencyCount: puzzle.geometry.adjacency.length,
+        exposedSurfaceCount: puzzle.geometry.exposedSurfaces.length,
+        diagnostics: structuredClone(puzzle.geometry.diagnostics),
+        verifier: geometryVerification,
+      },
+    },
     worldBounds: bounds(worldPoints),
     mechanism: {
       origin: [...mechanism.origin],

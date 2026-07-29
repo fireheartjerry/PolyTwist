@@ -29,6 +29,7 @@
   "exports": {
     ".": "./src/core/index.js",
     "./core": "./src/core/index.js",
+    "./geometry": "./src/geometry/index.js",
     "./scene-controller": "./src/render/scene-controller.js",
     "./research": "./src/research/index.js",
     "./server-api": "./src/server/api.js"

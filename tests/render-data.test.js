@@ -45,4 +45,17 @@ test('rigid clusters suppress bonded interface edges while preserving separate i
 
   assert.ok(bandagedSegments < controlSegments);
   assert.equal(cluster.pieceIds.length, 2);
+
+  const bondedPiece = bandaged.pieceById.get(cluster.pieceIds[0]);
+  assert.ok(bondedPiece);
+  const mesh = buildPieceMeshData(bandaged, bondedPiece, 0);
+  assert.equal(mesh.surfaceProvenance.length, mesh.positions.length / 3);
+  assert.ok([...mesh.surfaceProvenance].every((code) => code === 1 || code === 2));
+  const internalTriangles = bondedPiece.polyhedron.faces
+    .filter((face) => face.meta.provenance.category === 'internal-surface')
+    .reduce((count, face) => count + face.indices.length - 2, 0);
+  assert.equal(
+    mesh.triangleCount,
+    bondedPiece.polyhedron.triangles.length - internalTriangles,
+  );
 });

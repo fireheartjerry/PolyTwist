@@ -25,6 +25,9 @@ test('research manifest and geometry reports are deterministic and dense', () =>
 
   const geometry = analyzePuzzleGeometry(createPreset('ghost-3'));
   assert.equal(geometry.schema, 'kinescope.geometry-analysis.v1');
+  assert.equal(geometry.compilation.canonicalGeometry.schema, 'polytwist.affine-geometry.v1');
+  assert.equal(geometry.compilation.canonicalGeometry.verifier.valid, true);
+  assert.match(geometry.compilation.canonicalGeometry.hashes.geometry, /^[0-9a-f]{64}$/);
   assert.equal(geometry.pieces.length, 27);
   assert.equal(geometry.topologyChecks.allPositiveVolume, true);
   assert.ok(geometry.distributions.volume.summary.count > 0);

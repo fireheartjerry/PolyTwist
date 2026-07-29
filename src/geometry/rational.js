@@ -84,7 +84,21 @@ export function rationalKey(value) {
 
 /** @param {Rational} value */
 export function rationalToNumber(value) {
-  return Number(value.numerator) / Number(value.denominator);
+  const numerator = Number(value.numerator);
+  const denominator = Number(value.denominator);
+  if (Number.isFinite(numerator) && Number.isFinite(denominator)) {
+    return numerator / denominator;
+  }
+  const numeratorDigits = absBigInt(value.numerator).toString();
+  const denominatorDigits = value.denominator.toString();
+  const precision = 16;
+  const numeratorPrefix = numeratorDigits.slice(0, precision);
+  const denominatorPrefix = denominatorDigits.slice(0, precision);
+  const numeratorMantissa = Number(numeratorPrefix) / 10 ** (numeratorPrefix.length - 1);
+  const denominatorMantissa = Number(denominatorPrefix) / 10 ** (denominatorPrefix.length - 1);
+  const exponent = numeratorDigits.length - denominatorDigits.length;
+  const sign = value.numerator < 0n ? -1 : 1;
+  return sign * (numeratorMantissa / denominatorMantissa) * 10 ** exponent;
 }
 
 /** @param {Rational} value */
@@ -225,4 +239,3 @@ export function negatePlane(plane) {
     meta: plane.meta,
   });
 }
-

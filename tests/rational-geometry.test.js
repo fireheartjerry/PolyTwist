@@ -6,9 +6,11 @@ import {
   compareRational,
   divideRational,
   multiplyRational,
+  makeRational,
   normalizePlane,
   parseRational,
   rationalKey,
+  rationalToNumber,
   subtractRational,
 } from '../src/geometry/rational.js';
 import {
@@ -46,6 +48,10 @@ test('rational arithmetic and comparisons do not round', () => {
   assert.equal(rationalKey(divideRational(oneSixth, oneThird)), '1/2');
   assert.equal(compareRational(parseRational('0.1'), parseRational('1/10')), 0);
   assert.equal(compareRational(parseRational('999999999999999999/1000000000000000000'), parseRational(1)), -1);
+  assert.ok(Math.abs(rationalToNumber(makeRational(
+    5n * 10n ** 400n + 1n,
+    4n * 10n ** 400n + 3n,
+  )) - 1.25) < 1e-14);
 });
 
 test('oriented planes normalize positive equation scaling to primitive integers', () => {

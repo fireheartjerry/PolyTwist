@@ -2,6 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 
 import { compilePuzzle } from '../src/core/puzzle-compiler.js';
+import { verifyAffineGeometry } from '../src/geometry/affine-verifier.js';
 import {
   alienPreset,
   axisPreset,
@@ -32,6 +33,17 @@ for (const { create, logical, renderable, minimumTriangles } of presets) {
     assert.equal(puzzle.moves.length, 6);
     assert.ok(puzzle.stats.totalTriangles > minimumTriangles);
     assert.ok(puzzle.stats.totalVolume > 20);
+    assert.equal(puzzle.geometry.schema, 'polytwist.affine-geometry.v1');
+    assert.equal(puzzle.geometry.atomicCells.length, logical);
+    const bondReduction = (puzzle.spec.constraints?.bandages ?? [])
+      .reduce((sum, bandage) => sum + bandage.cells.length - 1, 0);
+    assert.equal(puzzle.geometry.physicalPieces.length, logical - bondReduction);
+    assert.equal(puzzle.geometry.exactness.source, 'rationalized-numerical');
+    assert.deepEqual(verifyAffineGeometry(puzzle.geometry), { valid: true, errors: [] });
+    assert.ok(puzzle.pieces.every((piece) => piece.polyhedron.faces.every(
+      (face) => ['outer-hull', 'cut-surface', 'internal-surface']
+        .includes(face.meta.provenance.category),
+    )));
   });
 }
 
@@ -40,8 +52,10 @@ test('procedural artifacts are deterministic and compiler-validated', () => {
   const second = alienPreset('determinism-42');
   assert.deepEqual(first, second);
   const compiled = compilePuzzle(first);
+  const repeated = compilePuzzle(second);
   assert.equal(compiled.stats.renderablePieces, 26);
   assert.equal(compiled.stats.topologyWarnings.length, 0);
+  assert.equal(compiled.geometry.hashes.geometry, repeated.geometry.hashes.geometry);
 });
 
 test('different appearance/geometry presets expose the same latent logical alphabet', () => {
@@ -95,6 +109,12 @@ test('bandage compiler enforces unique, renderable, face-connected rigid cluster
   assert.equal(compiled.stats.bandagedPieceCount, 4);
   assert.equal(compiled.constraints.bandages[0].cells.length, 2);
   assert.ok(Number.isFinite(compiled.constraints.bandages[0].centroid.x));
+  assert.equal(compiled.geometry.physicalPieces.length, 25);
+  assert.equal(
+    compiled.geometry.atomicCells.flatMap((cell) => cell.faces)
+      .filter((face) => face.provenance.category === 'internal-surface').length,
+    4,
+  );
 
   const disconnected = bandagedRelayPreset();
   disconnected.id = 'disconnected-bandage';

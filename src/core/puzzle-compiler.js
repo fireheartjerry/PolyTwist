@@ -1,12 +1,18 @@
 // @ts-check
 
-import { makeFrame } from './frame.js';
-import { boxHullPlanes, intervalPlanes, makePlane } from './halfspace.js';
-import { intersectHalfspaces, validatePolyhedron } from './polyhedron.js';
+import { makeFrame, upperCoordinatePlane } from './frame.js';
+import { boxHullPlanes, makePlane } from './halfspace.js';
+import { compileAffineGeometry } from '../geometry/affine-compiler.js';
+import { rationalToNumber } from '../geometry/rational.js';
+import { canonicalStringify } from '../geometry/sha256.js';
+import { average, normalize, v3 } from './vec3.js';
 
 /** @typedef {import('./frame.js').Frame} Frame */
 /** @typedef {import('./polyhedron.js').Polyhedron} Polyhedron */
 /** @typedef {import('./mat3i.js').Vec3i} Vec3i */
+
+const AFFINE_GEOMETRY_CACHE_LIMIT = 32;
+const affineGeometryCache = new Map();
 
 /**
  * @typedef {Object} PuzzleSpec
@@ -29,6 +35,8 @@ import { intersectHalfspaces, validatePolyhedron } from './polyhedron.js';
  * @property {[number,number,number]} homeIndex
  * @property {Vec3i} homeCoord
  * @property {Polyhedron} polyhedron
+ * @property {string} atomicCellId
+ * @property {string} physicalPieceId
  * @property {boolean} renderable
  * @property {number} outerArea
  */
@@ -56,6 +64,7 @@ import { intersectHalfspaces, validatePolyhedron } from './polyhedron.js';
  * @property {Map<string,CompiledPiece>} pieceById
  * @property {MoveDefinition[]} moves
  * @property {Map<string,MoveDefinition>} moveById
+ * @property {ReturnType<typeof compileAffineGeometry>} geometry
  * @property {{bandages:CompiledBandage[],bandageByPieceId:Map<string,CompiledBandage>}} constraints
  * @property {{logicalPieces:number,renderablePieces:number,totalTriangles:number,totalVertices:number,totalVolume:number,bandageCount:number,bandagedPieceCount:number,topologyWarnings:string[]}} stats
  */
@@ -102,6 +111,156 @@ function compileOuterPlanes(outer) {
     chamfer: outer.chamfer ?? 0,
     cornerChamfer: outer.cornerChamfer ?? 0,
   });
+}
+
+/** @param {import('./halfspace.js').Plane[]} planes */
+function affineHullInputs(planes) {
+  return planes.map((plane, index) => ({
+    id: plane.tag || `hull:${index}`,
+    normal: plane.rawNormal,
+    constant: plane.rawConstant,
+    tag: plane.tag,
+    meta: plane.meta,
+  }));
+}
+
+/** @param {Frame} frame @param {number[]} positions */
+function affineCutInputs(frame, positions) {
+  return [0, 1, 2].flatMap((axisValue) => {
+    const axis = /** @type {0|1|2} */ (axisValue);
+    return positions.map((position, boundaryIndex) => {
+      const plane = upperCoordinatePlane(frame, axis, position);
+      return {
+        id: `axis-${axis}-boundary-${boundaryIndex}`,
+        normal: /** @type {[number,number,number]} */ ([
+          plane.normal.x,
+          plane.normal.y,
+          plane.normal.z,
+        ]),
+        constant: plane.constant,
+        tag: `cut:${axis}:${boundaryIndex}`,
+        meta: { axis, boundaryIndex, boundary: position },
+      };
+    });
+  });
+}
+
+/**
+ * @param {[number,number,number]} cell
+ * @param {{id:string,meta:Record<string,unknown>}[]} cuts
+ */
+function logicalCellSelector(cell, cuts) {
+  return Object.fromEntries(cuts.map((cut) => {
+    const axis = Number(cut.meta.axis);
+    const boundaryIndex = Number(cut.meta.boundaryIndex);
+    return [cut.id, cell[axis] <= boundaryIndex ? -1 : 1];
+  }));
+}
+
+/**
+ * @param {PuzzleSpec} spec
+ * @param {{id:string,meta:Record<string,unknown>}[]} cuts
+ */
+function affineBondGroups(spec, cuts) {
+  return (spec.constraints?.bandages ?? []).map((bandage) => ({
+    id: bandage.id,
+    cells: bandage.cells.map((cell) => logicalCellSelector(cell, cuts)),
+  }));
+}
+
+/** @param {Parameters<typeof compileAffineGeometry>[0]} input */
+function compileCachedAffineGeometry(input) {
+  const key = canonicalStringify(input);
+  const cached = affineGeometryCache.get(key);
+  if (cached) {
+    affineGeometryCache.delete(key);
+    affineGeometryCache.set(key, cached);
+    return structuredClone(cached);
+  }
+  const geometry = compileAffineGeometry(input);
+  affineGeometryCache.set(key, structuredClone(geometry));
+  if (affineGeometryCache.size > AFFINE_GEOMETRY_CACHE_LIMIT) {
+    const oldest = affineGeometryCache.keys().next().value;
+    if (oldest !== undefined) affineGeometryCache.delete(oldest);
+  }
+  return geometry;
+}
+
+/**
+ * Projects one exact cell B-rep into the legacy numeric rendering structure.
+ * Topology, triangulation, and provenance remain owned by the exact artifact.
+ *
+ * @param {any} cell
+ * @param {any} geometry
+ */
+function numericPolyhedronFromExactCell(cell, geometry) {
+  const vertices = cell.polyhedron.vertices.map((point) => v3(
+    rationalToNumber(point[0]),
+    rationalToNumber(point[1]),
+    rationalToNumber(point[2]),
+  ));
+  const faces = cell.polyhedron.faces.map((exactFace, faceIndex) => {
+    const faceRecord = cell.faces[faceIndex];
+    const rawNormal = v3(
+      rationalToNumber(exactFace.plane.normal[0]),
+      rationalToNumber(exactFace.plane.normal[1]),
+      rationalToNumber(exactFace.plane.normal[2]),
+    );
+    const normal = normalize(rawNormal);
+    const points = exactFace.vertexIndices.map((index) => vertices[index]);
+    const cut = faceRecord.provenance.sourceType === 'cut'
+      ? geometry.normalizedInput.cuts[faceRecord.provenance.sourceIndex]
+      : null;
+    const side = cut
+      ? cell.signsByCut[cut.sourceId] < 0 ? 'upper' : 'lower'
+      : null;
+    return {
+      planeIndex: faceIndex,
+      indices: exactFace.vertexIndices,
+      normal,
+      centroid: average(points),
+      area: exactFace.area,
+      tag: faceRecord.provenance.sourceId,
+      kind: faceRecord.provenance.category === 'outer-hull' ? 'outer' : 'cut',
+      meta: {
+        ...structuredClone(exactFace.plane.meta),
+        ...(cut ? {
+          axis: cut.meta.axis,
+          boundary: cut.meta.boundary,
+          boundaryIndex: cut.meta.boundaryIndex,
+          side,
+        } : {}),
+        exactFaceId: faceRecord.id,
+        provenance: structuredClone(faceRecord.provenance),
+      },
+    };
+  });
+  const triangles = cell.polyhedron.triangles.map((triangle) => ({
+    a: triangle.vertexIndices[0],
+    b: triangle.vertexIndices[1],
+    c: triangle.vertexIndices[2],
+    faceIndex: triangle.faceIndex,
+  }));
+  const edges = cell.polyhedron.edges.map((edge) => ({
+    a: edge.vertexIndices[0],
+    b: edge.vertexIndices[1],
+    faceIndices: [...edge.faceIndices],
+  }));
+  const outerFaces = faces.filter((face) => face.meta.provenance.category === 'outer-hull');
+  const outerArea = outerFaces.reduce((sum, face) => sum + face.area, 0);
+  return {
+    vertices,
+    faces,
+    triangles,
+    edges,
+    volume: cell.polyhedron.numeric.volume,
+    centroid: v3(...cell.polyhedron.numeric.centroid),
+    outerArea,
+    outerFaceCount: outerFaces.length,
+    sourcePlaneCount: cell.polyhedron.sourcePlanes.length,
+    exactCellId: cell.id,
+    exactGeometryHash: geometry.hashes.geometry,
+  };
 }
 
 /** @param {PuzzleSpec} spec @returns {MoveDefinition[]} */
@@ -240,6 +399,26 @@ export function compilePuzzle(input) {
   const frame = makeFrame(spec.mechanism);
   const cuts = centeredCutPositions(size, spec.mechanism.cutSpacing);
   const outerPlanes = compileOuterPlanes(spec.outer);
+  const affineCuts = affineCutInputs(frame, cuts);
+  const geometry = compileCachedAffineGeometry({
+    body: { planes: affineHullInputs(outerPlanes) },
+    cuts: affineCuts,
+    bondGroups: affineBondGroups(spec, affineCuts),
+    sourceExactness: 'rationalized-numerical',
+  });
+
+  const atomByLogicalIndex = new Map();
+  for (const atom of geometry.atomicCells) {
+    const logicalIndex = /** @type {[number,number,number]} */ ([0, 0, 0]);
+    for (const cut of affineCuts) {
+      if (atom.signsByCut[cut.id] > 0) logicalIndex[Number(cut.meta.axis)] += 1;
+    }
+    const key = logicalIndex.join(',');
+    if (atomByLogicalIndex.has(key)) {
+      throw new Error(`Canonical geometry maps multiple atomic cells to logical index ${key}.`);
+    }
+    atomByLogicalIndex.set(key, atom);
+  }
 
   /** @type {CompiledPiece[]} */
   const pieces = [];
@@ -247,26 +426,14 @@ export function compilePuzzle(input) {
     for (let iy = 0; iy < size; iy += 1) {
       for (let iz = 0; iz < size; iz += 1) {
         const id = `p-${ix}-${iy}-${iz}`;
-        const planes = [...outerPlanes];
-        const indices = [ix, iy, iz];
-        for (let axis = 0; axis < 3; axis += 1) {
-          const index = indices[axis];
-          const lower = index === 0 ? null : cuts[index - 1];
-          const upper = index === size - 1 ? null : cuts[index];
-          planes.push(...intervalPlanes(frame, /** @type {0|1|2} */ (axis), lower, upper, id));
-        }
-
-        const polyhedron = intersectHalfspaces(planes);
-        if (!polyhedron) {
+        const atom = atomByLogicalIndex.get(`${ix},${iy},${iz}`);
+        if (!atom) {
           throw new Error(
             `Specification ${spec.id} produced an empty logical cell at (${ix}, ${iy}, ${iz}). ` +
             'Reduce mechanism tilt/offset or adjust cut spacing.',
           );
         }
-        const geometryErrors = validatePolyhedron(polyhedron, planes);
-        if (geometryErrors.length > 0) {
-          throw new Error(`Invalid piece ${id}: ${geometryErrors.join('; ')}`);
-        }
+        const polyhedron = numericPolyhedronFromExactCell(atom, geometry);
 
         pieces.push({
           id,
@@ -277,6 +444,8 @@ export function compilePuzzle(input) {
             logicalCoordinate(iz, size),
           ]),
           polyhedron,
+          atomicCellId: atom.id,
+          physicalPieceId: atom.physicalPieceId,
           renderable: polyhedron.outerArea > 1e-5,
           outerArea: polyhedron.outerArea,
         });
@@ -305,6 +474,7 @@ export function compilePuzzle(input) {
     pieceById,
     moves,
     moveById,
+    geometry,
     constraints,
     stats: {
       logicalPieces: pieces.length,

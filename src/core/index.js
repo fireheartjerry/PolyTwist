@@ -33,4 +33,5 @@ export {
   withMechanicsVariant,
 } from './benchmark-suite.js';
 export { ENGINE_VERSION, PLATFORM_NAME, PLATFORM_SLUG, SCHEMA_NAMESPACE } from '../version.js';
+export * from '../geometry/index.js';
 export * from '../research/index.js';

@@ -9,6 +9,8 @@ import { lowerCoordinatePlane, upperCoordinatePlane } from './frame.js';
  * @typedef {Object} Plane
  * @property {Vec3} normal Outward unit normal; the feasible half-space is normal·x <= constant.
  * @property {number} constant
+ * @property {[number,number,number]} rawNormal Source coefficients before render normalization.
+ * @property {number} rawConstant
  * @property {string} tag
  * @property {'outer'|'cut'|'constraint'} kind
  * @property {Record<string,unknown>} meta
@@ -25,11 +27,15 @@ export function makePlane(normal, constant, options = {}) {
   const n = Array.isArray(normal)
     ? v3(Number(normal[0]), Number(normal[1]), Number(normal[2]))
     : /** @type {Vec3} */ (normal);
+  const rawNormal = /** @type {[number,number,number]} */ ([n.x, n.y, n.z]);
+  const rawConstant = Number(constant);
   const len = Math.sqrt(dot(n, n));
   if (len <= 1e-12) throw new Error('Plane normal cannot be zero.');
   return {
     normal: normalize(n),
-    constant: constant / len,
+    constant: rawConstant / len,
+    rawNormal,
+    rawConstant,
     tag: options.tag ?? 'plane',
     kind: options.kind ?? 'constraint',
     meta: options.meta ?? {},

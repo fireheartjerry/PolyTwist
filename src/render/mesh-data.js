@@ -109,6 +109,7 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
   const material = [];
   const faceColors = [];
   const surfaces = [];
+  const surfaceProvenance = [];
   const linePositions = [];
 
   const appearance = puzzle.spec.appearance;
@@ -128,6 +129,11 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
   const isBondedInterfaceEdge = (edge) => {
     if (!bandagedPieceIds) return false;
     for (const face of poly.faces) {
+      if (
+        face.meta?.provenance?.category === 'internal-surface'
+        && face.indices.includes(edge.a)
+        && face.indices.includes(edge.b)
+      ) return true;
       if (face.kind !== 'cut' || !face.indices.includes(edge.a) || !face.indices.includes(edge.b)) continue;
       const axis = Number(face.meta?.axis);
       const side = String(face.meta?.side ?? '');
@@ -142,6 +148,10 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
   for (let triangleIndex = 0; triangleIndex < poly.triangles.length; triangleIndex += 1) {
     const triangle = poly.triangles[triangleIndex];
     const face = poly.faces[triangle.faceIndex];
+    const provenanceCategory = String(face.meta?.provenance?.category ?? (
+      face.kind === 'outer' ? 'outer-hull' : 'cut-surface'
+    ));
+    if (provenanceCategory === 'internal-surface') continue;
     const color = surfaceColor(puzzle, piece, triangle.faceIndex);
     const machineFaceColor = faceIdColor(faceIdBase + triangle.faceIndex);
     const isOuter = face.kind === 'outer';
@@ -157,6 +167,7 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
       material.push(roughness, metallic);
       faceColors.push(...machineFaceColor);
       surfaces.push(isOuter ? 1 : 0);
+      surfaceProvenance.push(isOuter ? 2 : 1);
     }
   }
 
@@ -175,6 +186,7 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
     material: new Float32Array(material),
     faceColors: new Float32Array(faceColors),
     surfaces: new Float32Array(surfaces),
+    surfaceProvenance: new Uint8Array(surfaceProvenance),
     linePositions: new Float32Array(linePositions),
     pieceColor: pieceIdColor(pieceIndex, puzzle.pieces.length),
     triangleCount: positions.length / 9,

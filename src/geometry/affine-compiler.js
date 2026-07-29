@@ -348,7 +348,7 @@ export function compileAffineGeometry(input) {
     if (reached.size !== members.length) {
       const missing = members.filter((member) => !reached.has(member));
       throw new Error(
-        `Bond group ${group.id ?? '(unnamed)'} is not face-connected; witness ${members[0]} cannot reach ${missing[0]}.`,
+        `Bond group ${group.id ?? '(unnamed)'} is not face-connected (not a face-connected cluster); witness ${members[0]} cannot reach ${missing[0]}.`,
       );
     }
     resolvedBondGroups.push(members);
