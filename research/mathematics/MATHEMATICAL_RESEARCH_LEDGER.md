@@ -17,9 +17,16 @@ At milestone base `3062274`, the affine-convex specialization of the Stratified 
 - `outer-hull`, `cut-surface`, and `internal-surface` provenance;
 - deterministic triangulations, normalized serialization hashes, diagnostics, and certificates;
 - an independent artifact verifier;
-- exact reproduction of Rational Ghost Atlas A's 27 chambers and six selected-face traces.
+- exact reproduction of Rational Ghost Atlas A's 27 chambers and six selected-face traces;
+- evaluator-private ideal-rigid display certificates checking proper exact
+  orientations, bijective occupancy, rigid render matrices, a common pivot,
+  and the declared active layer axis.
 
 This is implementation evidence for existing theorems and example `EX-GHOST-A-001`, not a new theorem or novelty claim. Legacy Euler-frame presets cross a declared `rationalized-numerical` source boundary before exact predicates begin.
+
+The display certificate is also implementation evidence, not a proof of
+general path admissibility or manufacturing clearance. It does not change the
+status of `OPEN-PATH-CERT-001` or `OPEN-TOLERANCE-001`.
 
 ## Canonical objective
 

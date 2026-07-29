@@ -106,16 +106,43 @@ function preservesAxis(rotation, axis) {
 }
 
 /**
+ * Derives the static renderer matrices for an exact docked state.
+ *
+ * @param {CompiledPuzzle} puzzle
+ * @param {Map<string,Mat3i>} transforms
+ */
+export function deriveExactRigidModelMatrices(puzzle, transforms) {
+  const matrices = new Map();
+  for (const piece of puzzle.pieces) {
+    if (!piece.renderable) continue;
+    const transform = transforms.get(piece.id);
+    if (!transform) continue;
+    matrices.set(piece.id, mat4AroundOrigin(
+      logicalRotationToWorld(puzzle.frame, transform),
+      puzzle.frame.origin,
+    ));
+  }
+  return matrices;
+}
+
+/**
  * Verifies the Phase 1 ideal-rigid display contract against actual derived matrices.
  *
  * @param {CompiledPuzzle} puzzle
  * @param {Map<string,Mat3i>} transforms
  * @param {Map<string,ArrayLike<number>>} modelMatrices
  * @param {MovePreview|null} [activeMove]
+ * @param {{geometryVerification?:ReturnType<typeof verifyAffineGeometry>}} [options]
  */
-export function certifyIdealRigidDisplay(puzzle, transforms, modelMatrices, activeMove = null) {
+export function certifyIdealRigidDisplay(
+  puzzle,
+  transforms,
+  modelMatrices,
+  activeMove = null,
+  options = {},
+) {
   const errors = [];
-  const geometryVerification = verifyAffineGeometry(puzzle.geometry);
+  const geometryVerification = options.geometryVerification ?? verifyAffineGeometry(puzzle.geometry);
   if (!geometryVerification.valid) {
     errors.push(...geometryVerification.errors.map((error) => `canonical geometry: ${error}`));
   }

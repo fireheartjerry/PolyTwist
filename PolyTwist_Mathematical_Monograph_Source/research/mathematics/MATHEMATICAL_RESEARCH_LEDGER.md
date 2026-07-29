@@ -384,7 +384,10 @@ At implementation milestone `3062274`, the software implements a disciplined but
 - one displaced/rotated orthogonal cut frame;
 - signed-permutation piece orientations and quarter-turn generators;
 - connected rigid bandages with state-dependent closure tests;
-- deterministic rendering, benchmark generation, and analysis derived from the compiled geometry and engine.
+- deterministic rendering, benchmark generation, and analysis derived from the compiled geometry and engine;
+- evaluator-private ideal-rigid display certificates over exact state and
+  actual render matrices, with renderer clearances explicitly marked
+  noncanonical.
 
 It does **not** implement the general atlas, curved or general semialgebraic cut carriers, noncubic dynamics, exact swept collision, general joints, jumbling, or the complete proof-carrying dynamics compiler described here.
 

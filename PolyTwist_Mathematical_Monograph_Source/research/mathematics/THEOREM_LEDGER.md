@@ -79,6 +79,12 @@
 
 At implementation milestone `3062274`, the exact affine compiler reproduces `EX-GHOST-A-001` with 27 atomic chambers, six traces on `X=8/5`, and the stated short `1-` trace endpoints. It also exercises `THM-AFFINE-CONVEX-001`, `THM-TRACE-CLIP-001`, and `THM-BOND-001` through deterministic tests and an independent artifact verifier. This computation is evidence only; no theorem or novelty status is promoted.
 
+The Phase 1 ideal-rigid display certificate additionally checks proper exact
+orientations, bijective logical occupancy, actual rigid render matrices, a
+common mechanism pivot, and the declared active layer axis. This is
+implementation evidence only. It neither promotes nor resolves
+`OPEN-PATH-CERT-001` or `OPEN-TOLERANCE-001`.
+
 ## E. Retained special cases from the previous ledger
 
 The earlier ledger is not discarded; its correct statements are embedded in the stronger theory.

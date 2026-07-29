@@ -33,6 +33,9 @@ The deterministic Node suite contains **63 tests**. The Phase 1 additions are in
 - exact action orders, blocked closures, successor states, permutation cycles, and pairwise commutation;
 - compact public fingerprints and exact private state signatures;
 - collision-free machine colors, global face IDs, and fused-bandage interface suppression;
+- ideal-rigid display certification at rest, during an axial layer animation,
+  and after an exact committed turn, including rejection of a non-rigid render
+  matrix;
 - deterministic CRC-32 and ZIP construction;
 - dense geometry reports and stable digests;
 - bounded state graphs with multiple legality patterns;

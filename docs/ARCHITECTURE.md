@@ -82,6 +82,14 @@ The CPU renderer performs deterministic triangle projection, z-buffering, channe
 
 Both renderers consume the same canonical triangulations, provenance, and exact engine transforms. Internal bonded surfaces are never emitted as render triangles. Meshes are compiled once; scrambling changes rigid transforms only.
 
+Evaluator-facing reports and private browser exports include an
+`ideal-rigid-display-certificate.v1` record. It independently checks the
+affine artifact, signed-permutation state, logical occupancy, actual render
+matrices, common pivot, and active layer axis. The report discloses
+renderer-only piece contraction and outer-face lift as noncanonical
+presentation parameters. It deliberately makes no manufacturing-tolerance,
+hidden-core, or general swept-collision claim.
+
 ## Research data flow
 
 ```mermaid

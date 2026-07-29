@@ -41,6 +41,13 @@ These hashes identify the normalized serialization of the supported affine objec
 
 Puzzle states contain only exact signed-permutation piece transforms. Scrambling never rebuilds a mesh. Bonded interfaces carry `internal-surface` provenance and are omitted from render triangles and exposed-surface lists.
 
+The evaluator-facing `polytwist.ideal-rigid-display-certificate.v1` report
+checks the canonical geometry, exact proper rotations, bijective logical
+occupancy, actual render matrices, common mechanism pivot, and declared active
+layer axis. Renderer clearance is disclosed as a noncanonical `0.962`
+centroid contraction with a `0.006` outer-face lift. Neither value affects
+mechanics, legality, canonical geometry, or hashes.
+
 ## Verification
 
 Focused fixtures cover:
@@ -60,3 +67,7 @@ The artifact schema is `schema/affine-geometry.schema.json`. `POST /api/v1/compi
 ## Known boundary
 
 The current signed-permutation move engine remains a proved-by-regression cubic compatibility specialization, not a general atlas dynamics compiler. Exact geometry is shipped; general joints, docking, path legality, and arbitrary mechanisms are not. Phase 2 starts there—not by quietly bolting collision guesses onto Phase 1.
+
+The ideal-rigid display certificate is likewise not a manufacturability,
+tolerance, hidden-core, friction, retention, compliance, or general
+swept-volume collision certificate.

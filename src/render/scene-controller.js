@@ -11,6 +11,7 @@ import { hashSeed } from '../core/rng.js';
 import { OrbitCamera } from './camera.js';
 import { axisAngle3, easeInOutCubic, mat4AroundOrigin, mat4Multiply } from './mat4.js';
 import { TwistyRenderer } from './webgl-renderer.js';
+import { certifyIdealRigidDisplay } from './rigid-display-certificate.js';
 import { ENGINE_VERSION } from '../version.js';
 
 /** @typedef {import('../core/puzzle-compiler.js').PuzzleSpec} PuzzleSpec */
@@ -608,6 +609,12 @@ export class SceneController {
       compiledStats: this.puzzle.stats,
       state: this.engine.serialize(),
       groundTruth: this.engine.groundTruth(),
+      idealRigidDisplay: certifyIdealRigidDisplay(
+        this.puzzle,
+        this.engine.transforms,
+        this.lastModelMatrices,
+        this.active?.preview ?? null,
+      ),
       dynamics: analyzeCurrentDynamics(this.engine),
       agentActionMap: this.puzzle.moves.map((move, index) => ({
         publicId: this.unknownMechanics ? `A${index}` : move.id,

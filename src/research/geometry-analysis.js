@@ -5,6 +5,11 @@ import { numericSummary, histogram } from './statistics.js';
 import { stableDigest } from './canonical.js';
 import { ENGINE_VERSION, PLATFORM_NAME } from '../version.js';
 import { verifyAffineGeometry } from '../geometry/affine-verifier.js';
+import { identity3i } from '../core/mat3i.js';
+import {
+  certifyIdealRigidDisplay,
+  deriveExactRigidModelMatrices,
+} from '../render/rigid-display-certificate.js';
 
 /** @typedef {import('../core/puzzle-compiler.js').PuzzleSpec} PuzzleSpec */
 /** @typedef {import('../core/puzzle-compiler.js').CompiledPuzzle} CompiledPuzzle */
@@ -66,6 +71,15 @@ export function analyzePuzzleGeometry(input, options = {}) {
   const includePieces = options.includePieces ?? true;
   const includeFaces = options.includeFaces ?? false;
   const histogramBins = Math.max(2, Math.min(64, Math.trunc(options.histogramBins ?? 12)));
+  const geometryVerification = verifyAffineGeometry(puzzle.geometry);
+  const homeTransforms = new Map(puzzle.pieces.map((piece) => [piece.id, identity3i()]));
+  const idealRigidDisplay = certifyIdealRigidDisplay(
+    puzzle,
+    homeTransforms,
+    deriveExactRigidModelMatrices(puzzle, homeTransforms),
+    null,
+    { geometryVerification },
+  );
 
   const pieceRows = puzzle.pieces.map((piece) => {
     const poly = piece.polyhedron;
@@ -147,8 +161,6 @@ export function analyzePuzzleGeometry(input, options = {}) {
   const meanVolume = values.volume.length ? values.volume.reduce((a, b) => a + b, 0) / values.volume.length : 0;
   const volumeDeviation = values.volume.reduce((sum, value) => sum + Math.abs(value - meanVolume), 0);
   const mechanism = puzzle.spec.mechanism;
-  const geometryVerification = verifyAffineGeometry(puzzle.geometry);
-
   const report = {
     schema: 'kinescope.geometry-analysis.v1',
     platform: PLATFORM_NAME,
@@ -175,6 +187,7 @@ export function analyzePuzzleGeometry(input, options = {}) {
         diagnostics: structuredClone(puzzle.geometry.diagnostics),
         verifier: geometryVerification,
       },
+      idealRigidDisplay,
     },
     worldBounds: bounds(worldPoints),
     mechanism: {
