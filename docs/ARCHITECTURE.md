@@ -9,12 +9,18 @@ KineScope is split into a deterministic research core and replaceable observatio
 ```text
 Puzzle specification
     ↓
-Compiler
+Canonical affine compiler (B, Φ, β)
+    ├── exact atomic chambers and adjacency
+    ├── bond-quotiented physical pieces
+    ├── face provenance and exposed surfaces
+    ├── deterministic triangulations and hashes
+    └── diagnostics / verification certificates
+          ↓
+Cubic compatibility compiler
     ├── canonical logical mechanism
-    ├── convex piece geometry
     ├── action generators
-    ├── rigid constraints
-    └── appearance metadata
+    ├── rigid-transform state adapter
+    └── appearance metadata and numeric render projection
           ↓
 Exact state engine
     ├── state transitions
@@ -52,20 +58,17 @@ Every logical piece has:
 - current coordinate;
 - current 3×3 signed-permutation orientation.
 
-Quarter-turn actions apply integer coordinate permutations and exact orientation multiplication. No floating-point pose is used to determine occupancy, solved state, legality, or reachability. Floating point appears only in geometry construction, camera projection, shading, and animation.
+Quarter-turn actions apply integer coordinate permutations and exact orientation multiplication. No floating-point pose is used to determine occupancy, solved state, legality, reachability, geometry topology, adjacency, provenance, or canonical hashing. Floating point appears only at the declared legacy trigonometric-input boundary and in derived camera projection, shading, and animation.
 
 A serialized state carries a schema version, puzzle identity, exact piece transforms, history, future, engine version counter, and deterministic hash. The loader validates puzzle compatibility and invariants before committing, so a forged or stale state does not partially mutate the engine.
 
 ## Geometry compiler
 
-The compiler intersects:
+The authoritative Phase 1 compiler accepts a bounded convex polyhedral body `B`, oriented planar cuts `Φ`, and face-connected bonds `β`. Primitive integer plane normalization and `BigInt` rational predicates drive hull reconstruction, incremental clipping, face incidence, chamber adjacency, the bond quotient, provenance, triangulation, and canonical SHA-256 digests.
 
-1. an arbitrary bounded convex outer hull; and
-2. half-spaces induced by each logical cell in a translated and rotated mechanism frame.
+Every face is classified as `outer-hull`, `cut-surface`, or `internal-surface`. Raw cut traces remain available after bonding, while bonded interfaces disappear from exposed surfaces. A separate verifier checks emitted exact B-reps, adjacency, provenance, piece coverage, and hashes without trusting the compiler's arrangement search.
 
-This produces convex polyhedra for each logical cell. The compiler derives faces, vertices, triangles, volume, centroid, exposed outer area, adjacency, machine IDs, materials, and topology diagnostics.
-
-Rigid bandages are validated as non-overlapping six-neighbor connected cell clusters. Their legality is evaluated from current exact coordinates: every cluster must be wholly selected or wholly unselected by an action.
+The current `PuzzleSpec` adapter derives `B`, `Φ`, and `β` from the cubic frame schema. Its Euler-derived coefficients are marked `rationalized-numerical`; exact topology begins after that explicit source boundary. Rigid bandage legality is still evaluated from current exact logical coordinates.
 
 ## Renderer separation
 
@@ -77,7 +80,7 @@ The WebGL2 renderer provides interactive camera control, animation, picking, lig
 
 The CPU renderer performs deterministic triangle projection, z-buffering, channel shading, and PNG encoding without browser automation. It is intended for API calls, CI, dataset workers, and environments where launching Chromium merely to obtain a depth image would be an impressive use of machinery.
 
-Both renderers consume the same compiled geometry and exact engine transforms.
+Both renderers consume the same canonical triangulations, provenance, and exact engine transforms. Internal bonded surfaces are never emitted as render triangles. Meshes are compiled once; scrambling changes rigid transforms only.
 
 ## Research data flow
 
@@ -163,3 +166,5 @@ Canonical JSON recursively sorts object keys and normalizes values before hashin
 - public state fingerprints.
 
 Generation timestamps are intentionally nullable in deterministic artifacts. A separate run manifest may record wall-clock execution metadata without contaminating the identity of the underlying benchmark.
+
+The affine compiler additionally emits unprefixed SHA-256 digests for normalized `(B, Φ, β)` input and exact compiled geometry. These hashes exclude display metadata and identify normalized serialization, not generic atlas isomorphism.

@@ -75,6 +75,10 @@
 | EX-GHOST-A-001 | Rational Ghost Atlas A. | Proved example | Rational orthogonal frame; 27 chamber witnesses; exact primitive plane equations; six clipped boundary traces with exact endpoints and lengths. |
 | EX-GHOST-B-001 | Rational Ghost Atlas B. | Proved example | Rational orthogonal frame; 27 chamber witnesses; exact primitive plane equations; five traces on one face and a certified nonintersection for the sixth. |
 
+### Implementation evidence (not a theorem-status change)
+
+At implementation milestone `3062274`, the exact affine compiler reproduces `EX-GHOST-A-001` with 27 atomic chambers, six traces on `X=8/5`, and the stated short `1-` trace endpoints. It also exercises `THM-AFFINE-CONVEX-001`, `THM-TRACE-CLIP-001`, and `THM-BOND-001` through deterministic tests and an independent artifact verifier. This computation is evidence only; no theorem or novelty status is promoted.
+
 ## E. Retained special cases from the previous ledger
 
 The earlier ledger is not discarded; its correct statements are embedded in the stronger theory.

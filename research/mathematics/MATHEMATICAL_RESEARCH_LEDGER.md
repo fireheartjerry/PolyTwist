@@ -1,5 +1,26 @@
 # PolyTwist Mathematical Research Ledger
 
+> **Canonical correction, 2026-07-29:** The full normative ledger is
+> `PolyTwist_Mathematical_Monograph_Source/research/mathematics/MATHEMATICAL_RESEARCH_LEDGER.md`.
+> The earlier material below is retained as research provenance. In particular,
+> nonempty affine sign cells are atomic chambers, not necessarily physical
+> pieces; physical pieces arise from the bond quotient `β`.
+
+## Implementation Phase 1 record
+
+At milestone base `3062274`, the affine-convex specialization of the Stratified Kinematic Atlas is implemented:
+
+- exact rational normalization of oriented hull and cut planes;
+- exact convex B-rep construction and incremental planar clipping;
+- atomic strict-sign chambers under `THM-AFFINE-CONVEX-001`;
+- exact paired-face adjacency and face-connected bond quotient under `THM-BOND-001`;
+- `outer-hull`, `cut-surface`, and `internal-surface` provenance;
+- deterministic triangulations, normalized serialization hashes, diagnostics, and certificates;
+- an independent artifact verifier;
+- exact reproduction of Rational Ghost Atlas A's 27 chambers and six selected-face traces.
+
+This is implementation evidence for existing theorems and example `EX-GHOST-A-001`, not a new theorem or novelty claim. Legacy Euler-frame presets cross a declared `rationalized-numerical` source boundary before exact predicates begin.
+
 ## Canonical objective
 
 PolyTwist studies whether multimodal AI agents can infer, actively experiment on, represent, and plan within previously unseen three-dimensional cut-and-turn mechanisms. This is not primarily a conventional Rubik's Cube solver. The scientific target is **active system identification and exact planning in unfamiliar spatial mechanisms**.

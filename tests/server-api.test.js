@@ -35,6 +35,40 @@ test('HTTP API serves health, exact transitions, and binary renders', async () =
   assert.equal(healthBody.ok, true);
   assert.equal(healthBody.data.platform, 'KineScope');
 
+  const compile = await handleApiRequest(new Request('http://localhost/api/v1/compile', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({ preset: 'classic-2', includePieces: false }),
+  }));
+  const compiled = await compile.json();
+  assert.equal(compiled.ok, true);
+  assert.equal(compiled.data.canonicalGeometry.schema, 'polytwist.affine-geometry.v1');
+  assert.equal(compiled.data.canonicalGeometry.verifier.valid, true);
+  assert.equal(compiled.data.canonicalGeometry.counts.atomicCells, 8);
+  assert.match(compiled.data.canonicalGeometry.hashes.geometry, /^[0-9a-f]{64}$/);
+  assert.ok(compiled.data.canonicalGeometry.diagnostics.stages.length >= 4);
+  assert.equal('artifact' in compiled.data.canonicalGeometry, false);
+
+  const fullCompile = await handleApiRequest(new Request('http://localhost/api/v1/compile', {
+    method: 'POST',
+    headers: { 'content-type': 'application/json' },
+    body: JSON.stringify({
+      preset: 'classic-2',
+      includePieces: false,
+      includeCanonicalGeometry: true,
+    }),
+  }));
+  const fullCompiled = await fullCompile.json();
+  assert.equal(fullCompiled.data.canonicalGeometry.artifact.schema, 'polytwist.affine-geometry.v1');
+  assert.match(
+    fullCompiled.data.canonicalGeometry.artifact.body.volume.numerator,
+    /^-?[0-9]+n$/,
+  );
+
+  const schemas = await handleApiRequest(new Request('http://localhost/api/v1/schemas'));
+  const schemaBody = await schemas.json();
+  assert.ok(schemaBody.data.catalog.some((entry) => entry.name === 'affine-geometry'));
+
   const create = await handleApiRequest(new Request('http://localhost/api/v1/state/create', {
     method: 'POST',
     headers: { 'content-type': 'application/json' },

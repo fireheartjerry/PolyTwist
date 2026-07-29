@@ -5,6 +5,21 @@
 **Repository audit base:** `a970c65ab367b98ea380d48919c449bb63fa8638`  
 **Normative companion:** `research/monograph/polytwist-monograph.tex`
 
+## 0. Implementation Phase 1 evidence — 2026-07-29
+
+Milestone base `3062274` implements the affine-convex specialization of the atlas:
+
+- primitive integer normalization and exact rational predicates for `B` and `Φ`;
+- exact convex B-reps and incremental planar clipping;
+- strict-sign atomic chambers justified by `THM-AFFINE-CONVEX-001`;
+- exact paired-face adjacency and face-connected bond quotient `β`;
+- seam-aware `outer-hull`, `cut-surface`, and `internal-surface` provenance;
+- deterministic triangulations, normalized serialization hashes, stage diagnostics, and certificates;
+- an independent verifier that does not repeat the arrangement search;
+- exact computational reproduction of Rational Ghost Atlas A's 27 chambers and six traces on `X=8/5`.
+
+This is implementation evidence for existing mathematics, especially `EX-GHOST-A-001`; it is not promoted as a new theorem. The generic canonical-serialization conjecture remains open. Legacy Euler-frame inputs are marked `rationalized-numerical`, after which topology predicates are exact.
+
 ## 1. Canonical objective
 
 PolyTwist studies exact representation, active identification, and planning for unfamiliar three-dimensional cut-and-turn mechanisms. The target is not a larger catalogue of Rubik-like action tables. It is a mathematical language in which one mechanism object determines:
@@ -361,16 +376,17 @@ No general mechanism implementation should be presented as canonical until it pa
 
 ## 18. Current implementation boundary
 
-At audit base `a970c65ab367b98ea380d48919c449bb63fa8638`, the software implements a disciplined but narrow specialization:
+At implementation milestone `3062274`, the software implements a disciplined but narrow specialization:
 
+- exact rational affine-convex geometry for bounded polyhedral `B`, planar `Φ`, and face-connected `β`;
+- exact chamber adjacency, bond quotient, provenance, traces, deterministic triangulations, hashes, diagnostics, and independent verification;
 - cubic logical lattices of size 2 through 9;
 - one displaced/rotated orthogonal cut frame;
-- convex half-space cell geometry;
 - signed-permutation piece orientations and quarter-turn generators;
 - connected rigid bandages with state-dependent closure tests;
-- deterministic rendering, benchmark generation, and analysis derived from that engine.
+- deterministic rendering, benchmark generation, and analysis derived from the compiled geometry and engine.
 
-It does **not** implement the general atlas, arbitrary cut carriers, noncubic mechanisms, exact swept collision, general joints, jumbling, or the proof-carrying compiler described here. This documentation change deliberately does not edit implementation code.
+It does **not** implement the general atlas, curved or general semialgebraic cut carriers, noncubic dynamics, exact swept collision, general joints, jumbling, or the complete proof-carrying dynamics compiler described here.
 
 ## 19. Immediate proof agenda
 
@@ -380,7 +396,7 @@ It does **not** implement the general atlas, arbitrary cut carriers, noncubic me
 4. Define a minimal atlas certificate bundle and an independently checkable proof kernel.
 5. Construct exact noncubic specimens: one dodecahedral face-turner and one state-dependent jumbling example.
 6. Formalize observation equivalence and active-identification experiment signatures for finite atlas families.
-7. Turn the current cubic compiler into an explicitly verified atlas specialization before any generalization work begins.
+7. Prove the cubic compatibility map and extend the independent checker beyond the implemented affine geometry certificates.
 
 ## 20. Provenance checklist
 

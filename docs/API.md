@@ -55,6 +55,29 @@ The API accepts `x-request-id`, permits cross-origin GET/POST requests, disables
 | POST | `/render` | Deterministic PNG or base64 observation |
 | POST | `/batch` | Up to 64 API operations in one request |
 
+## Canonical compilation
+
+`POST /compile` returns a bounded `canonicalGeometry` summary containing:
+
+- schema and exactness boundary;
+- hull, cut, chamber, adjacency, piece, surface, and trace counts;
+- normalized-input and compiled-geometry SHA-256 hashes;
+- stage diagnostics and stated complexity;
+- the independent verifier result.
+
+The full artifact is omitted by default. Request it explicitly:
+
+```json
+{
+  "preset": "ghost-3",
+  "includePieces": false,
+  "includeFaces": false,
+  "includeCanonicalGeometry": true
+}
+```
+
+The returned `canonicalGeometry.artifact` follows `polytwist.affine-geometry.v1`. Exact `BigInt` values use canonical decimal strings with an `n` suffix, for example `"37n"`. The schema is available through `/schemas` and at `schema/affine-geometry.schema.json`.
+
 ## Selecting a puzzle
 
 Most POST endpoints accept either a built-in preset:

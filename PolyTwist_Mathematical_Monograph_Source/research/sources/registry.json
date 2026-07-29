@@ -216,6 +216,7 @@
       "title": "PolyTwist / KineScope repository at audit base",
       "url": "https://github.com/fireheartjerry/PolyTwist",
       "commit": "a970c65ab367b98ea380d48919c449bb63fa8638",
+      "implementationMilestoneCommit": "3062274529bd96e8af5fdd8ec522879664be6d21",
       "verifiedAgainst": [
         "research/CONTINUATION_PROMPT.md",
         "research/mathematics/MATHEMATICAL_RESEARCH_LEDGER.md",
@@ -227,6 +228,11 @@
         "docs/ROADMAP.md",
         "docs/PUZZLE_SPEC.md",
         "schema/puzzle-spec.schema.json",
+        "schema/affine-geometry.schema.json",
+        "docs/IMPLEMENTATION_PHASE_1.md",
+        "src/geometry/affine-compiler.js",
+        "src/geometry/affine-verifier.js",
+        "src/geometry/exact-polyhedron.js",
         "src/core/puzzle-compiler.js",
         "src/core/puzzle-engine.js"
       ],

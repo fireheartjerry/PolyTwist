@@ -8,8 +8,8 @@ KineScope is a deterministic simulation, rendering, dataset-generation, and eval
 
 The platform deliberately separates four layers:
 
-1. **Canonical mechanics:** exact integer-valued piece coordinates and signed-permutation orientations.
-2. **Geometry:** convex piece cells compiled from an outer hull and a rotated or displaced cutting frame.
+1. **Canonical mathematical object:** exact `(B, Φ, β)` affine geometry plus exact integer-valued rigid state.
+2. **Geometry:** exact rational chambers, bond-quotiented pieces, provenance, and deterministic triangulations.
 3. **Observations:** synchronized human-oriented and machine-oriented render channels.
 4. **Research harness:** public/private episodes, task generation, diagnostics, scoring, provenance, JSON/JSONL output, and a stateless REST API.
 
@@ -19,6 +19,8 @@ Pixels may observe state. Pixels never define state. This rule prevents the benc
 
 ### Exact mechanics and procedural artifacts
 
+- Exact rational affine-convex compiler with canonical hashes, diagnostics, certificates, and an independent verifier.
+- Atomic chambers, exact adjacency, physical-piece bond quotient, raw traces, and face provenance.
 - Cubic logical lattices from `2×2×2` through `9×9×9`.
 - Exact quarter-turn transitions using integer 3×3 signed-permutation matrices.
 - Deterministic replay, serialization, transactional previews, undo/redo, and invariant validation.
@@ -83,9 +85,10 @@ Requirements: Node.js 20+ and, for the interactive interface, a browser with Web
 
 ```bash
 npm run check
-npm run typecheck
 npm run serve
 ```
+
+Run `npm run typecheck` when TypeScript is installed in the development environment.
 
 Open:
 
@@ -99,7 +102,9 @@ The same process serves the browser laboratory and REST API:
 http://127.0.0.1:4173/api/v1/health
 ```
 
-There is no install step and no runtime dependency tree. Apparently a JavaScript project can exist without downloading a geological formation called `node_modules`.
+There is no runtime dependency tree. Apparently a JavaScript project can exist without downloading a geological formation called `node_modules`.
+
+See [Implementation Phase 1](docs/IMPLEMENTATION_PHASE_1.md) for the exact compiler contract and its deliberately narrow boundary.
 
 ## REST API
 

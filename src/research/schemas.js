@@ -3,6 +3,46 @@
 const id = (name) => `https://kinescope.dev/schema/${name}.schema.json`;
 
 export const RESEARCH_SCHEMAS = Object.freeze({
+  'affine-geometry': {
+    $id: 'https://polytwist.dev/schema/affine-geometry.schema.json',
+    $schema: 'https://json-schema.org/draft/2020-12/schema',
+    title: 'PolyTwist canonical affine geometry artifact',
+    type: 'object',
+    required: [
+      'schema',
+      'exactness',
+      'normalizedInput',
+      'body',
+      'atomicCells',
+      'adjacency',
+      'physicalPieces',
+      'exposedSurfaces',
+      'diagnostics',
+      'certificates',
+      'hashes',
+    ],
+    properties: {
+      schema: { const: 'polytwist.affine-geometry.v1' },
+      exactness: { type: 'object' },
+      normalizedInput: { type: 'object' },
+      body: { type: 'object' },
+      atomicCells: { type: 'array' },
+      adjacency: { type: 'array' },
+      physicalPieces: { type: 'array' },
+      exposedSurfaces: { type: 'array' },
+      boundaryTraces: { type: 'array' },
+      diagnostics: { type: 'object' },
+      certificates: { type: 'object' },
+      hashes: {
+        type: 'object',
+        required: ['input', 'geometry'],
+        properties: {
+          input: { type: 'string', pattern: '^[0-9a-f]{64}$' },
+          geometry: { type: 'string', pattern: '^[0-9a-f]{64}$' },
+        },
+      },
+    },
+  },
   'api-envelope': {
     $id: id('api-envelope'),
     $schema: 'https://json-schema.org/draft/2020-12/schema',

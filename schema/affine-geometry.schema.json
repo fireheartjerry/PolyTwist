@@ -1,0 +1,435 @@
+{
+  "$id": "https://polytwist.dev/schema/affine-geometry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "PolyTwist canonical affine geometry artifact",
+  "description": "Deterministic proof-carrying output for a bounded convex polyhedral body cut by oriented affine planes and quotiented by face-connected bonds.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "exactness",
+    "normalizedInput",
+    "body",
+    "atomicCells",
+    "adjacency",
+    "physicalPieces",
+    "exposedSurfaces",
+    "boundaryTraces",
+    "diagnostics",
+    "certificates",
+    "hashes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "polytwist.affine-geometry.v1"
+    },
+    "exactness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["predicates", "source", "topologyUsesTolerance"],
+      "properties": {
+        "predicates": {
+          "const": "exact-rational"
+        },
+        "source": {
+          "enum": ["exact-rational", "rationalized-numerical"]
+        },
+        "topologyUsesTolerance": {
+          "const": false
+        }
+      }
+    },
+    "normalizedInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["bodyPlanes", "cuts", "bondGroups"],
+      "properties": {
+        "bodyPlanes": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "$ref": "#/$defs/plane"
+          }
+        },
+        "cuts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plane"
+          }
+        },
+        "bondGroups": {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "pattern": "^cell:[+-]*$"
+            }
+          }
+        }
+      }
+    },
+    "body": {
+      "$ref": "#/$defs/polyhedron"
+    },
+    "atomicCells": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "signKey",
+          "signs",
+          "polyhedron",
+          "faces",
+          "physicalPieceId"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^cell:[+-]*$"
+          },
+          "signKey": {
+            "type": "string",
+            "pattern": "^[+-]*$"
+          },
+          "signs": {
+            "type": "array",
+            "items": {
+              "enum": [-1, 1]
+            }
+          },
+          "signsByCut": {
+            "type": "object",
+            "additionalProperties": {
+              "enum": [-1, 1]
+            }
+          },
+          "polyhedron": {
+            "$ref": "#/$defs/polyhedron"
+          },
+          "faces": {
+            "type": "array",
+            "items": {
+              "$ref": "#/$defs/provenanceFace"
+            }
+          },
+          "physicalPieceId": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "adjacency": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "cutIndex", "cellIds", "faceIndices", "points"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cutIndex": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "cellIds": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "string"
+            }
+          },
+          "faceIndices": {
+            "type": "array",
+            "minItems": 2,
+            "maxItems": 2,
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "points": {
+            "type": "array",
+            "minItems": 3,
+            "items": {
+              "$ref": "#/$defs/point"
+            }
+          }
+        }
+      }
+    },
+    "physicalPieces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "cellIds", "exposedSurfaceIds"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cellIds": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          },
+          "exposedSurfaceIds": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "exposedSurfaces": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "cellId", "physicalPieceId", "provenance"],
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "cellId": {
+            "type": "string"
+          },
+          "physicalPieceId": {
+            "type": "string"
+          },
+          "provenance": {
+            "$ref": "#/$defs/provenance"
+          }
+        }
+      }
+    },
+    "boundaryTraces": {
+      "type": "array"
+    },
+    "diagnostics": {
+      "type": "object",
+      "required": ["stages", "complexity"],
+      "properties": {
+        "stages": {
+          "type": "array"
+        },
+        "complexity": {
+          "type": "object"
+        }
+      }
+    },
+    "certificates": {
+      "type": "object"
+    },
+    "hashes": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["input", "geometry"],
+      "properties": {
+        "input": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "geometry": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "integerString": {
+      "type": "string",
+      "pattern": "^-?(0|[1-9][0-9]*)n$"
+    },
+    "rational": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["numerator", "denominator"],
+      "properties": {
+        "numerator": {
+          "$ref": "#/$defs/integerString"
+        },
+        "denominator": {
+          "type": "string",
+          "pattern": "^[1-9][0-9]*n$"
+        }
+      }
+    },
+    "point": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "$ref": "#/$defs/rational"
+      }
+    },
+    "plane": {
+      "type": "object",
+      "required": [
+        "normal",
+        "constant",
+        "integerCoefficients",
+        "key",
+        "carrierKey",
+        "orientationAgainstCarrier"
+      ],
+      "properties": {
+        "normal": {
+          "$ref": "#/$defs/point"
+        },
+        "constant": {
+          "$ref": "#/$defs/rational"
+        },
+        "integerCoefficients": {
+          "type": "array",
+          "minItems": 4,
+          "maxItems": 4,
+          "items": {
+            "$ref": "#/$defs/integerString"
+          }
+        },
+        "key": {
+          "type": "string"
+        },
+        "carrierKey": {
+          "type": "string"
+        },
+        "orientationAgainstCarrier": {
+          "enum": [-1, 1]
+        },
+        "sourceId": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "polyhedron": {
+      "type": "object",
+      "required": [
+        "sourcePlanes",
+        "vertices",
+        "faces",
+        "edges",
+        "triangles",
+        "volume",
+        "centroid",
+        "numeric"
+      ],
+      "properties": {
+        "sourcePlanes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/plane"
+          }
+        },
+        "vertices": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "$ref": "#/$defs/point"
+          }
+        },
+        "faces": {
+          "type": "array",
+          "minItems": 4
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 6
+        },
+        "triangles": {
+          "type": "array",
+          "minItems": 4
+        },
+        "volume": {
+          "$ref": "#/$defs/rational"
+        },
+        "centroid": {
+          "$ref": "#/$defs/point"
+        },
+        "numeric": {
+          "type": "object"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "category",
+        "sourceType",
+        "sourceIndex",
+        "sourceId",
+        "adjacencyId"
+      ],
+      "properties": {
+        "category": {
+          "enum": ["outer-hull", "cut-surface", "internal-surface"]
+        },
+        "sourceType": {
+          "enum": ["hull", "cut"]
+        },
+        "sourceIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "sourceId": {
+          "type": "string"
+        },
+        "adjacencyId": {
+          "type": ["string", "null"]
+        }
+      }
+    },
+    "provenanceFace": {
+      "type": "object",
+      "required": [
+        "id",
+        "polyhedronFaceIndex",
+        "vertexIndices",
+        "triangleIndices",
+        "planeKey",
+        "carrierKey",
+        "provenance"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "polyhedronFaceIndex": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "vertexIndices": {
+          "type": "array",
+          "minItems": 3,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "triangleIndices": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "planeKey": {
+          "type": "string"
+        },
+        "carrierKey": {
+          "type": "string"
+        },
+        "provenance": {
+          "$ref": "#/$defs/provenance"
+        }
+      }
+    }
+  }
+}

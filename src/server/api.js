@@ -15,6 +15,8 @@ import { RESEARCH_SCHEMAS, schemaCatalog } from '../research/schemas.js';
 import { stableDigest } from '../research/canonical.js';
 import { renderPuzzlePng } from './software-renderer.js';
 import { ENGINE_VERSION, PLATFORM_NAME } from '../version.js';
+import { verifyAffineGeometry } from '../geometry/affine-verifier.js';
+import { canonicalStringify } from '../geometry/sha256.js';
 
 const API_VERSION = 'v1';
 const MAX_BODY_BYTES = 20 * 1024 * 1024;
@@ -84,6 +86,30 @@ function engineFromState(state, puzzle) {
   return engine;
 }
 
+/** @param {ReturnType<typeof compilePuzzle>['geometry']} geometry @param {boolean} includeArtifact */
+function canonicalGeometryResponse(geometry, includeArtifact) {
+  const response = {
+    schema: geometry.schema,
+    exactness: structuredClone(geometry.exactness),
+    counts: {
+      hullPlanes: geometry.normalizedInput.bodyPlanes.length,
+      cuts: geometry.normalizedInput.cuts.length,
+      atomicCells: geometry.atomicCells.length,
+      adjacency: geometry.adjacency.length,
+      physicalPieces: geometry.physicalPieces.length,
+      exposedSurfaces: geometry.exposedSurfaces.length,
+      boundaryTraces: geometry.boundaryTraces.length,
+    },
+    hashes: structuredClone(geometry.hashes),
+    diagnostics: structuredClone(geometry.diagnostics),
+    verifier: verifyAffineGeometry(geometry),
+  };
+  if (includeArtifact) {
+    response.artifact = JSON.parse(canonicalStringify(geometry));
+  }
+  return response;
+}
+
 export function createOpenApiDocument() {
   const post = (summary) => ({
     post: {
@@ -135,6 +161,10 @@ async function execute(route, body, url) {
     return {
       spec,
       compileStats: puzzle.stats,
+      canonicalGeometry: canonicalGeometryResponse(
+        puzzle.geometry,
+        body.includeCanonicalGeometry === true,
+      ),
       geometry: analyzePuzzleGeometry(puzzle, {
         includePieces: body.includePieces !== false,
         includeFaces: body.includeFaces === true,

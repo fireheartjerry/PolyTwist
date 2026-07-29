@@ -1,6 +1,6 @@
 # Puzzle specification reference
 
-A `PuzzleSpec` is the canonical source for a compiled artifact. Specifications are ordinary JSON and can be edited in the in-app **SPEC** dialog or passed to `compilePuzzle()`.
+A `PuzzleSpec` is the current cubic compatibility source for a canonical affine artifact. Specifications are ordinary JSON and can be edited in the in-app **SPEC** dialog or passed to `compilePuzzle()`. The compiler derives `(B, Φ, β)` and never derives mechanics from a mesh.
 
 ## Top-level fields
 
@@ -52,7 +52,7 @@ A `PuzzleSpec` is the canonical source for a compiled artifact. Specifications a
 }
 ```
 
-Each plane uses the feasible convention `normal · point ≤ constant`. Normals are normalized during compilation and constants are scaled accordingly. Planes must enclose a bounded, nondegenerate convex volume.
+Each plane uses the feasible convention `normal · point ≤ constant`. Source coefficients are preserved, converted to exact decimal rationals, and normalized to primitive integers for predicates and hashing. Planes must enclose a bounded, nondegenerate convex volume.
 
 ## Mechanism frame
 
@@ -71,6 +71,8 @@ Each plane uses the feasible convention `normal · point ≤ constant`. Normals 
 - `cutSpacing` is the distance between adjacent logical cut planes.
 
 Keeping the external hull fixed while changing this frame changes geometry and turn axes without changing the exact cubic coordinate algebra.
+
+Euler trigonometry is a numerical source operation. Its finite coefficients are rationalized exactly and the artifact reports `source: "rationalized-numerical"`; this is an honest boundary, not a claim that decimal sine values became symbolic by positive thinking.
 
 ## Moves
 
@@ -120,6 +122,8 @@ Bandages make action legality depend on the exact current state:
 - share no cell with another bandage.
 
 For a move to be legal, every rigid cluster must be wholly selected or wholly unselected. Since selection is evaluated from current exact coordinates, the legal action mask can change after each move. The compiled cluster also stores a volume-weighted centroid used to render the bonded pieces as one visual assembly.
+
+In canonical geometry, these clusters are the bond quotient `β`. Their paired faces receive `internal-surface` provenance and are excluded from exposed surfaces and render triangles. Unbonded cut interfaces receive `cut-surface`; hull faces receive `outer-hull`.
 
 ## Public metadata overrides
 
@@ -178,3 +182,5 @@ With `strictTopology: true`, a mismatch rejects compilation rather than silently
 ## JSON Schema
 
 A machine-readable schema is available at [`schema/puzzle-spec.schema.json`](../schema/puzzle-spec.schema.json). The compiler remains the definitive validator for geometric boundedness and topology because JSON Schema, tragically, cannot determine whether a set of planes encloses a valid polyhedron.
+
+The derived exact artifact follows [`schema/affine-geometry.schema.json`](../schema/affine-geometry.schema.json).

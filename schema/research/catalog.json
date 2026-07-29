@@ -4,6 +4,11 @@
   "engineVersion": "unversioned",
   "schemas": [
     {
+      "name": "affine-geometry",
+      "id": "https://polytwist.dev/schema/affine-geometry.schema.json",
+      "title": "PolyTwist canonical affine geometry artifact"
+    },
+    {
       "name": "api-envelope",
       "id": "https://kinescope.dev/schema/api-envelope.schema.json",
       "title": "KineScope API envelope"

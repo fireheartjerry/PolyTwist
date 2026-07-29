@@ -21,7 +21,7 @@ const orthogonalCuts = [
   { id: 'y', normal: [0, 1, 0], constant: 0 },
 ];
 
-test('one affine cut compiles two strict cells and one exact paired interface', () => {
+test('canonical affine compilation derives exact cells, interfaces, and stable hashes', () => {
   const geometry = compileAffineGeometry({
     body: cubeBody,
     cuts: [orthogonalCuts[0]],
@@ -36,9 +36,6 @@ test('one affine cut compiles two strict cells and one exact paired interface', 
   assert.ok(geometry.atomicCells.every((cell) => cell.faces.every(
     (face) => ['outer-hull', 'cut-surface'].includes(face.provenance.category),
   )));
-});
-
-test('canonical affine output ignores cut order and positive equation scaling', () => {
   const first = compileAffineGeometry({
     body: cubeBody,
     cuts: orthogonalCuts,
@@ -67,7 +64,7 @@ test('canonical affine output ignores cut order and positive equation scaling', 
   );
 });
 
-test('the bond quotient creates physical pieces and hides bonded interfaces', () => {
+test('the bond quotient hides connected interfaces and rejects disconnected hyperedges', () => {
   const geometry = compileAffineGeometry({
     body: cubeBody,
     cuts: orthogonalCuts,
@@ -92,9 +89,6 @@ test('the bond quotient creates physical pieces and hides bonded interfaces', ()
   assert.ok(geometry.exposedSurfaces.every(
     (surface) => surface.provenance.category !== 'internal-surface',
   ));
-});
-
-test('a bond hyperedge must be connected in the exact chamber adjacency graph', () => {
   assert.throws(() => compileAffineGeometry({
     body: cubeBody,
     cuts: orthogonalCuts,

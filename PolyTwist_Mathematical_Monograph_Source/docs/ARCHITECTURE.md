@@ -1,8 +1,9 @@
 # Architecture
 
-**Status:** target mathematical architecture plus current implementation boundary  
+**Status:** target mathematical architecture plus implemented affine-convex Phase 1 boundary
 **Date:** 2026-07-29  
 **Canonical audit base:** `a970c65ab367b98ea380d48919c449bb63fa8638`
+**Implementation milestone base:** `3062274`
 
 The architectural rule is stronger than “pixels do not define state”:
 
@@ -14,22 +15,24 @@ The canonical source object is the Stratified Kinematic Atlas defined in `resear
 
 ### Current implemented specialization
 
-The repository currently implements a cubic-lattice engine with:
+The repository now implements a canonical affine-convex geometry kernel plus a cubic-lattice dynamics adapter with:
 
 - sizes `2×2×2` through `9×9×9`;
 - one translated and rotated orthogonal mechanism frame;
-- convex half-space piece geometry;
+- exact rational planar-cut chamber geometry after a declared source boundary;
+- exact adjacency, face provenance, bond quotient, deterministic triangulations, hashes, and diagnostics;
+- an independent artifact verifier;
 - exact signed-permutation orientations and quarter turns;
 - connected rigid bandages with state-dependent closure checks;
 - deterministic browser/server rendering and research exports.
 
-This system is valuable and internally disciplined. It is **not** an implementation of arbitrary cut-and-turn mechanisms.
+The exact kernel accepts bounded convex polyhedral `B`, oriented affine `Φ`, and face-connected `β`. Legacy Euler trigonometry is explicitly marked `rationalized-numerical`; exact predicates begin from those finite coefficients. This system is **not** an implementation of arbitrary cut-and-turn mechanisms.
 
 ### Target atlas architecture
 
 The target accepts exact bodies, arbitrary supported cut carriers, bonds, assemblies, joints, turn paths, state-dependent gates, docking relations, and appearance/sensor data. It derives pieces, legality, dynamics, observations, and benchmark targets from those inputs.
 
-No implementation code was changed by the mathematical-monograph work. The architecture below is a promotion contract, not a claim of shipped capability.
+The architecture below remains the promotion contract. Phase 1 ships only its affine geometry, piece, provenance, and rendering specialization.
 
 ## 2. Canonical layer model
 
@@ -343,12 +346,12 @@ Adversarial fixtures should include:
 
 The migration order is proof-first.
 
-1. Encode the current cubic presets as affine-convex atlases.
-2. Prove the atlas stratification reproduces the existing logical cells.
-3. Prove bandage closure agrees with the current cluster test.
+1. **Implemented:** encode the current cubic presets as affine-convex `(B, Φ, β)` artifacts.
+2. **Regression-certified, proof pending:** reproduce the existing logical cells.
+3. **Implemented for face-connected cubic bandages:** derive the bond quotient and preserve the current cluster test.
 4. Prove each current quarter turn has the same domain and successor map.
 5. Cross-check state hashes through a declared compatibility map.
-6. Derive current meshes and render channels from atlas faces.
+6. **Implemented for Phase 1 faces:** derive current meshes and render channels from exact provenance.
 7. Only then add noncubic bodies, arbitrary cuts, or new joints.
 
 This avoids the classic rewrite strategy of generalizing everything simultaneously and discovering later that the old system was the only test oracle.
@@ -363,8 +366,9 @@ This avoids the classic rewrite strategy of generalizing everything simultaneous
 | `research/sources/` | literature registry and bibliography |
 | `docs/ARCHITECTURE.md` | target derivation and verification architecture |
 | `docs/ROADMAP.md` | promotion gates and implementation order |
-| current `src/core/` | existing cubic specialization until an atlas implementation is intentionally undertaken |
-| renderer/research/API code | current consumers of the existing exact engine; future consumers of compiled atlas artifacts |
+| `src/geometry/` | exact affine compiler, verifier, rational predicates, B-reps, canonical hashing |
+| current `src/core/` | cubic state specialization and compatibility adapter over canonical affine geometry |
+| renderer/research/API code | consumers of compiled geometry, provenance, transforms, diagnostics, and hashes |
 
 ## 16. Non-negotiable invariants
 

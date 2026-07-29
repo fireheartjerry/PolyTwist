@@ -86,6 +86,12 @@ function surfaceColor(puzzle, piece, faceIndex) {
   return multiplyColor(mixColor(base, accent, accentMix), variation * normalLift);
 }
 
+/** @param {import('../core/polyhedron.js').PolyFace} face */
+function provenanceCategory(face) {
+  const provenance = /** @type {{category?:unknown}|undefined} */ (face.meta?.provenance);
+  return String(provenance?.category ?? (face.kind === 'outer' ? 'outer-hull' : 'cut-surface'));
+}
+
 /**
  * Converts one exact convex piece into non-indexed GPU arrays. Vertices are duplicated per
  * triangle so flat normals and per-face machine labels remain unambiguous.
@@ -130,7 +136,7 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
     if (!bandagedPieceIds) return false;
     for (const face of poly.faces) {
       if (
-        face.meta?.provenance?.category === 'internal-surface'
+        provenanceCategory(face) === 'internal-surface'
         && face.indices.includes(edge.a)
         && face.indices.includes(edge.b)
       ) return true;
@@ -148,10 +154,8 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
   for (let triangleIndex = 0; triangleIndex < poly.triangles.length; triangleIndex += 1) {
     const triangle = poly.triangles[triangleIndex];
     const face = poly.faces[triangle.faceIndex];
-    const provenanceCategory = String(face.meta?.provenance?.category ?? (
-      face.kind === 'outer' ? 'outer-hull' : 'cut-surface'
-    ));
-    if (provenanceCategory === 'internal-surface') continue;
+    const category = provenanceCategory(face);
+    if (category === 'internal-surface') continue;
     const color = surfaceColor(puzzle, piece, triangle.faceIndex);
     const machineFaceColor = faceIdColor(faceIdBase + triangle.faceIndex);
     const isOuter = face.kind === 'outer';

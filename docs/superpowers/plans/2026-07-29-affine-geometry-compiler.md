@@ -8,6 +8,8 @@
 
 **Tech Stack:** JavaScript ES modules, JSDoc/TypeScript checking, `BigInt` rational arithmetic, Node test runner, existing deterministic render/research/API stack.
 
+**Execution status (2026-07-29):** Tasks 1–5 implemented and committed through the canonical compiler, legacy adapter, renderer/research integration, schema, API, and documentation. Final release verification remains the only open task.
+
 ---
 
 ## Scope and invariants
@@ -277,4 +279,3 @@ Expected: no whitespace errors; only intentional changes before the final commit
 - [ ] **Step 4: Commit any verification fixes**
 
 Use a narrowly scoped commit message describing the actual fix.
-

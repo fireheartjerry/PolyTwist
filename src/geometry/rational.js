@@ -232,7 +232,11 @@ export function normalizePlane(input) {
 /** @param {NormalizedPlane} plane @returns {NormalizedPlane} */
 export function negatePlane(plane) {
   return normalizePlane({
-    normal: plane.normal.map(negateRational),
+    normal: [
+      negateRational(plane.normal[0]),
+      negateRational(plane.normal[1]),
+      negateRational(plane.normal[2]),
+    ],
     constant: negateRational(plane.constant),
     id: plane.sourceId ?? undefined,
     tag: plane.tag ?? undefined,

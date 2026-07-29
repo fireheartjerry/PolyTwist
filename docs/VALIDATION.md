@@ -11,7 +11,19 @@ npm run build
 npm run browser:smoke
 ```
 
-The v0.3 deterministic Node suite contains **57 tests**. It covers:
+The deterministic Node suite contains **63 tests**. The Phase 1 additions are intentionally consolidated into six high-signal proof fixtures. They cover:
+
+- exact rational parsing, arithmetic, large-coefficient numeric projection, and primitive plane normalization;
+- dependency-free standard-vector SHA-256 and canonical serialization;
+- exact convex B-rep closure, Euler characteristic, two-face edge incidence, volume, centroid, and clipping;
+- deterministic faces and triangles under plane reordering and positive rescaling;
+- rejection of unbounded and lower-dimensional intersections;
+- canonical affine chamber adjacency, bond quotient, provenance, exposed surfaces, diagnostics, and hashes;
+- independent rejection of corrupted vertices, provenance, and hashes;
+- Rational Ghost Atlas A's 27 chambers, six selected-face traces, and exact short-trace endpoints;
+- canonical geometry integration for every supported preset and procedural artifact;
+- renderer omission of `internal-surface` triangles and per-vertex provenance codes;
+- compile API summaries, verifier results, canonical hashes, and schema discovery;
 
 - exact signed-permutation rotation algebra and right-hand-rule behavior;
 - inverse/order-four restoration, occupancy, serialization, loading, undo, and redo;
@@ -31,7 +43,7 @@ The v0.3 deterministic Node suite contains **57 tests**. It covers:
 - deterministic CPU PNG rendering across observation modes;
 - REST health, exact transition, binary render behavior, and Vercel adapter response preservation.
 
-The JSDoc-annotated source passes `tsc -p tsconfig.check.json --noEmit`. The static builder emits a self-contained browser application at `dist/index.html`.
+The JSDoc-annotated source is configured for `tsc -p tsconfig.check.json --noEmit`; TypeScript must be installed in the execution environment. The static builder emits a self-contained browser application at `dist/index.html`.
 
 ## Compiler inspection
 
@@ -51,6 +63,16 @@ The Ghost Frame 4×4 preset is expected to compile to 64 logical cells and 56 re
 ```
 
 After `R`, `U` becomes legal. The dynamics report records blocked primitives, executable successors, local action closure, affected-piece transitions, permutation cycles, and all primitive action pairs.
+
+Canonical compiler inspection is also available through:
+
+```bash
+curl -X POST http://127.0.0.1:4173/api/v1/compile \
+  -H 'content-type: application/json' \
+  -d '{"preset":"ghost-3","includePieces":false}'
+```
+
+The response must report `polytwist.affine-geometry.v1`, a valid independent-verifier result, exact stage diagnostics, and two 64-character SHA-256 hashes. Add `"includeCanonicalGeometry":true` only when the full exact artifact is required.
 
 ## API smoke test
 

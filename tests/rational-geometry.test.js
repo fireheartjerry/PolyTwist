@@ -30,16 +30,13 @@ const cubePlanes = [
   { id: 'z-', normal: [0, 0, -1], constant: 1 },
 ];
 
-test('rational scalars parse decimal, scientific, and fraction syntax exactly', () => {
+test('exact rational, plane-normalization, and canonical-hash primitives', () => {
   assert.equal(rationalKey(parseRational('3/4')), '3/4');
   assert.equal(rationalKey(parseRational('-1.250')), '-5/4');
   assert.equal(rationalKey(parseRational('2.5e-3')), '1/400');
   assert.equal(rationalKey(parseRational(0.125)), '1/8');
   assert.throws(() => parseRational('1/0'), /denominator/i);
   assert.throws(() => parseRational(Number.NaN), /finite/i);
-});
-
-test('rational arithmetic and comparisons do not round', () => {
   const oneThird = parseRational('1/3');
   const oneSixth = parseRational('1/6');
   assert.equal(rationalKey(addRational(oneThird, oneSixth)), '1/2');
@@ -52,9 +49,6 @@ test('rational arithmetic and comparisons do not round', () => {
     5n * 10n ** 400n + 1n,
     4n * 10n ** 400n + 3n,
   )) - 1.25) < 1e-14);
-});
-
-test('oriented planes normalize positive equation scaling to primitive integers', () => {
   const first = normalizePlane({
     normal: ['1/2', '-3/4', '5/6'],
     constant: '7/8',
@@ -74,9 +68,6 @@ test('oriented planes normalize positive equation scaling to primitive integers'
   assert.equal(first.carrierKey, reversed.carrierKey);
   assert.equal(first.orientationAgainstCarrier, 1);
   assert.equal(reversed.orientationAgainstCarrier, -1);
-});
-
-test('SHA-256 and canonical object hashing are deterministic', () => {
   assert.equal(
     sha256('abc'),
     'ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad',
@@ -93,7 +84,7 @@ test('SHA-256 and canonical object hashing are deterministic', () => {
   );
 });
 
-test('exact half-space intersection reconstructs a closed canonical cube', () => {
+test('exact convex B-rep construction, canonical ordering, clipping, and rejection', () => {
   const cube = intersectExactHalfspaces(cubePlanes);
   assert.ok(cube);
   assert.equal(cube.vertices.length, 8);
@@ -105,9 +96,6 @@ test('exact half-space intersection reconstructs a closed canonical cube', () =>
   assert.equal(cube.vertices.length - cube.edges.length + cube.faces.length, 2);
   assert.ok(cube.edges.every((edge) => edge.faceIndices.length === 2));
   assert.deepEqual(validateExactPolyhedron(cube), []);
-});
-
-test('exact hull faces and triangles are invariant under source-plane ordering', () => {
   const forward = intersectExactHalfspaces(cubePlanes);
   const reordered = intersectExactHalfspaces([
     cubePlanes[4],
@@ -130,12 +118,9 @@ test('exact hull faces and triangles are invariant under source-plane ordering',
       .map((index) => exactPointKey(polyhedron.vertices[index]))),
   });
   assert.deepEqual(signature(forward), signature(reordered));
-});
-
-test('exact clipping at an affine plane creates two closed equal-volume children', () => {
-  const cube = intersectExactHalfspaces(cubePlanes);
-  assert.ok(cube);
-  const split = clipExactPolyhedron(cube, {
+  const splitCube = intersectExactHalfspaces(cubePlanes);
+  assert.ok(splitCube);
+  const split = clipExactPolyhedron(splitCube, {
     id: 'middle-x',
     normal: [1, 0, 0],
     constant: 0,
@@ -156,9 +141,6 @@ test('exact clipping at an affine plane creates two closed equal-volume children
     split.positive.faces.filter((face) => face.plane.sourceId === 'middle-x').length,
     1,
   );
-});
-
-test('exact hull construction rejects unbounded and lower-dimensional intersections', () => {
   assert.equal(intersectExactHalfspaces(cubePlanes.slice(0, 5)), null);
   assert.equal(intersectExactHalfspaces([
     ...cubePlanes.slice(2),

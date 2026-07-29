@@ -2,7 +2,17 @@
 
 KineScope 0.3 is a broad research substrate. It is not a claim that every manufactured twisty puzzle, polyhedral cut complex, and physically annoying plastic object has been reduced to a solved software abstraction.
 
-## Implemented in v0.3
+## Implemented through Phase 1
+
+- exact rational plane normalization and predicates for the affine-convex specialization;
+- deterministic exact convex B-reps and output-sensitive incremental planar clipping;
+- canonical atomic sign chambers, exact adjacency, bond quotient, and physical pieces;
+- exact `outer-hull`, `cut-surface`, and `internal-surface` provenance;
+- exposed surfaces, raw boundary traces, deterministic triangulations, certificates, and SHA-256 hashes;
+- independent artifact verifier and `polytwist.affine-geometry.v1` schema;
+- direct canonical compilation of Classic, Ghost, Mirror, Axis, bandaged, and procedural planar-cut presets;
+- renderer projection from canonical faces, compile-once meshes, and rigid-transform-only state updates;
+- exact Rational Ghost Atlas A regression with 27 cells and six proved selected-face traces;
 
 - exact cubic `2×2×2` through `9×9×9` logical mechanisms;
 - convex shape-mod compilation from bounded half-spaces;
@@ -21,7 +31,16 @@ KineScope 0.3 is a broad research substrate. It is not a claim that every manufa
 - latency, token, cost, coverage, and calibration reporting;
 - stateless REST API, OpenAPI output, batch operations, and Vercel adapters.
 
-## v0.4: richer experimentation and materialization
+## Phase 1 hardening
+
+- add the second rational Ghost Atlas B as a full trace regression;
+- strengthen the verifier with independently recomputed volumes and adversarial certificate fixtures;
+- add content-addressed artifact persistence instead of process-local caching;
+- benchmark coefficient growth and add safe resource ceilings;
+- prove and document the cubic compatibility map beyond regression evidence;
+- complete renderer manifests from every raster primitive back to exact source faces.
+
+## Phase 2+: richer experimentation and materialization
 
 - streaming dataset generation and artifact-store adapters;
 - asynchronous large-suite job API;
@@ -33,9 +52,9 @@ KineScope 0.3 is a broad research substrate. It is not a claim that every manufa
 - configurable disclosure of legality, identity, notation, and sensor calibration;
 - intervention registry for impossible-state and corrupted-transition controls.
 
-## v0.5: richer state-dependent mechanics
+## Deferred mechanism work
 
-- swept-volume collision checks;
+- swept-volume collision checks only after exact path semantics and certificates are specified;
 - lock/unlock and key-piece predicates;
 - partial-angle and jumbling turns;
 - multi-stage actions and conditional generators;

@@ -3,6 +3,7 @@
 **Status:** mathematics-first promotion plan  
 **Date:** 2026-07-29  
 **Canonical audit base:** `a970c65ab367b98ea380d48919c449bb63fa8638`
+**Implementation milestone base:** `3062274`
 
 PolyTwist should not generalize by adding puzzle families one constructor at a time. The roadmap promotes mathematical capabilities only after their semantics, certificates, and failure modes are fixed.
 
@@ -10,6 +11,8 @@ PolyTwist should not generalize by adding puzzle families one constructor at a t
 
 The repository currently provides:
 
+- a canonical exact-rational affine-convex compiler for `(B, Φ, β)`;
+- exact atomic chambers, adjacency, bond quotient, provenance, traces, deterministic triangulations, hashes, and verification;
 - exact cubic logical mechanisms for sizes 2 through 9;
 - convex shape-mod geometry from bounded half-spaces;
 - translated and rotated orthogonal cut frames;
@@ -42,6 +45,8 @@ Exit condition: the mathematical target is precise enough that implementation wo
 
 ## 3. Promotion Gate M1: exact cut and topology kernel
 
+**Status:** affine-convex Phase 1 subset implemented. General semialgebraic carriers, disconnected equal-sign components, and Rational Ghost Atlas B regression remain open.
+
 ### Mathematical work
 
 - freeze exact coefficient-domain requirements;
@@ -67,6 +72,8 @@ Exit condition: the mathematical target is precise enough that implementation wo
 - no floating-point tolerance changes topology.
 
 ## 4. Promotion Gate M2: physical-piece and seam kernel
+
+**Status:** face-connected bond quotient and seam provenance implemented for convex affine chambers. True merged-solid B-reps and general piece-regularity certificates remain open.
 
 ### Mathematical work
 
@@ -162,6 +169,8 @@ Exit condition: the mathematical target is precise enough that implementation wo
 - independent replay verifies every exported edge and reverse.
 
 ## 8. Promotion Gate M6: certified rendering
+
+**Status:** deterministic exact triangulations and face provenance feed both current renderers; full raster manifests and approximation/error certificates remain open.
 
 ### Mathematical work
 
