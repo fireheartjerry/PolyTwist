@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/dynamics-analysis.schema.json",
+  "title": "KineScope Exact Dynamics Analysis",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "puzzleId",
+    "stateHash",
+    "maxOrder",
+    "actionCount",
+    "legalActionMask",
+    "actions",
+    "pairs"
+  ],
+  "properties": {
+    "schema": { "const": "kinescope.dynamics-analysis.v1" },
+    "puzzleId": { "type": "string" },
+    "stateHash": { "type": "string" },
+    "maxOrder": { "type": "integer", "minimum": 1 },
+    "actionCount": { "type": "integer", "minimum": 0 },
+    "legalActionMask": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "actions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "token",
+          "label",
+          "axis",
+          "layer",
+          "quarterTurns",
+          "legal",
+          "affectedPieceIds",
+          "violatedBandages",
+          "successorStateHash",
+          "orderAtState",
+          "closure",
+          "permutationCycles",
+          "transitions"
+        ]
+      }
+    },
+    "pairs": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["first", "second", "forward", "reverse", "commutes"]
+      }
+    }
+  }
+}

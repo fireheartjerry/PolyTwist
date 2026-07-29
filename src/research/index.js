@@ -1,0 +1,11 @@
+export { canonicalize, canonicalJson, canonicalEqual, deepClone, safeId, stableDigest } from './canonical.js';
+export { mean, variance, standardDeviation, quantile, gini, numericSummary, histogram, entropyBits } from './statistics.js';
+export { OBSERVATION_CHANNELS, TASK_CATALOG, FACTOR_CATALOG, DEFAULT_CAMERA_BANK, SPLIT_CATALOG } from './catalog.js';
+export { RESEARCH_SCHEMAS, schemaCatalog } from './schemas.js';
+export { createResearchManifest } from './manifest.js';
+export { analyzePuzzleGeometry } from './geometry-analysis.js';
+export { exploreStateGraph } from './state-graph.js';
+export { enumerateCubeMechanicsHypotheses, applyMechanicsHypothesis, rankMechanicsExperiments } from './mechanics-hypotheses.js';
+export { inverseActionToken, createOpaqueActionMap, createOpaquePieceMap, generateResearchEpisode } from './episode.js';
+export { generateResearchSuite, suiteAsJsonl } from './dataset.js';
+export { evaluatePredictions } from './evaluator.js';

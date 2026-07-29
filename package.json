@@ -1,0 +1,36 @@
+{
+  "name": "kinescope",
+  "private": true,
+  "type": "module",
+  "description": "Research infrastructure for active inference of unfamiliar 3D mechanics, synchronized rendering, benchmark generation, and evaluation.",
+  "scripts": {
+    "test": "node --test tests/*.test.js",
+    "check": "node scripts/check.mjs && node --test tests/*.test.js",
+    "serve": "node scripts/serve-api.mjs",
+    "inspect": "node scripts/inspect-spec.mjs",
+    "browser:smoke": "xvfb-run -a python3 tests/browser-smoke.py",
+    "suite": "node scripts/research-suite.mjs",
+    "analyze": "node scripts/analyze-mechanics.mjs",
+    "typecheck": "tsc -p tsconfig.check.json --noEmit",
+    "build": "node scripts/build-static.mjs",
+    "serve:static": "node scripts/serve.mjs",
+    "api": "node scripts/serve-api.mjs",
+    "research:manifest": "node scripts/research-manifest.mjs",
+    "research:analyze": "node scripts/research-analyze.mjs",
+    "research:graph": "node scripts/research-graph.mjs",
+    "research:suite": "node scripts/research-suite.mjs",
+    "research:evaluate": "node scripts/research-evaluate.mjs",
+    "spec-suite": "node scripts/generate-suite.mjs",
+    "research:schemas": "node scripts/materialize-schemas.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "exports": {
+    ".": "./src/core/index.js",
+    "./core": "./src/core/index.js",
+    "./scene-controller": "./src/render/scene-controller.js",
+    "./research": "./src/research/index.js",
+    "./server-api": "./src/server/api.js"
+  }
+}

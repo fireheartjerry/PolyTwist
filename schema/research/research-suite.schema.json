@@ -1,0 +1,50 @@
+{
+  "$id": "https://kinescope.dev/schema/research-suite.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KineScope research suite",
+  "type": "object",
+  "required": [
+    "schema",
+    "suiteId",
+    "engineVersion",
+    "configuration",
+    "summary",
+    "public",
+    "private"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.research-suite.v1"
+    },
+    "suiteId": {
+      "type": "string"
+    },
+    "engineVersion": {
+      "type": "string"
+    },
+    "configuration": {
+      "type": "object"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "public": {
+      "type": "object",
+      "required": [
+        "episodes",
+        "items"
+      ]
+    },
+    "private": {
+      "type": "object",
+      "required": [
+        "episodes",
+        "targets",
+        "diagnostics"
+      ]
+    },
+    "suiteDigest": {
+      "type": "string"
+    }
+  }
+}

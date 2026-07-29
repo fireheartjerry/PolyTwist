@@ -1,0 +1,35 @@
+{
+  "$id": "https://kinescope.dev/schema/api-envelope.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "KineScope API envelope",
+  "type": "object",
+  "required": [
+    "ok",
+    "requestId"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "requestId": {
+      "type": "string"
+    },
+    "data": {},
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "details": {}
+      }
+    }
+  }
+}

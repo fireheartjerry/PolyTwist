@@ -1,0 +1,28 @@
+{
+  "$id": "https://kinescope.dev/schema/private-target.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluator-private target",
+  "type": "object",
+  "required": [
+    "schema",
+    "itemId",
+    "taskId",
+    "target",
+    "verification"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.target-private.v1"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "taskId": {
+      "type": "string"
+    },
+    "target": {},
+    "verification": {
+      "type": "object"
+    }
+  }
+}

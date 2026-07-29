@@ -1,0 +1,332 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/puzzle-spec.schema.json",
+  "title": "KineScope Puzzle Specification",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "id",
+    "name",
+    "family",
+    "description",
+    "size",
+    "outer",
+    "mechanism",
+    "appearance"
+  ],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "family": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "size": {
+      "type": "integer",
+      "minimum": 2,
+      "maximum": 9
+    },
+    "outer": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "halfSize": {
+          "$ref": "#/$defs/positiveVec3"
+        },
+        "chamfer": {
+          "type": "number",
+          "minimum": 0
+        },
+        "cornerChamfer": {
+          "type": "number",
+          "minimum": 0
+        },
+        "planes": {
+          "type": "array",
+          "minItems": 4,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "normal",
+              "constant"
+            ],
+            "properties": {
+              "normal": {
+                "$ref": "#/$defs/vec3"
+              },
+              "constant": {
+                "type": "number"
+              },
+              "tag": {
+                "type": "string"
+              }
+            }
+          }
+        }
+      },
+      "oneOf": [
+        {
+          "required": [
+            "halfSize"
+          ],
+          "not": {
+            "required": [
+              "planes"
+            ]
+          }
+        },
+        {
+          "required": [
+            "planes"
+          ],
+          "not": {
+            "required": [
+              "halfSize"
+            ]
+          }
+        }
+      ]
+    },
+    "mechanism": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "origin",
+        "eulerDeg",
+        "cutSpacing"
+      ],
+      "properties": {
+        "origin": {
+          "$ref": "#/$defs/vec3"
+        },
+        "eulerDeg": {
+          "$ref": "#/$defs/vec3"
+        },
+        "cutSpacing": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      }
+    },
+    "moves": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "axis",
+          "layer",
+          "quarterTurns"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+          },
+          "label": {
+            "type": "string"
+          },
+          "axis": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 2
+          },
+          "layer": {
+            "oneOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "enum": [
+                  "min",
+                  "max"
+                ]
+              }
+            ]
+          },
+          "quarterTurns": {
+            "type": "integer",
+            "not": {
+              "const": 0
+            }
+          }
+        }
+      }
+    },
+    "constraints": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "bandages": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "cells"
+            ],
+            "properties": {
+              "id": {
+                "type": "string",
+                "pattern": "^[A-Za-z][A-Za-z0-9_-]*$"
+              },
+              "label": {
+                "type": "string"
+              },
+              "cells": {
+                "type": "array",
+                "minItems": 2,
+                "items": {
+                  "type": "array",
+                  "prefixItems": [
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "integer"
+                    },
+                    {
+                      "type": "integer"
+                    }
+                  ],
+                  "items": false,
+                  "minItems": 3,
+                  "maxItems": 3
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "appearance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "palette"
+      ],
+      "properties": {
+        "palette": {
+          "type": "string",
+          "minLength": 1
+        },
+        "bodyColor": {
+          "$ref": "#/$defs/color"
+        },
+        "outerColor": {
+          "$ref": "#/$defs/color"
+        },
+        "accentColor": {
+          "$ref": "#/$defs/color"
+        },
+        "roughness": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "metallic": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        "seed": {
+          "type": [
+            "string",
+            "number"
+          ]
+        }
+      }
+    },
+    "validation": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedRenderable": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "strictTopology": {
+          "type": "boolean"
+        }
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "vec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        },
+        {
+          "type": "number"
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "positiveVec3": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        {
+          "type": "number",
+          "exclusiveMinimum": 0
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    },
+    "color": {
+      "type": "array",
+      "prefixItems": [
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        },
+        {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1
+        }
+      ],
+      "items": false,
+      "minItems": 3,
+      "maxItems": 3
+    }
+  }
+}

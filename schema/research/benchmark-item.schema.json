@@ -1,0 +1,37 @@
+{
+  "$id": "https://kinescope.dev/schema/benchmark-item.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Public benchmark item",
+  "type": "object",
+  "required": [
+    "schema",
+    "itemId",
+    "taskId",
+    "split",
+    "input",
+    "metadata"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.item-public.v1"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "taskId": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string"
+    },
+    "answerType": {
+      "type": "string"
+    },
+    "input": {
+      "type": "object"
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

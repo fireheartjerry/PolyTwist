@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/episode-public.schema.json",
+  "title": "KineScope Public Episode",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "engineVersion",
+    "episodeId",
+    "puzzle",
+    "mechanics",
+    "actionAlphabet",
+    "observationFiles",
+    "camera",
+    "stateId"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.episode.public.v1"
+    },
+    "engineVersion": {
+      "type": "string"
+    },
+    "episodeId": {
+      "type": "string"
+    },
+    "puzzle": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "family",
+        "description"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "name": {
+          "type": "string"
+        },
+        "family": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "mechanics": {
+      "enum": [
+        "withheld",
+        "disclosed"
+      ]
+    },
+    "actionAlphabet": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "legalActionMask": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "boolean"
+      }
+    },
+    "observationFiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "mode",
+          "path",
+          "width",
+          "height"
+        ],
+        "properties": {
+          "mode": {
+            "enum": [
+              "studio",
+              "albedo",
+              "piece",
+              "face",
+              "normal",
+              "depth"
+            ]
+          },
+          "path": {
+            "type": "string"
+          },
+          "width": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "height": {
+            "type": "integer",
+            "minimum": 1
+          }
+        }
+      }
+    },
+    "camera": {
+      "type": "object"
+    },
+    "stateId": {
+      "type": "string"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "mechanics": {
+            "const": "disclosed"
+          }
+        },
+        "required": [
+          "mechanics"
+        ]
+      },
+      "then": {
+        "required": [
+          "legalActionMask"
+        ]
+      },
+      "else": {
+        "not": {
+          "required": [
+            "legalActionMask"
+          ]
+        }
+      }
+    }
+  ]
+}

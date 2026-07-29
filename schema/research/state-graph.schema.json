@@ -1,0 +1,29 @@
+{
+  "$id": "https://kinescope.dev/schema/state-graph.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bounded exact state graph",
+  "type": "object",
+  "required": [
+    "schema",
+    "puzzleId",
+    "summary",
+    "nodes"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.state-graph.v1"
+    },
+    "puzzleId": {
+      "type": "string"
+    },
+    "summary": {
+      "type": "object"
+    },
+    "nodes": {
+      "type": "array"
+    },
+    "edges": {
+      "type": "array"
+    }
+  }
+}

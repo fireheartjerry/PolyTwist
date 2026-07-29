@@ -1,0 +1,46 @@
+{
+  "$id": "https://kinescope.dev/schema/render-request.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Server render request",
+  "type": "object",
+  "required": [
+    "spec"
+  ],
+  "properties": {
+    "spec": {
+      "type": "object"
+    },
+    "state": {
+      "type": "object"
+    },
+    "sequence": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "mode": {
+      "enum": [
+        "studio",
+        "albedo",
+        "piece",
+        "face",
+        "normal",
+        "depth"
+      ]
+    },
+    "width": {
+      "type": "integer",
+      "minimum": 32,
+      "maximum": 2048
+    },
+    "height": {
+      "type": "integer",
+      "minimum": 32,
+      "maximum": 2048
+    },
+    "camera": {
+      "type": "object"
+    }
+  }
+}

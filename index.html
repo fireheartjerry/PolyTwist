@@ -1,0 +1,227 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070b12">
+  <meta name="description" content="KineScope: research infrastructure for exact 3D mechanism inference, controlled rendering, and multimodal spatial reasoning.">
+  <title>KineScope</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cpath fill='%23090e18' d='M0 0h64v64H0z'/%3E%3Cpath fill='none' stroke='%235bd8ff' stroke-width='4' d='m32 7 22 12v26L32 57 10 45V19zM10 19l22 13 22-13M32 32v25'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./app.css">
+</head>
+<body>
+  <main id="app" aria-label="KineScope research environment">
+    <canvas id="world" aria-label="Interactive 3D twisty puzzle viewport"></canvas>
+    <div class="viewport-vignette" aria-hidden="true"></div>
+    <div class="viewport-noise" aria-hidden="true"></div>
+
+    <header class="topbar glass-panel">
+      <div class="brand-group">
+        <div class="brand-mark" aria-hidden="true">
+          <span></span><span></span><span></span>
+        </div>
+        <div>
+          <div class="eyebrow">SPATIAL INFERENCE RESEARCH</div>
+          <h1>LATENT<span>MECHANICS</span></h1>
+        </div>
+      </div>
+      <div class="telemetry" aria-label="Renderer telemetry">
+        <div class="telemetry-item"><span>FPS</span><strong id="fpsMetric">--</strong></div>
+        <div class="telemetry-item"><span>TRIS</span><strong id="triMetric">--</strong></div>
+        <div class="telemetry-item"><span>PIECES</span><strong id="pieceMetric">--</strong></div>
+        <div class="telemetry-item wide"><span>STATE</span><strong id="stateMetric">INITIALIZING</strong></div>
+      </div>
+      <div class="top-actions">
+        <button id="cameraResetButton" class="icon-button" title="Reset camera" aria-label="Reset camera">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.9 7.5A8.5 8.5 0 1 1 4 14m.9-6.5V3m0 4.5H9.5"/></svg>
+        </button>
+        <button id="autoRotateButton" class="icon-button" title="Toggle automatic orbit" aria-label="Toggle automatic orbit">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 12a8 8 0 0 1-14.7 4.4M4 12A8 8 0 0 1 18.7 7.6M5.3 16.4H2m3.3 0v3.3M18.7 7.6H22m-3.3 0V4.3"/></svg>
+        </button>
+        <button id="specButton" class="button compact secondary">SPEC</button>
+      </div>
+    </header>
+
+    <aside class="left-rail rail glass-panel" aria-label="Puzzle controls">
+      <section class="panel-section artifact-section">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">ARTIFACT</span>
+            <h2 id="puzzleName">Compiling geometry</h2>
+          </div>
+          <span id="solvedBadge" class="status-badge">SOLVED</span>
+        </div>
+        <p id="puzzleDescription" class="description">Building a world model humans and machines can both interrogate.</p>
+        <label class="field-label" for="presetSelect">Puzzle family</label>
+        <div class="select-wrap">
+          <select id="presetSelect">
+            <option value="ghost-2">Ghost Frame 2×2</option>
+            <option value="classic-2">Classic 2×2</option>
+            <option value="ghost-3">Ghost Frame 3</option>
+            <option value="ghost-4">Ghost Frame 4×4</option>
+            <option value="axis-3">Axis Prism 3</option>
+            <option value="bandaged-relay-3">Bandaged Relay 3×3</option>
+            <option value="mirror-prism-3">Mirror Prism 3</option>
+            <option value="classic-3">Classic 3×3</option>
+            <option value="classic-4">Classic 4×4</option>
+            <option value="alien">Procedural Alien Artifact</option>
+          </select>
+          <span aria-hidden="true">⌄</span>
+        </div>
+        <div class="seed-row">
+          <input id="artifactSeed" value="artifact-001" spellcheck="false" aria-label="Procedural artifact seed">
+          <button id="generateArtifactButton" class="button secondary">GENERATE</button>
+        </div>
+      </section>
+
+      <section class="panel-section mechanics-section">
+        <div class="section-heading inline">
+          <div>
+            <span class="eyebrow">MECHANICS INTERFACE</span>
+            <h3>Action alphabet</h3>
+          </div>
+          <label class="switch" title="Hide conventional Rubik notation">
+            <input id="unknownMechanicsToggle" type="checkbox" checked>
+            <span></span>
+            <em>WITHHOLD</em>
+          </label>
+        </div>
+        <div id="moveGrid" class="move-grid" aria-label="Puzzle moves"></div>
+        <div class="sequence-box">
+          <input id="sequenceInput" placeholder="α γ α′ γ′ or R U R′ U′" spellcheck="false" aria-label="Move sequence">
+          <button id="runSequenceButton" class="button primary">RUN</button>
+        </div>
+      </section>
+
+      <section class="panel-section experiment-section">
+        <div class="section-heading inline">
+          <div>
+            <span class="eyebrow">EXPERIMENT</span>
+            <h3>Deterministic scramble</h3>
+          </div>
+          <output id="scrambleLengthOutput">18</output>
+        </div>
+        <input id="scrambleLength" class="range" type="range" min="1" max="40" value="18">
+        <div class="button-row">
+          <button id="scrambleButton" class="button primary grow">SCRAMBLE</button>
+          <button id="undoButton" class="button secondary icon-text" title="Undo">↶</button>
+          <button id="redoButton" class="button secondary icon-text" title="Redo">↷</button>
+          <button id="resetButton" class="button danger icon-text" title="Reset">×</button>
+        </div>
+        <div class="speed-control">
+          <span>TURN RATE</span>
+          <input id="speedRange" class="range" type="range" min="0.5" max="6" step="0.1" value="3.2">
+          <output id="speedOutput">3.2/s</output>
+        </div>
+      </section>
+    </aside>
+
+    <aside class="right-rail rail glass-panel" aria-label="Observation and inspector controls">
+      <section class="panel-section observation-section">
+        <div class="section-heading">
+          <div>
+            <span class="eyebrow">OBSERVATION STACK</span>
+            <h3>Sensor pass</h3>
+          </div>
+          <span class="live-dot"><i></i>LIVE</span>
+        </div>
+        <div id="modeGrid" class="mode-grid">
+          <button data-mode="studio" class="mode-button active"><span class="mode-swatch studio"></span><b>Studio RGB</b><small>Human view</small></button>
+          <button data-mode="albedo" class="mode-button"><span class="mode-swatch albedo"></span><b>Albedo</b><small>Unlit surface</small></button>
+          <button data-mode="piece" class="mode-button"><span class="mode-swatch piece"></span><b>Piece ID</b><small>Instance mask</small></button>
+          <button data-mode="face" class="mode-button"><span class="mode-swatch face"></span><b>Face ID</b><small>Surface mask</small></button>
+          <button data-mode="normal" class="mode-button"><span class="mode-swatch normal"></span><b>Normals</b><small>World frame</small></button>
+          <button data-mode="depth" class="mode-button"><span class="mode-swatch depth"></span><b>Depth</b><small>Metric proxy</small></button>
+        </div>
+        <div class="button-row export-row">
+          <button id="captureButton" class="button secondary grow">CAPTURE PNG</button>
+          <button id="bundleButton" class="button primary grow">EXPORT EPISODE</button>
+        </div>
+      </section>
+
+      <section class="panel-section inspector-section">
+        <div class="section-heading inline">
+          <div>
+            <span class="eyebrow">GEOMETRY PROBE</span>
+            <h3>Piece inspector</h3>
+          </div>
+          <button id="clearSelectionButton" class="text-button">CLEAR</button>
+        </div>
+        <div id="inspectorEmpty" class="inspector-empty">
+          <div class="crosshair" aria-hidden="true"></div>
+          <p>Select a visible piece to inspect exact logical and geometric state.</p>
+        </div>
+        <div id="inspectorData" class="inspector-data" hidden>
+          <div class="piece-id-row"><strong id="pieceIdValue">p-0-0-0</strong><span id="pieceCoordValue">[−2, −2, −2]</span></div>
+          <div class="data-grid">
+            <div><span>VERTICES</span><b id="pieceVertices">0</b></div>
+            <div><span>FACES</span><b id="pieceFaces">0</b></div>
+            <div><span>TRIANGLES</span><b id="pieceTriangles">0</b></div>
+            <div><span>VOLUME</span><b id="pieceVolume">0</b></div>
+          </div>
+          <div id="pieceBandage" class="bond-chip" hidden><span>RIGID CLUSTER</span><b id="pieceBandageValue">none</b></div>
+          <label>Exact orientation</label>
+          <pre id="pieceOrientation">[1,0,0,0,1,0,0,0,1]</pre>
+        </div>
+      </section>
+
+      <section class="panel-section system-section">
+        <span class="eyebrow">SYSTEM</span>
+        <div class="system-grid">
+          <span>Renderer</span><b id="rendererValue">WebGL2</b>
+          <span>Draw calls</span><b id="drawCallsValue">--</b>
+          <span>GPU buffers</span><b id="buffersValue">--</b>
+          <span>Shadow atlas</span><b id="shadowValue">--</b>
+        </div>
+      </section>
+    </aside>
+
+    <section class="timeline glass-panel" aria-label="Move timeline">
+      <div class="timeline-label">
+        <span class="eyebrow">TRANSITION TRACE</span>
+        <b id="moveCount">0 MOVES</b>
+      </div>
+      <div id="timelineTrack" class="timeline-track"><span class="timeline-empty">No transformations committed</span></div>
+      <button id="cancelQueueButton" class="text-button queue-button">CANCEL QUEUE <span id="queueCount">0</span></button>
+    </section>
+
+    <div class="viewport-help" aria-hidden="true">
+      <span><i class="mouse-icon"></i>ORBIT</span>
+      <span>SHIFT + DRAG&nbsp;&nbsp;PAN</span>
+      <span>SCROLL&nbsp;&nbsp;ZOOM</span>
+      <span>CLICK&nbsp;&nbsp;INSPECT</span>
+    </div>
+
+    <div id="loadingOverlay" class="loading-overlay">
+      <div class="loader-cube" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div><span class="eyebrow">COMPILING ARTIFACT</span><strong id="loadingMessage">Intersecting half-spaces</strong></div>
+    </div>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  </main>
+
+  <dialog id="specDialog" class="spec-dialog">
+    <form method="dialog" class="dialog-shell">
+      <div class="dialog-header">
+        <div>
+          <span class="eyebrow">PUZZLE SPECIFICATION LANGUAGE</span>
+          <h2>Compile a custom artifact</h2>
+        </div>
+        <button value="cancel" class="icon-button dialog-close" aria-label="Close">×</button>
+      </div>
+      <p>Edit the external hull, latent mechanism frame, and appearance independently. Invalid geometry is rejected before it can quietly poison a benchmark.</p>
+      <textarea id="specEditor" spellcheck="false" aria-label="Puzzle specification JSON"></textarea>
+      <div id="specError" class="spec-error" role="alert"></div>
+      <div class="dialog-footer">
+        <button id="copySpecButton" value="noop" class="button secondary">COPY JSON</button>
+        <button id="formatSpecButton" value="noop" class="button secondary">FORMAT</button>
+        <span class="spacer"></span>
+        <button value="cancel" class="button secondary">CANCEL</button>
+        <button id="applySpecButton" value="noop" class="button primary">COMPILE</button>
+      </div>
+    </form>
+  </dialog>
+
+  <script type="module" src="./src/main.js"></script>
+</body>
+</html>

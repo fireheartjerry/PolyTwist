@@ -1,0 +1,52 @@
+{
+  "schema": "kinescope.schema-catalog.v1",
+  "platform": "KineScope",
+  "engineVersion": "unversioned",
+  "schemas": [
+    {
+      "name": "api-envelope",
+      "id": "https://kinescope.dev/schema/api-envelope.schema.json",
+      "title": "KineScope API envelope"
+    },
+    {
+      "name": "research-suite",
+      "id": "https://kinescope.dev/schema/research-suite.schema.json",
+      "title": "KineScope research suite"
+    },
+    {
+      "name": "benchmark-item",
+      "id": "https://kinescope.dev/schema/benchmark-item.schema.json",
+      "title": "Public benchmark item"
+    },
+    {
+      "name": "private-target",
+      "id": "https://kinescope.dev/schema/private-target.schema.json",
+      "title": "Evaluator-private target"
+    },
+    {
+      "name": "prediction",
+      "id": "https://kinescope.dev/schema/prediction.schema.json",
+      "title": "Model prediction"
+    },
+    {
+      "name": "evaluation",
+      "id": "https://kinescope.dev/schema/evaluation.schema.json",
+      "title": "Evaluation report"
+    },
+    {
+      "name": "state-graph",
+      "id": "https://kinescope.dev/schema/state-graph.schema.json",
+      "title": "Bounded exact state graph"
+    },
+    {
+      "name": "render-request",
+      "id": "https://kinescope.dev/schema/render-request.schema.json",
+      "title": "Server render request"
+    },
+    {
+      "name": "run-manifest",
+      "id": "https://kinescope.dev/schema/run-manifest.schema.json",
+      "title": "Experimental run manifest"
+    }
+  ]
+}

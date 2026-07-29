@@ -1,0 +1,30 @@
+{
+  "$id": "https://kinescope.dev/schema/evaluation.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Evaluation report",
+  "type": "object",
+  "required": [
+    "schema",
+    "suiteId",
+    "coverage",
+    "aggregate",
+    "results"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.evaluation.v1"
+    },
+    "suiteId": {
+      "type": "string"
+    },
+    "coverage": {
+      "type": "object"
+    },
+    "aggregate": {
+      "type": "object"
+    },
+    "results": {
+      "type": "array"
+    }
+  }
+}

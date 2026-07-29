@@ -1,0 +1,95 @@
+{
+  "id": "bandaged-relay-3",
+  "name": "Bandaged Relay 3",
+  "family": "state-dependent-bandaged-shapemod",
+  "description": "A visually ordinary shape-mod with bonded piece clusters that make action legality depend on the current exact state.",
+  "size": 3,
+  "outer": {
+    "halfSize": [
+      1.54,
+      1.5,
+      1.57
+    ],
+    "chamfer": 0.052,
+    "cornerChamfer": 0.034
+  },
+  "mechanism": {
+    "origin": [
+      0.025,
+      -0.02,
+      0.018
+    ],
+    "eulerDeg": [
+      4.8,
+      -6.4,
+      3.7
+    ],
+    "cutSpacing": 1
+  },
+  "constraints": {
+    "bandages": [
+      {
+        "id": "north-bridge",
+        "label": "North bridge",
+        "cells": [
+          [
+            2,
+            2,
+            2
+          ],
+          [
+            2,
+            1,
+            2
+          ]
+        ]
+      },
+      {
+        "id": "south-key",
+        "label": "South key",
+        "cells": [
+          [
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            1
+          ]
+        ]
+      }
+    ]
+  },
+  "appearance": {
+    "palette": "bandaged",
+    "bodyColor": [
+      0.018,
+      0.024,
+      0.034
+    ],
+    "outerColor": [
+      0.24,
+      0.46,
+      0.66
+    ],
+    "accentColor": [
+      0.28,
+      0.92,
+      0.76
+    ],
+    "roughness": 0.24,
+    "metallic": 0.62,
+    "seed": "bandaged-relay-3"
+  },
+  "validation": {
+    "expectedRenderable": 26,
+    "strictTopology": true
+  },
+  "metadata": {
+    "mechanicsVisibility": "withheld",
+    "difficulty": "state-dependent-legality",
+    "hiddenConstraintFamily": "rigid-bandages"
+  }
+}

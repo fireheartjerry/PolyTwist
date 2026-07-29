@@ -1,0 +1,583 @@
+{
+  "schema": "kinescope.spec-suite.v1",
+  "engineVersion": "unversioned",
+  "seed": "sample",
+  "design": "2x2-appearance-mechanics-factorial",
+  "groupCount": 1,
+  "conditionCount": 4,
+  "groups": [
+    {
+      "groupId": "sample-0000",
+      "conditions": [
+        {
+          "code": "A0M0",
+          "spec": {
+            "id": "factorial-sample-0000-a0m0",
+            "name": "Factorial sample-0000 A0M0",
+            "family": "procedural-unseen-mechanics",
+            "description": "Controlled A0M0 condition for appearance–mechanics disentanglement.",
+            "size": 3,
+            "outer": {
+              "halfSize": [
+                1.528088433695957,
+                1.4904378277529031,
+                1.4698704120516777
+              ],
+              "chamfer": 0.06747777117416262,
+              "cornerChamfer": 0.026420072846114633
+            },
+            "mechanism": {
+              "origin": [
+                0.01595281159272418,
+                -0.01487834261963144,
+                0.022727057817392045
+              ],
+              "eulerDeg": [
+                -1.9153986952733248,
+                1.6484524074476212,
+                9.174068405292928
+              ],
+              "cutSpacing": 1.0426015521399676
+            },
+            "appearance": {
+              "palette": "alien",
+              "bodyColor": [
+                0.015,
+                0.02,
+                0.03
+              ],
+              "outerColor": [
+                0.24,
+                0.45053906184621156,
+                0.76
+              ],
+              "accentColor": [
+                0.9239999999999999,
+                0.31600000000000006,
+                0.8459020825689032
+              ],
+              "roughness": 0.253198961801827,
+              "metallic": 0.7646596483374014,
+              "seed": "factorial:sample:0000:0"
+            },
+            "validation": {
+              "expectedRenderable": 26,
+              "strictTopology": true
+            },
+            "metadata": {
+              "mechanicsVisibility": "withheld",
+              "split": "procedural-ood",
+              "seed": "factorial:sample:0000:0",
+              "factorialGroup": "sample-0000",
+              "appearanceVariant": "A0",
+              "mechanicsVariant": "M0",
+              "condition": "A0M0"
+            }
+          },
+          "compileStats": {
+            "logicalPieces": 27,
+            "renderablePieces": 26,
+            "totalTriangles": 468,
+            "totalVertices": 288,
+            "totalVolume": 26.701379858750553,
+            "bandageCount": 0,
+            "bandagedPieceCount": 0,
+            "topologyWarnings": []
+          },
+          "actionSemantics": [
+            {
+              "id": "R",
+              "label": "R",
+              "axis": 0,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "L",
+              "label": "L",
+              "axis": 0,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "U",
+              "label": "U",
+              "axis": 1,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "axis": 1,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "F",
+              "label": "F",
+              "axis": 2,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "axis": 2,
+              "layer": -2,
+              "quarterTurns": 1
+            }
+          ]
+        },
+        {
+          "code": "A1M0",
+          "spec": {
+            "id": "factorial-sample-0000-a1m0",
+            "name": "Factorial sample-0000 A1M0",
+            "family": "procedural-unseen-mechanics",
+            "description": "Controlled A1M0 condition for appearance–mechanics disentanglement.",
+            "size": 3,
+            "outer": {
+              "halfSize": [
+                1.528088433695957,
+                1.4904378277529031,
+                1.4698704120516777
+              ],
+              "chamfer": 0.06747777117416262,
+              "cornerChamfer": 0.026420072846114633
+            },
+            "mechanism": {
+              "origin": [
+                0.01595281159272418,
+                -0.01487834261963144,
+                0.022727057817392045
+              ],
+              "eulerDeg": [
+                -1.9153986952733248,
+                1.6484524074476212,
+                9.174068405292928
+              ],
+              "cutSpacing": 1.0426015521399676
+            },
+            "appearance": {
+              "palette": "factorial-appearance-variant",
+              "bodyColor": [
+                0.0451,
+                0.05729363498069345,
+                0.0649
+              ],
+              "outerColor": [
+                0.8429162860189114,
+                0.16341751375801175,
+                0.15131928092869773
+              ],
+              "accentColor": [
+                0.7585706942374506,
+                0.9316,
+                0.3084
+              ],
+              "roughness": 0.3794804130075499,
+              "metallic": 0.790814693379216,
+              "seed": "appearance:sample:0000"
+            },
+            "validation": {
+              "expectedRenderable": 26,
+              "strictTopology": true
+            },
+            "metadata": {
+              "mechanicsVisibility": "withheld",
+              "split": "procedural-ood",
+              "seed": "factorial:sample:0000:0",
+              "factorialGroup": "sample-0000",
+              "appearanceVariant": "A1",
+              "mechanicsVariant": "M0",
+              "condition": "A1M0"
+            }
+          },
+          "compileStats": {
+            "logicalPieces": 27,
+            "renderablePieces": 26,
+            "totalTriangles": 468,
+            "totalVertices": 288,
+            "totalVolume": 26.701379858750553,
+            "bandageCount": 0,
+            "bandagedPieceCount": 0,
+            "topologyWarnings": []
+          },
+          "actionSemantics": [
+            {
+              "id": "R",
+              "label": "R",
+              "axis": 0,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "L",
+              "label": "L",
+              "axis": 0,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "U",
+              "label": "U",
+              "axis": 1,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "axis": 1,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "F",
+              "label": "F",
+              "axis": 2,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "axis": 2,
+              "layer": -2,
+              "quarterTurns": 1
+            }
+          ]
+        },
+        {
+          "code": "A0M1",
+          "spec": {
+            "id": "factorial-sample-0000-a0m1",
+            "name": "Factorial sample-0000 A0M1",
+            "family": "procedural-unseen-mechanics",
+            "description": "Controlled A0M1 condition for appearance–mechanics disentanglement.",
+            "size": 3,
+            "outer": {
+              "halfSize": [
+                1.528088433695957,
+                1.4904378277529031,
+                1.4698704120516777
+              ],
+              "chamfer": 0.06747777117416262,
+              "cornerChamfer": 0.026420072846114633
+            },
+            "mechanism": {
+              "origin": [
+                0.01595281159272418,
+                -0.01487834261963144,
+                0.022727057817392045
+              ],
+              "eulerDeg": [
+                -1.9153986952733248,
+                1.6484524074476212,
+                9.174068405292928
+              ],
+              "cutSpacing": 1.0426015521399676
+            },
+            "appearance": {
+              "palette": "alien",
+              "bodyColor": [
+                0.015,
+                0.02,
+                0.03
+              ],
+              "outerColor": [
+                0.24,
+                0.45053906184621156,
+                0.76
+              ],
+              "accentColor": [
+                0.9239999999999999,
+                0.31600000000000006,
+                0.8459020825689032
+              ],
+              "roughness": 0.253198961801827,
+              "metallic": 0.7646596483374014,
+              "seed": "factorial:sample:0000:0"
+            },
+            "validation": {
+              "expectedRenderable": 26,
+              "strictTopology": true
+            },
+            "metadata": {
+              "mechanicsVisibility": "withheld",
+              "split": "procedural-ood",
+              "seed": "factorial:sample:0000:0",
+              "factorialGroup": "sample-0000",
+              "appearanceVariant": "A0",
+              "mechanicsVariant": "M1-axis-cycle",
+              "condition": "A0M1"
+            },
+            "moves": [
+              {
+                "id": "R",
+                "label": "R",
+                "axis": 1,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "L",
+                "label": "L",
+                "axis": 1,
+                "layer": -2,
+                "quarterTurns": 1
+              },
+              {
+                "id": "U",
+                "label": "U",
+                "axis": 2,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "D",
+                "label": "D",
+                "axis": 2,
+                "layer": -2,
+                "quarterTurns": 1
+              },
+              {
+                "id": "F",
+                "label": "F",
+                "axis": 0,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "B",
+                "label": "B",
+                "axis": 0,
+                "layer": -2,
+                "quarterTurns": 1
+              }
+            ]
+          },
+          "compileStats": {
+            "logicalPieces": 27,
+            "renderablePieces": 26,
+            "totalTriangles": 468,
+            "totalVertices": 288,
+            "totalVolume": 26.701379858750553,
+            "bandageCount": 0,
+            "bandagedPieceCount": 0,
+            "topologyWarnings": []
+          },
+          "actionSemantics": [
+            {
+              "id": "R",
+              "label": "R",
+              "axis": 1,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "L",
+              "label": "L",
+              "axis": 1,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "U",
+              "label": "U",
+              "axis": 2,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "axis": 2,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "F",
+              "label": "F",
+              "axis": 0,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "axis": 0,
+              "layer": -2,
+              "quarterTurns": 1
+            }
+          ]
+        },
+        {
+          "code": "A1M1",
+          "spec": {
+            "id": "factorial-sample-0000-a1m1",
+            "name": "Factorial sample-0000 A1M1",
+            "family": "procedural-unseen-mechanics",
+            "description": "Controlled A1M1 condition for appearance–mechanics disentanglement.",
+            "size": 3,
+            "outer": {
+              "halfSize": [
+                1.528088433695957,
+                1.4904378277529031,
+                1.4698704120516777
+              ],
+              "chamfer": 0.06747777117416262,
+              "cornerChamfer": 0.026420072846114633
+            },
+            "mechanism": {
+              "origin": [
+                0.01595281159272418,
+                -0.01487834261963144,
+                0.022727057817392045
+              ],
+              "eulerDeg": [
+                -1.9153986952733248,
+                1.6484524074476212,
+                9.174068405292928
+              ],
+              "cutSpacing": 1.0426015521399676
+            },
+            "appearance": {
+              "palette": "factorial-appearance-variant",
+              "bodyColor": [
+                0.0451,
+                0.05729363498069345,
+                0.0649
+              ],
+              "outerColor": [
+                0.8429162860189114,
+                0.16341751375801175,
+                0.15131928092869773
+              ],
+              "accentColor": [
+                0.7585706942374506,
+                0.9316,
+                0.3084
+              ],
+              "roughness": 0.3794804130075499,
+              "metallic": 0.790814693379216,
+              "seed": "appearance:sample:0000"
+            },
+            "validation": {
+              "expectedRenderable": 26,
+              "strictTopology": true
+            },
+            "metadata": {
+              "mechanicsVisibility": "withheld",
+              "split": "procedural-ood",
+              "seed": "factorial:sample:0000:0",
+              "factorialGroup": "sample-0000",
+              "appearanceVariant": "A1",
+              "mechanicsVariant": "M1-axis-cycle",
+              "condition": "A1M1"
+            },
+            "moves": [
+              {
+                "id": "R",
+                "label": "R",
+                "axis": 1,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "L",
+                "label": "L",
+                "axis": 1,
+                "layer": -2,
+                "quarterTurns": 1
+              },
+              {
+                "id": "U",
+                "label": "U",
+                "axis": 2,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "D",
+                "label": "D",
+                "axis": 2,
+                "layer": -2,
+                "quarterTurns": 1
+              },
+              {
+                "id": "F",
+                "label": "F",
+                "axis": 0,
+                "layer": 2,
+                "quarterTurns": -1
+              },
+              {
+                "id": "B",
+                "label": "B",
+                "axis": 0,
+                "layer": -2,
+                "quarterTurns": 1
+              }
+            ]
+          },
+          "compileStats": {
+            "logicalPieces": 27,
+            "renderablePieces": 26,
+            "totalTriangles": 468,
+            "totalVertices": 288,
+            "totalVolume": 26.701379858750553,
+            "bandageCount": 0,
+            "bandagedPieceCount": 0,
+            "topologyWarnings": []
+          },
+          "actionSemantics": [
+            {
+              "id": "R",
+              "label": "R",
+              "axis": 1,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "L",
+              "label": "L",
+              "axis": 1,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "U",
+              "label": "U",
+              "axis": 2,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "D",
+              "label": "D",
+              "axis": 2,
+              "layer": -2,
+              "quarterTurns": 1
+            },
+            {
+              "id": "F",
+              "label": "F",
+              "axis": 0,
+              "layer": 2,
+              "quarterTurns": -1
+            },
+            {
+              "id": "B",
+              "label": "B",
+              "axis": 0,
+              "layer": -2,
+              "quarterTurns": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

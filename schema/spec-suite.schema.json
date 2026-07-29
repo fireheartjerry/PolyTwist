@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/spec-suite.schema.json",
+  "title": "KineScope Appearance–Mechanics Factorial Suite",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "engineVersion", "seed", "design", "groupCount", "conditionCount", "groups"],
+  "properties": {
+    "schema": { "const": "kinescope.spec-suite.v1" },
+    "engineVersion": { "type": "string" },
+    "seed": { "type": "string" },
+    "design": { "const": "2x2-appearance-mechanics-factorial" },
+    "groupCount": { "type": "integer", "minimum": 1 },
+    "conditionCount": { "type": "integer", "minimum": 4 },
+    "groups": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["groupId", "conditions"],
+        "properties": {
+          "groupId": { "type": "string" },
+          "conditions": {
+            "type": "array",
+            "minItems": 4,
+            "maxItems": 4,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["code", "spec", "compileStats", "actionSemantics"],
+              "properties": {
+                "code": { "enum": ["A0M0", "A1M0", "A0M1", "A1M1"] },
+                "spec": { "$ref": "puzzle-spec.schema.json" },
+                "compileStats": { "type": "object" },
+                "actionSemantics": { "type": "array" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+.DS_Store
+*.log
+coverage/
+.vscode/
+.vercel/
+dist/
+tests/__pycache__/
+*.pyc
+__pycache__/
+*.py[cod]
+.pytest_cache/
+validation/
+deployment-vercel/
+datasets/

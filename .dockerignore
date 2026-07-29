@@ -1,0 +1,9 @@
+.git
+.github
+node_modules
+datasets
+validation
+deployment-vercel
+dist
+tests
+*.zip

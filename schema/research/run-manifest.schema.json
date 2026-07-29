@@ -1,0 +1,53 @@
+{
+  "$id": "https://kinescope.dev/schema/run-manifest.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Experimental run manifest",
+  "type": "object",
+  "required": [
+    "runId",
+    "suiteDigest",
+    "model",
+    "environment",
+    "startedAt"
+  ],
+  "properties": {
+    "runId": {
+      "type": "string"
+    },
+    "suiteDigest": {
+      "type": "string"
+    },
+    "model": {
+      "type": "object"
+    },
+    "environment": {
+      "type": "object"
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "seeds": {
+      "type": "object"
+    },
+    "software": {
+      "type": "object"
+    },
+    "hardware": {
+      "type": "object"
+    },
+    "costs": {
+      "type": "object"
+    },
+    "artifacts": {
+      "type": "array"
+    }
+  }
+}

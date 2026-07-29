@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/agent-observation.schema.json",
+  "title": "KineScope Agent Observation",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "engineVersion",
+    "puzzle",
+    "mechanics",
+    "actionAlphabet",
+    "renderMode",
+    "camera",
+    "stateId"
+  ],
+  "properties": {
+    "schema": { "const": "kinescope.agent-observation.v1" },
+    "engineVersion": { "type": "string" },
+    "puzzle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "family", "description"],
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "family": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "mechanics": { "enum": ["withheld", "disclosed"] },
+    "actionAlphabet": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "type": "string" }
+    },
+    "legalActionMask": {
+      "type": "object",
+      "additionalProperties": { "type": "boolean" }
+    },
+    "renderMode": { "enum": ["studio", "albedo", "piece", "face", "normal", "depth"] },
+    "camera": { "type": "object" },
+    "stateId": { "type": "string" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "mechanics": { "const": "disclosed" } },
+        "required": ["mechanics"]
+      },
+      "then": { "required": ["legalActionMask"] },
+      "else": { "not": { "required": ["legalActionMask"] } }
+    }
+  ]
+}

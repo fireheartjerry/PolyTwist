@@ -1,0 +1,24 @@
+cff-version: 1.2.0
+title: "KineScope: Research Infrastructure for Active Inference of Unfamiliar 3D Mechanisms"
+message: "If you use KineScope, please cite this software release and the associated benchmark paper when available."
+type: software
+authors:
+  - family-names: Li
+    given-names: Jerry Yuze
+date-released: 2026-07-28
+license: MIT
+keywords:
+  - multimodal reasoning
+  - spatial reasoning
+  - system identification
+  - active learning
+  - twisty puzzles
+  - benchmark
+  - out-of-distribution generalization
+abstract: >-
+  KineScope is deterministic research infrastructure for compiling,
+  simulating, rendering, and evaluating unfamiliar three-dimensional mechanisms.
+  It provides exact twisty-puzzle mechanics, procedural shape modification,
+  state-dependent constraints, synchronized observation channels, JSON-first
+  benchmark generation, active mechanics-identification oracles, and a stateless
+  server API.

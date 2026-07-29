@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://kinescope.dev/schema/agent-transition.schema.json",
+  "title": "KineScope Agent Transition Receipt",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "action", "accepted", "stateId"],
+  "properties": {
+    "schema": { "const": "kinescope.agent-transition.v1" },
+    "action": { "type": "string" },
+    "accepted": { "const": true },
+    "stateId": { "type": "string" }
+  }
+}
