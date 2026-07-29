@@ -1,0 +1,236 @@
+{
+  "$schema": "polytwist.source-registry.v1",
+  "generatedAt": "2026-07-29",
+  "canonicalAuditBase": "a970c65ab367b98ea380d48919c449bb63fa8638",
+  "policy": {
+    "preferredEvidence": "Primary literature or first-party software documentation",
+    "provenanceRule": "A source supports only the claims listed in supportedClaimIds; repository-specific definitions and theorems are never retroactively attributed to prior work.",
+    "accessDate": "2026-07-29"
+  },
+  "sources": [
+    {
+      "id": "SRC-ARR-ZASLAVSKY-1975",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "Zaslavsky1975",
+      "title": "Facing Up to Arrangements: Face-Count Formulas for Partitions of Space by Hyperplanes",
+      "doi": "10.1090/memo/0154",
+      "verifiedAgainst": ["AMS/Crossref metadata"],
+      "supportedClaimIds": ["EST-ARR-001"]
+    },
+    {
+      "id": "SRC-OM-FOLKMAN-LAWRENCE-1978",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "FolkmanLawrence1978",
+      "title": "Oriented Matroids",
+      "doi": "10.1016/0095-8956(78)90039-4",
+      "verifiedAgainst": ["Elsevier metadata"],
+      "supportedClaimIds": ["EST-OM-001"]
+    },
+    {
+      "id": "SRC-ARR-EDELSBRUNNER-OROURKE-SEIDEL-1986",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "EdelsbrunnerORourkeSeidel1986",
+      "title": "Constructing Arrangements of Lines and Hyperplanes with Applications",
+      "doi": "10.1137/0215024",
+      "verifiedAgainst": ["SIAM publisher metadata"],
+      "supportedClaimIds": ["EST-ALG-ARR-001"]
+    },
+    {
+      "id": "SRC-RAG-BASU-POLLACK-ROY-2006",
+      "kind": "reference-monograph",
+      "primary": false,
+      "citationKey": "BasuPollackRoy2006",
+      "title": "Algorithms in Real Algebraic Geometry",
+      "doi": "10.1007/3-540-33099-2",
+      "verifiedAgainst": ["Springer metadata"],
+      "supportedClaimIds": ["EST-SA-001", "EST-QE-001"]
+    },
+    {
+      "id": "SRC-RAG-BOCHNAK-COSTE-ROY-1998",
+      "kind": "reference-monograph",
+      "primary": false,
+      "citationKey": "BochnakCosteRoy1998",
+      "title": "Real Algebraic Geometry",
+      "doi": "10.1007/978-3-662-03718-8",
+      "verifiedAgainst": ["Springer metadata"],
+      "supportedClaimIds": ["EST-SA-001", "EST-SA-TRI-001"]
+    },
+    {
+      "id": "SRC-CAD-COLLINS-1975",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "Collins1975",
+      "title": "Quantifier Elimination for Real Closed Fields by Cylindrical Algebraic Decomposition",
+      "doi": "10.1007/3-540-07407-4_17",
+      "verifiedAgainst": ["Springer bibliographic metadata"],
+      "supportedClaimIds": ["EST-QE-001", "EST-CAD-001"]
+    },
+    {
+      "id": "SRC-CAD-ARNON-COLLINS-MCCALLUM-1984",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "ArnonCollinsMcCallum1984",
+      "title": "Cylindrical Algebraic Decomposition I: The Basic Algorithm",
+      "doi": "10.1137/0213054",
+      "verifiedAgainst": ["SIAM publisher metadata"],
+      "supportedClaimIds": ["EST-CAD-001"]
+    },
+    {
+      "id": "SRC-SA-HARDT-1980",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "Hardt1980",
+      "title": "Semi-Algebraic Local-Triviality in Semi-Algebraic Mappings",
+      "doi": "10.2307/2374240",
+      "verifiedAgainst": ["journal and DOI metadata"],
+      "supportedClaimIds": ["EST-SA-TRIV-001"]
+    },
+    {
+      "id": "SRC-QE-DAVENPORT-HEINTZ-1988",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "DavenportHeintz1988",
+      "title": "Real Quantifier Elimination is Doubly Exponential",
+      "doi": "10.1016/S0747-7171(88)80004-X",
+      "verifiedAgainst": ["Elsevier publisher metadata"],
+      "supportedClaimIds": ["EST-QE-LB-001"]
+    },
+    {
+      "id": "SRC-MOTION-LOZANO-PEREZ-1983",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "LozanoPerez1983",
+      "title": "Spatial Planning: A Configuration Space Approach",
+      "doi": "10.1109/TC.1983.1676196",
+      "verifiedAgainst": ["IEEE publisher metadata"],
+      "supportedClaimIds": ["EST-CSPACE-001"]
+    },
+    {
+      "id": "SRC-MOTION-SCHWARTZ-SHARIR-I-1983",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "SchwartzSharir1983I",
+      "title": "On the Piano Movers' Problem I",
+      "doi": "10.1002/cpa.3160360305",
+      "verifiedAgainst": ["Wiley publisher metadata"],
+      "supportedClaimIds": ["EST-MOTION-001"]
+    },
+    {
+      "id": "SRC-MOTION-SCHWARTZ-SHARIR-II-1983",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "SchwartzSharir1983II",
+      "title": "On the Piano Movers' Problem II",
+      "doi": "10.1016/0196-8858(83)90014-3",
+      "verifiedAgainst": ["journal metadata"],
+      "supportedClaimIds": ["EST-MOTION-001"]
+    },
+    {
+      "id": "SRC-PARTIAL-EXEL-1998",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "Exel1998",
+      "title": "Partial Actions of Groups and Actions of Inverse Semigroups",
+      "doi": "10.1090/S0002-9939-98-04575-4",
+      "verifiedAgainst": ["AMS metadata", "arXiv author manuscript"],
+      "supportedClaimIds": ["EST-PARTIAL-001"]
+    },
+    {
+      "id": "SRC-PARTIAL-KELLENDONK-LAWSON-2004",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "KellendonkLawson2004",
+      "title": "Partial Actions of Groups",
+      "doi": "10.1142/S0218196704001657",
+      "verifiedAgainst": ["journal metadata"],
+      "supportedClaimIds": ["EST-PARTIAL-002"]
+    },
+    {
+      "id": "SRC-INFO-LINDLEY-1956",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "Lindley1956",
+      "title": "On a Measure of the Information Provided by an Experiment",
+      "doi": "10.1214/aoms/1177728069",
+      "verifiedAgainst": ["journal DOI metadata"],
+      "supportedClaimIds": ["EST-INFO-001"]
+    },
+    {
+      "id": "SRC-RUBIK-DEMAINE-ETAL-2011",
+      "kind": "primary-literature",
+      "primary": true,
+      "citationKey": "DemaineEtAl2011",
+      "title": "Algorithms for Solving Rubik's Cubes",
+      "doi": "10.1007/978-3-642-23719-5_58",
+      "verifiedAgainst": ["authors' publication page", "arXiv"],
+      "supportedClaimIds": ["EST-RUBIK-ALG-001"]
+    },
+    {
+      "id": "SRC-PRIOR-CUBING-PG-2026",
+      "kind": "first-party-software-documentation",
+      "primary": true,
+      "citationKey": "CubingJSPuzzleGeometry2026",
+      "title": "cubing.js PuzzleGeometry API Reference",
+      "url": "https://js.cubing.net/cubing/api/classes/puzzle-geometry.PuzzleGeometry.html",
+      "verifiedAgainst": ["first-party API documentation"],
+      "supportedClaimIds": ["PRIOR-PG-001"]
+    },
+    {
+      "id": "SRC-PRIOR-TWIZZLE-2026",
+      "kind": "first-party-software-documentation",
+      "primary": true,
+      "citationKey": "TwizzleExplorer2026",
+      "title": "Twizzle Explorer Help: PuzzleGeometry",
+      "url": "https://alpha.twizzle.net/explore/help.html",
+      "verifiedAgainst": ["first-party help documentation"],
+      "supportedClaimIds": ["PRIOR-PG-001", "PRIOR-PG-LIMIT-001"]
+    },
+    {
+      "id": "SRC-PRIOR-KPUZZLE-2026",
+      "kind": "first-party-software-documentation",
+      "primary": true,
+      "citationKey": "CubingJSKPuzzle2026",
+      "title": "cubing/kpuzzle Documentation",
+      "url": "https://js.cubing.net/cubing/kpuzzle/",
+      "verifiedAgainst": ["first-party documentation"],
+      "supportedClaimIds": ["PRIOR-KP-001"]
+    },
+    {
+      "id": "SRC-PRIOR-MPU-2026",
+      "kind": "first-party-software-documentation",
+      "primary": true,
+      "citationKey": "MagicPuzzleUltimate2026",
+      "title": "Magic Puzzle Ultimate",
+      "url": "https://superliminal.com/andrey/mpu/",
+      "verifiedAgainst": ["project author's site"],
+      "supportedClaimIds": ["PRIOR-MPU-001"]
+    },
+    {
+      "id": "SRC-REPO-POLYTWIST-2026",
+      "kind": "repository-primary-source",
+      "primary": true,
+      "citationKey": "PolyTwistRepository2026",
+      "title": "PolyTwist / KineScope repository at audit base",
+      "url": "https://github.com/fireheartjerry/PolyTwist",
+      "commit": "a970c65ab367b98ea380d48919c449bb63fa8638",
+      "verifiedAgainst": [
+        "research/CONTINUATION_PROMPT.md",
+        "research/mathematics/MATHEMATICAL_RESEARCH_LEDGER.md",
+        "docs/ARCHITECTURE.md",
+        "docs/API.md",
+        "docs/BENCHMARK_PROTOCOL.md",
+        "docs/RESEARCH_SUITE.md",
+        "docs/VALIDATION.md",
+        "docs/ROADMAP.md",
+        "docs/PUZZLE_SPEC.md",
+        "schema/puzzle-spec.schema.json",
+        "src/core/puzzle-compiler.js",
+        "src/core/puzzle-engine.js"
+      ],
+      "supportedClaimIds": ["AUDIT-REPO-001", "AUDIT-REPO-002", "AUDIT-REPO-003"]
+    }
+  ]
+}
