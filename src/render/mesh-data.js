@@ -6,6 +6,9 @@ import { hashSeed } from '../core/rng.js';
 /** @typedef {import('../core/puzzle-compiler.js').CompiledPiece} CompiledPiece */
 /** @typedef {import('../core/puzzle-compiler.js').CompiledPuzzle} CompiledPuzzle */
 
+export const DISPLAY_PIECE_SCALE = 0.962;
+export const DISPLAY_OUTER_FACE_LIFT = 0.006;
+
 /** @param {readonly number[]} color @param {number} factor @returns {[number,number,number]} */
 function multiplyColor(color, factor) {
   return [
@@ -107,8 +110,8 @@ export function buildPieceMeshData(puzzle, piece, pieceIndex, faceIdBase = 0) {
   // Every piece in a rigid bandage is shrunk about the same centroid. Their bonded
   // interface therefore remains coincident while a clean gap stays around the union.
   const shrinkCenter = bandage?.centroid ?? poly.centroid;
-  const shrink = 0.962;
-  const outerLift = 0.006;
+  const shrink = DISPLAY_PIECE_SCALE;
+  const outerLift = DISPLAY_OUTER_FACE_LIFT;
   const positions = [];
   const normals = [];
   const colors = [];
