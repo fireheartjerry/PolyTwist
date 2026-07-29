@@ -11,7 +11,22 @@ import {
   rationalKey,
   subtractRational,
 } from '../src/geometry/rational.js';
+import {
+  clipExactPolyhedron,
+  exactPointKey,
+  intersectExactHalfspaces,
+  validateExactPolyhedron,
+} from '../src/geometry/exact-polyhedron.js';
 import { canonicalSha256, sha256 } from '../src/geometry/sha256.js';
+
+const cubePlanes = [
+  { id: 'x+', normal: [1, 0, 0], constant: 1 },
+  { id: 'x-', normal: [-1, 0, 0], constant: 1 },
+  { id: 'y+', normal: [0, 1, 0], constant: 1 },
+  { id: 'y-', normal: [0, -1, 0], constant: 1 },
+  { id: 'z+', normal: [0, 0, 1], constant: 1 },
+  { id: 'z-', normal: [0, 0, -1], constant: 1 },
+];
 
 test('rational scalars parse decimal, scientific, and fraction syntax exactly', () => {
   assert.equal(rationalKey(parseRational('3/4')), '3/4');
@@ -66,4 +81,78 @@ test('SHA-256 and canonical object hashing are deterministic', () => {
   );
   assert.notEqual(canonicalSha256({ a: 1 }), canonicalSha256({ a: 2 }));
   assert.throws(() => canonicalSha256({ invalid: Number.POSITIVE_INFINITY }), /finite/i);
+});
+
+test('exact half-space intersection reconstructs a closed canonical cube', () => {
+  const cube = intersectExactHalfspaces(cubePlanes);
+  assert.ok(cube);
+  assert.equal(cube.vertices.length, 8);
+  assert.equal(cube.faces.length, 6);
+  assert.equal(cube.edges.length, 12);
+  assert.equal(cube.triangles.length, 12);
+  assert.equal(rationalKey(cube.volume), '8/1');
+  assert.deepEqual(cube.centroid.map(rationalKey), ['0/1', '0/1', '0/1']);
+  assert.equal(cube.vertices.length - cube.edges.length + cube.faces.length, 2);
+  assert.ok(cube.edges.every((edge) => edge.faceIndices.length === 2));
+  assert.deepEqual(validateExactPolyhedron(cube), []);
+});
+
+test('exact hull faces and triangles are invariant under source-plane ordering', () => {
+  const forward = intersectExactHalfspaces(cubePlanes);
+  const reordered = intersectExactHalfspaces([
+    cubePlanes[4],
+    cubePlanes[1],
+    cubePlanes[3],
+    cubePlanes[5],
+    cubePlanes[0],
+    cubePlanes[2],
+  ]);
+  assert.ok(forward);
+  assert.ok(reordered);
+
+  const signature = (polyhedron) => ({
+    vertices: polyhedron.vertices.map(exactPointKey),
+    faces: polyhedron.faces.map((face) => ({
+      plane: face.plane.key,
+      points: face.vertexIndices.map((index) => exactPointKey(polyhedron.vertices[index])),
+    })),
+    triangles: polyhedron.triangles.map((triangle) => triangle.vertexIndices
+      .map((index) => exactPointKey(polyhedron.vertices[index]))),
+  });
+  assert.deepEqual(signature(forward), signature(reordered));
+});
+
+test('exact clipping at an affine plane creates two closed equal-volume children', () => {
+  const cube = intersectExactHalfspaces(cubePlanes);
+  assert.ok(cube);
+  const split = clipExactPolyhedron(cube, {
+    id: 'middle-x',
+    normal: [1, 0, 0],
+    constant: 0,
+  });
+
+  assert.equal(split.relation, 'split');
+  assert.ok(split.negative);
+  assert.ok(split.positive);
+  assert.equal(rationalKey(split.negative.volume), '4/1');
+  assert.equal(rationalKey(split.positive.volume), '4/1');
+  assert.deepEqual(validateExactPolyhedron(split.negative), []);
+  assert.deepEqual(validateExactPolyhedron(split.positive), []);
+  assert.equal(
+    split.negative.faces.filter((face) => face.plane.sourceId === 'middle-x').length,
+    1,
+  );
+  assert.equal(
+    split.positive.faces.filter((face) => face.plane.sourceId === 'middle-x').length,
+    1,
+  );
+});
+
+test('exact hull construction rejects unbounded and lower-dimensional intersections', () => {
+  assert.equal(intersectExactHalfspaces(cubePlanes.slice(0, 5)), null);
+  assert.equal(intersectExactHalfspaces([
+    ...cubePlanes.slice(2),
+    { normal: [1, 0, 0], constant: 0 },
+    { normal: [-1, 0, 0], constant: 0 },
+  ]), null);
 });
