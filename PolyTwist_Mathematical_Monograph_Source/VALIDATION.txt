@@ -1,0 +1,12 @@
+PolyTwist mathematical monograph release validation
+
+- LaTeX build: latexmk -pdf -interaction=nonstopmode -halt-on-error
+- PDF pages: 49
+- PDF preflight: no warnings
+- Visual audit: rendered all 49 pages at 200 DPI; final appendix and bibliography pages inspected
+- Claims registry: 54 claims, unique IDs, all dependencies resolved
+- Source registry: 21 sources, unique IDs
+- Bibliography: 21 entries; all registry keys and monograph citations resolve
+- Theorem ledger: all machine-readable claim IDs resolve
+- Implementation code changed: no
+- Canonical audit base: a970c65ab367b98ea380d48919c449bb63fa8638

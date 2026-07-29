@@ -1,0 +1,1753 @@
+\documentclass[11pt,openany]{book}
+
+\usepackage[letterpaper,margin=1in,headheight=15pt]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{mathtools,amssymb,amsthm,bm}
+\usepackage{newtxtext,newtxmath}
+\usepackage{microtype}
+\usepackage{booktabs,longtable,tabularx,array,multirow}
+\usepackage{enumitem}
+\usepackage{seqsplit}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{arrows.meta,positioning,calc,fit,backgrounds,matrix,shapes.geometric,decorations.pathreplacing,patterns,graphs}
+\usepackage[most]{tcolorbox}
+\usepackage{fancyhdr}
+\usepackage{emptypage}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{csquotes}
+\usepackage[backend=biber,style=alphabetic,maxbibnames=99,giveninits=true,sorting=nyt]{biblatex}
+\addbibresource{../sources/references.bib}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+
+\definecolor{polyblue}{HTML}{245B78}
+\definecolor{polycyan}{HTML}{1D8796}
+\definecolor{polyteal}{HTML}{2D7464}
+\definecolor{polygold}{HTML}{A06C22}
+\definecolor{polyred}{HTML}{9B3D3D}
+\definecolor{polyink}{HTML}{20252B}
+\definecolor{polygray}{HTML}{65717C}
+\definecolor{polypale}{HTML}{F3F6F8}
+\definecolor{polyline}{HTML}{D6DEE4}
+
+\hypersetup{
+  pdftitle={PolyTwist: A Stratified Kinematic Atlas for Cut-and-Turn Mechanisms},
+  pdfauthor={Jerry Yuze Li},
+  pdfsubject={Exact mathematics for arbitrary cut-and-turn mechanisms and multimodal reasoning benchmarks},
+  pdfkeywords={twisty puzzles, semialgebraic geometry, configuration space, partial actions, inverse semigroups, spatial reasoning}
+}
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[LE]{\small\textsc{PolyTwist Mathematical Monograph}}
+\fancyhead[RO]{\small\nouppercase{\leftmark}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+
+\setlist[itemize]{topsep=4pt,itemsep=2pt,parsep=1pt,leftmargin=1.6em}
+\setlist[enumerate]{topsep=4pt,itemsep=2pt,parsep=1pt,leftmargin=1.8em}
+\setcounter{tocdepth}{2}
+\setcounter{secnumdepth}{3}
+
+\newcommand{\R}{\mathbb R}
+\newcommand{\K}{\mathbb K}
+\newcommand{\Q}{\mathbb Q}
+\newcommand{\SE}{\operatorname{SE}}
+\newcommand{\SO}{\operatorname{SO}}
+\newcommand{\Conf}{\operatorname{Conf}}
+\newcommand{\Int}{\operatorname{int}}
+\newcommand{\cl}{\operatorname{cl}}
+\newcommand{\sgn}{\operatorname{sgn}}
+\newcommand{\dom}{\operatorname{dom}}
+\newcommand{\im}{\operatorname{im}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\dist}{\operatorname{dist}}
+\newcommand{\Atlas}{\mathfrak P}
+\newcommand{\Strat}{\mathscr X}
+\newcommand{\Pieces}{\mathscr P}
+\newcommand{\States}{\Omega}
+\newcommand{\Turns}{\mathcal T}
+\newcommand{\claimid}[1]{\textnormal{\sffamily\footnotesize[#1]}}
+
+\newtheoremstyle{polyplain}%
+  {7pt}{7pt}{\itshape}{}% space above/below/body/font indent
+  {\bfseries\color{polyink}}{.}{0.5em}{}
+\newtheoremstyle{polydef}%
+  {7pt}{7pt}{\normalfont}{}% 
+  {\bfseries\color{polyblue}}{.}{0.5em}{}
+\theoremstyle{polyplain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{polydef}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem{conjecture}[theorem]{Conjecture}
+
+\crefname{theorem}{theorem}{theorems}
+\crefname{lemma}{lemma}{lemmas}
+\crefname{corollary}{corollary}{corollaries}
+\crefname{proposition}{proposition}{propositions}
+\crefname{definition}{definition}{definitions}
+\crefname{example}{example}{examples}
+\crefname{remark}{remark}{remarks}
+\crefname{conjecture}{conjecture}{conjectures}
+
+\tcolorboxenvironment{theorem}{enhanced,breakable,colback=polypale,colframe=polyteal!75!black,boxrule=0.6pt,left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=8pt,after skip=8pt}
+\tcolorboxenvironment{definition}{enhanced,breakable,colback=polyblue!3,colframe=polyblue!70!black,boxrule=0.6pt,left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=8pt,after skip=8pt}
+\tcolorboxenvironment{conjecture}{enhanced,breakable,colback=polygold!5,colframe=polygold!80!black,boxrule=0.6pt,left=7pt,right=7pt,top=5pt,bottom=5pt,before skip=8pt,after skip=8pt}
+
+\newtcolorbox{statusbox}[2][]{enhanced,breakable,colback=polypale,colframe=polygray,boxrule=0.6pt,title={#2},fonttitle=\bfseries,#1}
+\newtcolorbox{designrule}[1][]{enhanced,breakable,colback=polycyan!4,colframe=polycyan!75!black,boxrule=0.7pt,title={Design rule},fonttitle=\bfseries,#1}
+\newtcolorbox{warningbox}[1][]{enhanced,breakable,colback=polyred!4,colframe=polyred!75!black,boxrule=0.7pt,title={Boundary of the claim},fonttitle=\bfseries,#1}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcolumntype{L}[1]{>{\raggedright\arraybackslash}p{#1}}
+\newcolumntype{C}[1]{>{\centering\arraybackslash}p{#1}}
+
+\title{\Huge\bfseries PolyTwist\\[0.4em]
+\LARGE A Stratified Kinematic Atlas for Cut-and-Turn Mechanisms}
+\author{Jerry Yuze Li}
+\date{Mathematical research draft -- 29 July 2026}
+
+\begin{document}
+
+\frontmatter
+\begin{titlepage}
+\centering
+\vspace*{1.0in}
+{\color{polyblue}\rule{0.85\textwidth}{1.2pt}}\\[1.1cm]
+{\Huge\bfseries PolyTwist\par}
+\vspace{0.35cm}
+{\LARGE\bfseries A Stratified Kinematic Atlas\par}
+\vspace{0.12cm}
+{\LARGE for Cut-and-Turn Mechanisms\par}
+\vspace{0.8cm}
+{\large Exact geometry, partial dynamics, and proof-carrying benchmark semantics\par}
+\vfill
+{\Large Jerry Yuze Li\par}
+\vspace{0.25cm}
+{\large Mathematical research draft\par}
+{\large 29 July 2026\par}
+\vfill
+\begin{minipage}{0.82\textwidth}
+\small
+\textbf{Canonical repository audit base:}
+\texttt{a970c65ab367b98ea380d48919c449bb63fa8638}.\\[0.35em]
+This monograph changes research mathematics and architecture documentation only. It does not claim that the current software implements the atlas developed here.
+\end{minipage}
+\vspace{0.8cm}
+{\color{polyblue}\rule{0.85\textwidth}{1.2pt}}
+\end{titlepage}
+
+\chapter*{Research status and provenance}
+\addcontentsline{toc}{chapter}{Research status and provenance}
+
+\begin{statusbox}{Claim classes used throughout}
+\begin{tabularx}{\textwidth}{L{0.19\textwidth}Y}
+\toprule
+\textbf{Tag} & \textbf{Meaning}\\
+\midrule
+Established & Previously established mathematics, cited to primary or authoritative literature.\\
+Definition & A repository-specific object. A definition is not a novelty claim.\\
+Proved here & A theorem proved in this monograph from explicitly stated assumptions.\\
+Evidence & A deterministic computation or exact instance check that has not been promoted to a general theorem.\\
+Conjecture/open & A statement or algorithmic target without a complete proof.\\
+\bottomrule
+\end{tabularx}
+\end{statusbox}
+
+Every substantial statement is mirrored in \texttt{research/claims.json}; bibliographic metadata and claim support are mirrored in \texttt{research/sources/registry.json}. The monograph deliberately separates three things that technical writing often tosses into one suspiciously convenient bucket: established mathematics, PolyTwist definitions, and actual new proofs.
+
+\begin{warningbox}
+The phrase \emph{canonical representation} has two levels. The mathematical object is canonical as an isomorphism class of exact atlases. A practical byte-for-byte canonical serializer under all geometric symmetries is not proved here; it is isolated as \cref{conj:canonical-serialization}.
+\end{warningbox}
+
+\chapter*{Abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+A cut-and-turn puzzle is not a mesh, a sticker permutation, or a list of move names. It is a geometric mechanism whose cuts induce a stratified body, whose bonds induce physical pieces, whose assembly constraints induce a configuration space, and whose legal motions induce partial dynamics. Existing PolyTwist code already enforces a valuable principle -- pixels observe mechanics rather than define them -- but its canonical state is still a cubic logical lattice with convex geometry attached afterward. That is sufficient for Rubik-like shape modifications and insufficient for arbitrary mechanisms.
+
+This monograph proposes the \emph{Stratified Kinematic Atlas}
+\[
+\Atlas=(\K;B,\Phi,\beta,\mathcal J,\Turns,\mathcal O)
+\]
+as the canonical mathematical object. The compact semialgebraic body $B$ and oriented cut functions $\Phi$ induce a finite connected sign-component stratification. A bond system $\beta$ quotients atomic chambers into rigid physical pieces. Exact assembly data $\mathcal J$ derive the continuous configuration space and docked state space. A turn template specifies an anchor, a gate, a semialgebraic rigid-motion path, and a docking relation. A move is legal precisely when it satisfies gate atomicity, bond closure, swept-path admissibility, and endpoint docking.
+
+The resulting state transitions are partial bijections, not necessarily total permutations. They generate an inverse semigroup and an associated legal-motion groupoid; the usual Rubik group action appears exactly when every primitive move is total. This yields a single derivation chain from cuts to pieces, legality, state graph, scrambles, planning, rendering, and active system identification. The monograph proves finiteness and specialization results, exact trace-clipping formulas, a bond-incidence criterion, semialgebraicity of turn domains, finite legality stratification, isomorphism invariance, a passive-observation nonidentifiability theorem, and exact product-automaton scramble laws. Two rational ghost-like cut atlases are worked out with exact matrices, chamber witnesses, primitive plane equations, trace endpoints, and TikZ diagrams.
+
+The novelty claim is intentionally narrow. Hyperplane arrangements, configuration-space motion planning, partial actions, permutation puzzle formats, and plane-cut puzzle generators all predate PolyTwist. The plausible research contribution is their exact integration into a proof-carrying mechanism specification and a benchmark whose observations and labels are derived from that same object.
+
+\tableofcontents
+
+\mainmatter
+
+\chapter{Why the puzzle itself needs a mathematical object}
+\label{chap:motivation}
+
+\section{The research target}
+
+The goal is not another Rubik's Cube benchmark with more textures and a heroic amount of JSON. The target is a mathematical language capable of expressing, from one exact object,
+\begin{itemize}
+  \item affine, curved, intersecting, offset, and procedurally generated cuts;
+  \item visible traces and their metric and topological relations;
+  \item the induced physical pieces, including bandages and hidden joins;
+  \item continuous mechanical configurations and discrete docked states;
+  \item state-dependent legal and illegal motions;
+  \item the induced state graph, scramble laws, planning problems, and experiments;
+  \item exact surfaces, certified meshes, and rendered observations.
+\end{itemize}
+
+These are not independent modules. They are successive images of one mechanism object. If geometry says one thing and the state engine says another, the benchmark has become a stage prop.
+
+\section{Repository audit at the canonical base}
+\label{sec:repository-audit}
+
+The canonical repository was audited at commit
+\texttt{a970c65ab367b98ea380d48919c449bb63fa8638} \parencite{PolyTwistRepository2026}. The current system is technically disciplined within its scope:
+\begin{itemize}
+  \item mechanics are exact integer-valued transforms on a cubic logical lattice;
+  \item geometry is compiled from convex half-space intersections;
+  \item a displaced and rotated frame produces Ghost-Cube-like shape modifications;
+  \item bandages make the legal action mask state-dependent;
+  \item rendering and benchmark export observe the exact engine state.
+\end{itemize}
+
+The limitation is foundational. The compiler begins with an $N\times N\times N$ lattice, three orthogonal coordinate families in one frame, and quarter-turn generators. Physical pieces are intersections of an outer convex hull with those pre-existing lattice cells. The engine selects a move by an integer coordinate layer and checks only whether a declared rigid bandage is split. Swept geometric collision, arbitrary cut carriers, non-cubic bodies, non-quarter-turn joints, and jumbling are not represented by the canonical state.
+
+The existing mathematical ledger correctly labels its Slice-Action Code and Unified Legality Operator as provisional. They are useful diagnostics, but neither can reconstruct the mechanism that produced them. This monograph preserves the correct affine, support, and scramble results while replacing the foundation.
+
+\section{Cuts alone are not a puzzle}
+
+A tempting definition is ``body plus cuts.'' It fails before the notation has time to become impressive.
+
+\begin{theorem}[Cuts underdetermine dynamics \claimid{THM-CUTS-UNDERDET-001}]
+\label{thm:cuts-underdetermine-dynamics}
+There exist two cut-and-turn mechanisms with identical body, oriented cut carriers, chamber decomposition, and physical pieces, but nonisomorphic legal-motion systems.
+\end{theorem}
+
+\begin{proof}
+Let $B=[-1,1]^3$ and use the three oriented planes $x=0$, $y=0$, and $z=0$. With no bonds, the atomic chambers are the eight open octants clipped by $B$.
+
+Mechanism $M_0$ declares no turn templates. Its state graph contains only isolated states.
+
+Mechanism $M_1$ declares one turn $a$: select the four chambers in $x>0$ and rotate them together by $\pi/2$ about the $x$-axis. During the path, the selected interiors remain in $x>0$ and the stationary interiors remain in $x<0$, so no selected interior meets a stationary one. The right half-cube is invariant under the quarter-turn, hence the endpoint permutes its four octants and is docked. The reverse quarter-turn is legal.
+
+Thus $M_1$ contains a nontrivial order-four partial transformation while $M_0$ contains none. Their geometric cut data agree and their dynamics do not.
+\end{proof}
+
+\begin{designrule}
+Kinematics are primitive atlas data constrained by geometry. They cannot be inferred uniquely from cut traces, even with perfect geometric measurement.
+\end{designrule}
+
+\section{The derivation principle}
+
+The desired architecture is summarized in \cref{fig:derivation-chain}. Every arrow must be deterministic and independently verifiable.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  node distance=8mm and 7mm,
+  box/.style={draw=polyblue!75!black,rounded corners=2pt,fill=polyblue!4,minimum height=9mm,align=center,font=\small,inner xsep=7pt},
+  obs/.style={draw=polycyan!75!black,rounded corners=2pt,fill=polycyan!4,minimum height=9mm,align=center,font=\small,inner xsep=7pt},
+  arr/.style={-{Stealth[length=2.3mm]},thick,draw=polygray}
+]
+\node[box] (atlas) {$\Atlas$\\exact atlas};
+\node[box,right=of atlas] (strat) {sign-component\\stratification};
+\node[box,right=of strat] (pieces) {physical\\pieces};
+\node[box,right=of pieces] (conf) {$\Conf,\States$};
+\node[box,below=of conf] (turns) {partial legal\\turns};
+\node[box,left=of turns] (groupoid) {inverse semigroup\\and groupoid};
+\node[box,left=of groupoid] (graph) {state graph,\\scramble, planning};
+\node[obs,below=of strat] (surface) {transformed exact\\surfaces};
+\node[obs,left=of surface] (mesh) {certified mesh};
+\node[obs,left=of mesh] (pixels) {pixels and\\sensor channels};
+\draw[arr] (atlas)--(strat);
+\draw[arr] (strat)--(pieces);
+\draw[arr] (pieces)--(conf);
+\draw[arr] (conf)--(turns);
+\draw[arr] (turns)--(groupoid);
+\draw[arr] (groupoid)--(graph);
+\draw[arr] (atlas)--(surface);
+\draw[arr] (surface)--(mesh);
+\draw[arr] (mesh)--(pixels);
+\end{tikzpicture}
+\caption{The canonical derivation chain. Rendering and benchmark dynamics share the same source object instead of politely disagreeing in separate subsystems.}
+\label{fig:derivation-chain}
+\end{figure}
+
+\chapter{Exact substrate and the Stratified Kinematic Atlas}
+\label{chap:atlas}
+
+\section{Effective exact coefficients}
+\label{sec:semialgebraic-substrate}
+
+The mathematical semantics live over $\R$. An encoded instance uses an \emph{effective ordered coefficient domain} $\K\subset\R$ with exact arithmetic and decidable sign. The default implementation target is the field of real algebraic numbers; rational instances form an especially pleasant subset because humans occasionally deserve nice denominators.
+
+A subset of $\R^n$ is \emph{semialgebraic over $\K$} when it is a finite Boolean combination of polynomial equalities and strict or weak inequalities with coefficients in $\K$. Semialgebraic sets are closed under Boolean operations and projection, have finitely many connected components, and admit compatible finite triangulations and cell decompositions \parencite{BasuPollackRoy2006,BochnakCosteRoy1998}. Quantifier elimination over real closed fields makes these closure statements algorithmic in principle \parencite{Collins1975}.
+
+\begin{definition}[Regular-closed body]
+A \emph{body} is a compact semialgebraic set $B\subset\R^3$ satisfying
+\[
+B=\cl(\Int B),\qquad \dim B=3.
+\]
+Regular closure excludes free-floating lower-dimensional debris from the canonical solid.
+\end{definition}
+
+\section{Exact rigid paths}
+
+A placement is an element of $\SE(3)$, represented by $(R,t)$ with $R\in\SO(3)$ and $t\in\R^3$. The defining equations $R^TR=I$ and $\det R=1$ are polynomial, so $\SE(3)$ is semialgebraic.
+
+Ordinary trigonometric parameterizations are not semialgebraic. This is not a reason to abandon exact paths; it is a reason to parameterize them properly.
+
+\begin{lemma}[Rational half-angle rotation path]
+\label{lem:half-angle-path}
+Let $u\in\K^3$ be a unit vector and let $U$ be its cross-product matrix. For a parameter $s$ define
+\[
+R_u(s)=I+\frac{2s}{1+s^2}U+\frac{2s^2}{1+s^2}U^2.
+\]
+Then $R_u(s)\in\SO(3)$ and represents rotation about $u$ through angle $2\arctan s$. If an endpoint rotation has algebraic sine and cosine and is not a half-turn, it admits such an exact semialgebraic path. A half-turn is the concatenation of two quarter-turn paths.
+\end{lemma}
+
+\begin{proof}
+Substitute $\sin\theta=2s/(1+s^2)$ and $1-\cos\theta=2s^2/(1+s^2)$ into Rodrigues' formula. The matrix identities $U^T=-U$, $U^2=uu^T-I$, and $U^3=-U$ give $R_u(s)^TR_u(s)=I$ and determinant one. For an endpoint with $\cos\theta\ne-1$, take $s=\sin\theta/(1+\cos\theta)$. Algebraicity is preserved by field operations. Split $\theta=\pi$ into two paths of angle $\pi/2$.
+\end{proof}
+
+\section{The canonical tuple}
+
+\begin{definition}[Stratified Kinematic Atlas \claimid{DEF-SKA-001}]
+\label{def:ska}
+A \emph{Stratified Kinematic Atlas} (SKA) is a tuple
+\[
+\Atlas=(\K;B,\Phi,\beta,\mathcal J,\Turns,\mathcal O)
+\]
+with the following data.
+\begin{enumerate}
+  \item $\K$ is an effective exact coefficient domain.
+  \item $B\subset\R^3$ is a compact three-dimensional regular-closed semialgebraic body.
+  \item $\Phi=(\phi_1,\ldots,\phi_m)$ is an ordered family of continuous semialgebraic functions on a neighborhood of $B$. Each $\phi_i$ is oriented: multiplying it by a positive scalar preserves the cut, while multiplying by a negative scalar reverses its sides.
+  \item $\beta$ is an admissible bond system on the atomic chambers induced by $(B,\Phi)$.
+  \item $\mathcal J$ is exact semialgebraic assembly data: fixed bodies, anchors, joints, clearance and nonpenetration relations, global gauge, intrinsic piece symmetries, and a docking predicate.
+  \item $\Turns$ is a finite family of reversible turn templates.
+  \item $\mathcal O$ is exact appearance and sensor data attached to bodies, surfaces, and strata.
+\end{enumerate}
+Every cut carrier is required to have empty interior in $B$; equivalently, no $\phi_i$ vanishes on a nonempty open subset of $B$.
+\end{definition}
+
+The tuple separates three layers without divorcing them. $(B,\Phi,\beta)$ derives the physical solids. $\mathcal J$ derives admissible and docked placements of those solids. $\Turns$ derives legal state transitions through exact paths. $\mathcal O$ derives observations and can be changed for appearance-transfer experiments without secretly rewriting mechanics.
+
+\section{What is canonical}
+
+The atlas is not canonical because its cuts have cute IDs. It is canonical as an exact mathematical structure up to rigid isomorphism, defined in \cref{def:atlas-isomorphism}. Coefficient normalization, deterministic ordering, and graph canonicalization are serialization problems layered on top of that structure.
+
+This distinction matters. A JSON digest can be deterministic and still encode the wrong mathematical object. Conversely, two byte-distinct exact files can define isomorphic mechanisms.
+
+\chapter{Canonical cut stratification}
+\label{chap:stratification}
+
+\section{Connected sign components}
+
+For $x\in B$, define the ternary sign vector
+\[
+\sigma(x)=\bigl(\sgn\phi_1(x),\ldots,\sgn\phi_m(x)\bigr)\in\{-,0,+\}^m.
+\]
+For a fixed sign vector $\sigma$, let
+\[
+X_\sigma
+=
+B\cap\bigcap_{i=1}^m\{x:\sgn\phi_i(x)=\sigma_i\}.
+\]
+
+\begin{definition}[Connected sign-component stratification \claimid{DEF-SIGNCOMP-001}]
+\label{def:sign-component-stratification}
+The canonical cut stratification $\Strat(B,\Phi)$ is the set of connected components of all nonempty $X_\sigma$, each equipped with its sign label and the closure-incidence relation
+\[
+A\preceq C \quad\Longleftrightarrow\quad A\subseteq\cl C.
+\]
+\end{definition}
+
+The component suffix is essential. A sign vector says which side of every carrier contains a point; it does not say which connected region contains the point.
+
+\begin{theorem}[Finiteness \claimid{THM-SIGN-FINITE-001}]
+\label{thm:sign-component-finiteness}
+The stratification $\Strat(B,\Phi)$ is finite.
+\end{theorem}
+
+\begin{proof}
+Every $X_\sigma$ is semialgebraic because it is a finite intersection of semialgebraic sign conditions with $B$. A semialgebraic set has finitely many connected components. There are only $3^m$ sign vectors.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.0]
+  \fill[polyblue!5] (0,0) circle (3cm);
+  \fill[white] (0,0) circle (2cm);
+  \fill[polyblue!5] (0,0) circle (1cm);
+  \draw[very thick,polyink] (0,0) circle (3cm);
+  \draw[thick,polyred] (0,0) circle (2cm);
+  \draw[thick,polyred] (0,0) circle (1cm);
+  \node[align=center] at (0,0) {$\phi>0$\\component 1};
+  \node[align=center] at (0,2.5) {$\phi>0$\\component 2};
+  \node[align=center] at (0,1.5) {$\phi<0$};
+  \node[align=center,text width=9cm] at (0,-4.0) {Cross-section with $B=\{r\le3\}$ and $\phi=(r^2-1)(r^2-4)$. The positive sign condition has two connected components. A bare sign vector merges them and loses topology.};
+\end{tikzpicture}
+\caption{Why connected components, not sign vectors alone, are canonical.}
+\label{fig:disconnected-sign}
+\end{figure}
+
+\section{Atomic chambers and lower-dimensional strata}
+
+The \emph{atomic chambers} are the connected components of
+\[
+B^\circ\setminus\bigcup_{i=1}^m \phi_i^{-1}(0).
+\]
+They are exactly the three-dimensional strata with strict sign labels. Lower-dimensional strata encode carrier intersections, boundary traces, vertices, and degeneracies. The closure-incidence poset records how all of these pieces meet.
+
+\begin{proposition}[Chamber cover]
+\label{prop:chamber-cover}
+Under the empty-interior assumption on the cut carriers, the closures of the atomic chambers cover $B$, and distinct chambers have disjoint interiors.
+\end{proposition}
+
+\begin{proof}
+The finite union of carrier zero sets is closed and nowhere dense in $B$. Its complement is dense in $B$ and is the disjoint union of the atomic chambers. Taking closures yields $B$. Distinct connected components of an open set are disjoint, so their interiors are disjoint.
+\end{proof}
+
+\section{The affine-convex specialization}
+\label{sec:affine-specialization}
+
+Let $B$ be convex and let every cut be affine,
+\[
+\phi_i(x)=n_i^Tx-d_i.
+\]
+
+\begin{theorem}[Affine-convex sign completeness \claimid{THM-AFFINE-CONVEX-001}]
+\label{thm:affine-convex-sign-completeness}
+Every nonempty strict sign region $X_\sigma$ is convex and therefore connected. Hence strict sign vectors index atomic chambers without an additional connected-component identifier.
+\end{theorem}
+
+\begin{proof}
+A strict affine sign condition is an open half-space. Its intersection with the convex set $B$ and finitely many other half-spaces is convex. Every nonempty convex set is connected.
+\end{proof}
+
+This theorem identifies the exact boundary of the current repository's sign-vector intuition. It is correct for convex bodies and affine carriers. It is not a universal law of puzzle geometry.
+
+\section{The oriented-matroid shadow}
+\label{sec:oriented-matroid-shadow}
+
+For an affine arrangement in all of $\R^3$, homogenization turns the realized sign vectors into the covectors of a realizable oriented matroid. Oriented matroids abstract the incidence, sidedness, and combinatorial duality of hyperplane arrangements \parencite{FolkmanLawrence1978}. They are therefore a natural combinatorial shadow of an affine PolyTwist cut system.
+
+They do not determine metric offsets, lengths, clearances, piece congruence, or swept collision. Two geometrically different realizations can share an oriented matroid. PolyTwist should preserve the oriented-matroid structure as an invariant, not mistake it for the mechanism.
+
+\section{Canonical strata versus computational cells}
+\label{sec:canonical-stratification}
+
+A connected sign component need not be a ball or a smooth manifold. Exact algorithms may refine the canonical stratification with a compatible semialgebraic triangulation or cylindrical algebraic decomposition \parencite{BochnakCosteRoy1998,ArnonCollinsMcCallum1984}. Such a refinement is a certificate-bearing computational device. The canonical result is obtained by quotienting refinement cells back to their connected sign components and closure incidence.
+
+\begin{designrule}
+Never make a particular triangulation, mesh tessellation, or CAD projection order part of puzzle identity. Those are compiler choices. The sign-component structure is the invariant target.
+\end{designrule}
+
+\chapter{Traces, seams, pieces, and bonds}
+\label{chap:traces-pieces}
+
+\section{Raw traces and visible seams}
+
+The oriented carrier of cut $i$ is
+\[
+S_i=B\cap\phi_i^{-1}(0).
+\]
+Its raw boundary trace is
+\[
+T_i=S_i\cap\partial B.
+\]
+The strata contained in $T_i$, together with closure incidence, encode trace components, intersections, endpoints, and topology.
+
+A raw carrier trace is not automatically a visible seam. If the chambers on its two sides are bonded into one physical piece, the interface is mechanically absent even though the carrier was useful during construction.
+
+\begin{definition}[Visible mechanical seam \claimid{DEF-TRACE-001}]
+\label{def:visible-seam}
+At a regular point of $T_i$ with one adjacent three-dimensional chamber on each side, the point is a \emph{visible mechanical seam} when those chambers belong to different physical pieces. The global seam is the closure of the set of such regular points. Decorative lines and stickers belong to $\mathcal O$, not to this seam set.
+\end{definition}
+
+\section{Exact affine trace clipping}
+
+Suppose a cut plane and a polyhedral boundary face lie in
+\[
+n^Tx=d,
+\qquad
+m^Tx=h,
+\]
+with $v=n\times m\ne0$. Define $D=\lVert v\rVert^2$ and
+\[
+\alpha=\frac{d\lVert m\rVert^2-h(n^Tm)}{D},
+\qquad
+\beta=\frac{h\lVert n\rVert^2-d(n^Tm)}{D},
+\qquad
+x_0=\alpha n+\beta m.
+\]
+Then the plane intersection is $x(t)=x_0+tv$. If the face has inequalities $c_r^Tx\le e_r$, each gives
+\[
+(c_r^Tv)t\le e_r-c_r^Tx_0.
+\]
+Positive coefficients give upper bounds, negative coefficients give lower bounds, and zero coefficients give feasibility tests.
+
+\begin{theorem}[Exact trace clipping \claimid{THM-TRACE-CLIP-001}]
+\label{thm:exact-trace-clipping}
+For an affine cut and a polyhedral boundary face, the trace is empty, a point, a segment, a ray, a line, or the entire face in a degenerate coincident case. In the bounded-face case with nonparallel planes, its segment endpoints are $x(L)$ and $x(U)$, where $[L,U]$ is the exact intersection of the induced scalar intervals. Its length is $(U-L)\lVert v\rVert$.
+\end{theorem}
+
+\begin{proof}
+The two independent plane equations define the affine line $x_0+\R v$; direct substitution verifies $n^Tx_0=d$ and $m^Tx_0=h$. Restricting every face half-space to that line yields a one-dimensional linear inequality. Their intersection is an interval, possibly empty or degenerate. The Euclidean displacement between endpoints is $(U-L)v$.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[scale=1.05]
+  \fill[polyblue!4] (-3,-2) rectangle (3,2);
+  \draw[very thick,polyink] (-3,-2) rectangle (3,2);
+  \draw[thick,polyred] (-4,-1.7) -- (4,1.5);
+  \draw[line width=2.2pt,polycyan] (-3,-1.3) -- (3,1.1);
+  \fill[polycyan] (-3,-1.3) circle (2.2pt) node[below left,text=polyink] {$x(L)$};
+  \fill[polycyan] (3,1.1) circle (2.2pt) node[above right,text=polyink] {$x(U)$};
+  \node[above] at (0,2) {polyhedral boundary face};
+  \node[rotate=21,text=polyred] at (0.2,0.3) {plane-intersection line};
+  \draw[decorate,decoration={brace,amplitude=4pt},polycyan] (-2.95,-1.55) -- (2.95,0.81) node[midway,below=6pt,rotate=21,text=polyink] {exact clipped trace};
+\end{tikzpicture}
+\caption{All trace geometry is line clipping in the affine-polyhedral specialization. Pixels are not invited to estimate the endpoints afterward.}
+\label{fig:trace-clipping}
+\end{figure}
+
+The exact angle between a cut and face is represented without floating inverse trigonometry by the normalized pair
+\[
+\left(n^Tm,\ \lVert n\times m\rVert\right),
+\]
+which determines cosine and sine once normal lengths and orientations are fixed.
+
+\section{Bond systems and physical pieces}
+
+Let $\mathcal C$ be the finite set of atomic chambers. A bond system may be represented by a graph $G_\beta=(\mathcal C,E_\beta)$ whose edges join chambers that are rigidly fused across a shared codimension-one interface. More general hyperedges are reducible to a graph by adding a hidden bond node, so the graph model loses no finite equivalence information.
+
+\begin{definition}[Physical piece \claimid{DEF-PIECE-001}]
+\label{def:physical-piece}
+For a connected component $K$ of $G_\beta$, define
+\[
+Q_K=\cl\left(\bigcup_{C\in K}C\right).
+\]
+The bond system is \emph{admissible} when every $Q_K$ is a connected regular-closed semialgebraic solid, the interiors of distinct $Q_K$ are disjoint, and their union is $B$.
+\end{definition}
+
+Admissibility is not an aesthetic preference. A bond file that joins two remote chambers through empty space does not magically manufacture a rigid part; it manufactures an invalid specification.
+
+Choose an arbitrary orientation for every edge of $G_\beta$ and let $D_\beta$ be its edge-by-chamber incidence matrix. For a chamber support vector $m\in\{0,1\}^{\mathcal C}$, an edge row evaluates to the difference of the selector values at its endpoints.
+
+\begin{theorem}[Bond-kernel criterion \claimid{THM-BOND-001}]
+\label{thm:bond-kernel}
+A binary selector $m$ is constant on every physical piece if and only if
+\[
+D_\beta m=0.
+\]
+\end{theorem}
+
+\begin{proof}
+If $D_\beta m=0$, the endpoints of every bond edge receive equal values. Equality propagates along every path, so $m$ is constant on each connected component. Conversely, a componentwise constant selector has equal endpoint values on every edge, hence every incidence row vanishes.
+\end{proof}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  ch/.style={circle,draw=polyink,minimum size=8mm,inner sep=0pt,font=\small},
+  bond/.style={line width=2pt,draw=polyred},
+  free/.style={thick,draw=polygray},
+  sel/.style={fill=polycyan!20}
+]
+\node[ch,sel] (a) at (0,0) {$1$};
+\node[ch,sel] (b) at (1.5,0) {$1$};
+\node[ch] (c) at (3,0) {$0$};
+\node[ch] (d) at (4.5,0) {$0$};
+\draw[bond] (a)--(b) node[midway,above] {$\beta$};
+\draw[free] (b)--(c);
+\draw[bond] (c)--(d) node[midway,above] {$\beta$};
+\node[align=center] at (2.25,-0.9) {$D_\beta m=0$: each bonded component is wholly selected or wholly stationary};
+
+\begin{scope}[yshift=-2.1cm]
+\node[ch,sel] (e) at (0,0) {$1$};
+\node[ch] (f) at (1.5,0) {$0$};
+\node[ch] (g) at (3,0) {$0$};
+\node[ch] (h) at (4.5,0) {$0$};
+\draw[bond] (e)--(f) node[midway,above] {$\beta$};
+\draw[free] (f)--(g);
+\draw[bond] (g)--(h) node[midway,above] {$\beta$};
+\node[align=center,text=polyred] at (2.25,-0.9) {$D_\beta m\ne0$: the proposed gate splits a rigid piece};
+\end{scope}
+\end{tikzpicture}
+\caption{Bandage legality is a graph-incidence invariant, not an exception hard-coded beside the move parser.}
+\label{fig:bond-kernel}
+\end{figure}
+
+\section{Relation to the previous support condition}
+
+If a legal action has already been compiled into a permutation matrix $P_a$ on finite slots, a selected support is a union of permutation cycles exactly when $P_am=m$. That theorem remains correct. It is downstream of geometry. The bond-kernel criterion applies before an action permutation exists and therefore belongs in the foundation.
+
+
+\chapter{Configuration space and exact observations}
+\label{chap:configuration}
+
+\section{Piece placements and symmetries}
+
+Let $\Pieces$ be the physical-piece set and let $Q_p\subset\R^3$ denote the home solid of piece $p$. A raw placement is
+\[
+g=(g_p)_{p\in\Pieces}\in\SE(3)^{\Pieces}.
+\]
+If a piece has an intrinsic decorated symmetry group
+\[
+H_p=\{h\in\SE(3):h(Q_p,\mathcal O_p)=(Q_p,\mathcal O_p)\},
+\]
+then $g_p$ and $g_ph$ represent the same placed decorated piece. A global rigid gauge may also be quotiented when no world-fixed frame is declared. Shape symmetry and decorated symmetry are deliberately distinct: a uniformly silver Mirror-Cube piece may have more observational symmetry than a labeled calibration piece.
+
+\section{Assembly constraints}
+\label{sec:configuration-space}
+
+The assembly data $\mathcal J$ contain exact semialgebraic predicates for anchors, joints, clearances, fixed bodies, and docking. Interior nonpenetration is not optional prose; it is part of the configuration predicate:
+\[
+\Int(g_pQ_p)\cap\Int(g_qQ_q)=\varnothing
+\qquad(p\ne q).
+\]
+Fixed core bodies are treated as additional anchored solids and obey the same nonpenetration condition.
+
+\begin{definition}[Configuration and docked state spaces \claimid{DEF-CONF-001}]
+\label{def:configuration-space}
+Let $\widetilde{\Conf}(\Atlas)$ be the set of raw placements satisfying all exact assembly predicates and interior nonpenetration. The \emph{configuration space} is
+\[
+\Conf(\Atlas)=\widetilde{\Conf}(\Atlas)\big/\left(G_{\mathrm{gauge}}\times\prod_{p\in\Pieces}H_p\right).
+\]
+The \emph{docked state space} $\States\subseteq\Conf(\Atlas)$ is the subset satisfying the docking predicate in $\mathcal J$.
+\end{definition}
+
+The continuous space $\Conf$ is where a turn travels. The docked space $\States$ is where scrambles, plans, and benchmark states live. Confusing the two makes it impossible to state swept collision correctly.
+
+\section{The exact scene and its approximations}
+
+At state $x=[g]\in\States$, the exact visible scene is the union of transformed decorated boundaries
+\[
+\mathcal S(x)=\bigcup_{p\in\Pieces}g_p(\partial Q_p,\mathcal O_p),
+\]
+together with visible anchored bodies and any declared gaps or transparent components. Occlusion is determined by these transformed surfaces and the camera model.
+
+A mesh $M_\varepsilon(x)$ is a certified approximation to $\mathcal S(x)$, ideally with a Hausdorff error bound, orientation consistency, and a topology certificate on strata where topology preservation is required. A rendered image is then
+\[
+I=\operatorname{Render}\bigl(M_\varepsilon(x),\text{camera},\text{lighting},\text{sensor}\bigr).
+\]
+The image is an observation. It is not a second definition of $x$.
+
+\begin{designrule}
+Every public modality -- RGB, depth, segmentation, normals, point clouds, tactile contacts, or action outcomes -- must be generated from the same exact state and atlas. Cross-modal disagreement is a compiler defect, not ``realistic noise,'' unless an explicit noise model says otherwise.
+\end{designrule}
+
+\section{Why the outer body is not a permanent container}
+
+The solved body $B$ induces home piece shapes. A shape-modifying puzzle may leave the silhouette of $B$ after a turn. Accordingly, admissibility is not the condition $\bigcup_pg_pQ_p=B$. It is the exact assembly relation in $\mathcal J$: nonpenetration, joints, anchors, clearances, and docking. This distinction permits Ghost and Axis mechanisms without granting every collection of flying shards diplomatic immunity from collision.
+
+\chapter{Turn templates and exact legality}
+\label{chap:legality}
+
+\section{Gates and state-indexed anchors}
+
+A cut carrier explains where pieces came from. A turn gate explains which currently placed material is intended to move. The two often coincide in a solved state and need not coincide after other turns.
+
+\begin{definition}[Turn template \claimid{DEF-TURN-001}]
+\label{def:turn-template}
+A reversible turn template $a\in\Turns$ consists of:
+\begin{enumerate}
+  \item a semialgebraic anchor-frame map $F_a:\States\to\SE(3)$, frozen at the start of a turn;
+  \item a continuous semialgebraic gate function $\gamma_a:\R^3\to\R$, whose positive side is selected;
+  \item a piecewise-semialgebraic rigid path $\rho_a:[0,1]\to\SE(3)$ with $\rho_a(0)=I$;
+  \item an exact endpoint docking predicate $\Delta_a$;
+  \item a reverse template $\bar a$ whose path is the time reversal of $a$ and whose anchor/gate data are compatible at the endpoint.
+\end{enumerate}
+\end{definition}
+
+For an atomic chamber $C$ contained in physical piece $p(C)$ and a representative placement $g$ of state $x$, its start-of-turn anchor coordinates are
+\[
+C_x^a=F_a(x)^{-1}g_{p(C)}C.
+\]
+
+\begin{definition}[Gate atomicity and support]
+The gate is \emph{atomic at $x$} when, for every atomic chamber $C$, the function $\gamma_a$ has one strict sign throughout $\Int C_x^a$. The support vector $m_x(a)\in\{0,1\}^{\mathcal C}$ is
+\[
+m_x(a)_C=
+\begin{cases}
+1,&\gamma_a>0\text{ on }\Int C_x^a,\\
+0,&\gamma_a<0\text{ on }\Int C_x^a.
+\end{cases}
+\]
+\end{definition}
+
+Gate atomicity rules out the splendid engineering strategy of rotating half a rigid chamber and hoping the mesh renderer does not notice.
+
+\section{The induced placement path}
+
+Assume gate atomicity and bond closure. A physical piece is selected when its chambers have support one. With $F=F_a(x)$, define
+\[
+g_p(t)=
+\begin{cases}
+F\rho_a(t)F^{-1}g_p,&p\text{ selected},\\
+g_p,&p\text{ stationary}.
+\end{cases}
+\]
+This gives a raw placement path $g(t)$. It descends to a path in configuration space precisely when all assembly constraints hold for every $t$.
+
+\begin{definition}[Exact legal turn \claimid{DEF-LEGALITY-001}]
+\label{def:legal-turn}
+A turn template $a$ is legal at $x\in\States$ when:
+\begin{enumerate}
+  \item \textbf{gate atomicity} holds;
+  \item \textbf{bond closure} holds: $D_\beta m_x(a)=0$;
+  \item \textbf{swept-path admissibility} holds: $[g(t)]\in\Conf(\Atlas)$ for all $t\in[0,1]$;
+  \item \textbf{endpoint docking} holds: $[g(1)]\in\States$ and $\Delta_a(x,[g(1)])$ is true.
+\end{enumerate}
+The domain $D_a\subseteq\States$ is the set of states where these conditions hold.
+\end{definition}
+
+\begin{theorem}[Legality factorization \claimid{THM-LEGALITY-FACTORIZATION-001}]
+\label{thm:legality-factorization}
+Under \cref{def:turn-template,def:legal-turn}, legal execution is equivalent to the conjunction of gate atomicity, bond closure, swept-path admissibility, and endpoint docking. Each failed factor admits an independent counterexample certificate.
+\end{theorem}
+
+\begin{proof}
+The equivalence is the definition. Independence follows from the certificate types: a straddling chamber witnesses gate failure; a bond edge with unequal selector values witnesses bond failure; a time and colliding point pair or violated joint equation witnesses path failure; and an endpoint equation or docking relation witnesses docking failure. None of these witnesses logically implies the others.
+\end{proof}
+
+The useful object is therefore a structured residual
+\[
+\Lambda_x(a)=
+\bigl(r_{\mathrm{gate}},D_\beta m_x(a),r_{\mathrm{path}},r_{\mathrm{dock}}\bigr),
+\]
+not one scalar whose zero somehow promises that geometry, topology, and mechanics have all behaved.
+
+\section{Semialgebraic path legality}
+\label{sec:path-legality}
+
+Swept collision is a quantified statement. For two pieces $p$ and $q$, collision during the proposed turn is expressed by
+\[
+\exists t\in[0,1]\ \exists u\in\Int Q_p\ \exists v\in\Int Q_q:
+\quad g_p(t)u=g_q(t)v.
+\]
+Joint and clearance violations are similar first-order formulas. With semialgebraic paths, all terms are semialgebraic.
+
+\begin{theorem}[Semialgebraic turn domains \claimid{THM-DOMAIN-SEMI-001}]
+\label{thm:semialgebraic-turn-domain}
+Assume $B$, all cuts, physical pieces, assembly relations, anchor maps, gates, motion paths, and docking predicates are semialgebraic. Then every turn domain $D_a\subseteq\States$ is semialgebraic.
+\end{theorem}
+
+\begin{proof}
+There are finitely many chamber support patterns. For a fixed pattern, gate atomicity is a finite collection of universally quantified sign conditions over semialgebraic chamber interiors. Bond closure is a finite linear equality over the binary pattern. Swept-path admissibility is a finite collection of universally quantified semialgebraic constraints in the time parameter and piece points. Docking is semialgebraic by assumption. Quantifier elimination over real closed fields converts each fixed-pattern formula to a quantifier-free semialgebraic formula; the domain is the finite union over admissible patterns.
+\end{proof}
+
+This theorem gives completeness in principle, not cheap computation. General real quantifier elimination can exhibit doubly-exponential worst-case behavior \parencite{DavenportHeintz1988}. The proper response is specialized exact geometry with a complete fallback, not a sudden spiritual attachment to epsilon tests.
+
+\section{Finite legality stratification}
+\label{sec:legality-stratification}
+
+For a finite turn set $\Turns=\{a_1,\ldots,a_r\}$, define the exact legal-action mask
+\[
+\ell(x)=\bigl(\mathbf 1_{D_{a_1}}(x),\ldots,\mathbf 1_{D_{a_r}}(x)\bigr)\in\{0,1\}^r.
+\]
+
+\begin{theorem}[Finite legality stratification \claimid{THM-LEGALITY-STRATA-001}]
+\label{thm:finite-legality-stratification}
+Under the hypotheses of \cref{thm:semialgebraic-turn-domain}, $\States$ admits a finite partition into connected semialgebraic sets on each of which $\ell$ is constant.
+\end{theorem}
+
+\begin{proof}
+For each mask $b\in\{0,1\}^r$, take the Boolean combination
+\[
+L_b=\bigcap_{b_i=1}D_{a_i}\cap\bigcap_{b_i=0}(\States\setminus D_{a_i}).
+\]
+It is semialgebraic. Each $L_b$ has finitely many connected components, and there are finitely many masks.
+\end{proof}
+
+The resulting components are the canonical \emph{legality strata}. They are geometry-induced regions of state space, not bins invented to make a benchmark chart look industrious.
+
+\section{A selector example}
+
+For a half-space gate $\gamma(z)=n^Tz-d$ and a convex chamber polytope $C$, gate atomicity is decided by the exact extrema
+\[
+\min_{z\in C}\gamma(z),\qquad \max_{z\in C}\gamma(z).
+\]
+If the minimum is positive, $C$ is selected; if the maximum is negative, it is stationary; otherwise the gate straddles the chamber. Once vertices are certified, these extrema occur at vertices. This is a precise affine fast path for the general quantified definition.
+
+\chapter{Partial algebraic dynamics}
+\label{chap:partial-dynamics}
+
+\section{Legal turns are partial bijections}
+
+For $x\in D_a$, let $\tau_a(x)$ be the docked endpoint of the legal path.
+
+\begin{theorem}[Turn partial bijection \claimid{THM-PARTIAL-BIJECTION-001}]
+\label{thm:turn-partial-bijection}
+If $\bar a$ is the exact time-reversed template and the assembly constraints are time-symmetric, then
+\[
+\tau_a:D_a\longrightarrow D_{\bar a}
+\]
+is a bijection with inverse $\tau_{\bar a}$.
+\end{theorem}
+
+\begin{proof}
+Let $x\in D_a$ and write $y=\tau_a(x)$. Reversing the legal path preserves every time-symmetric assembly constraint and returns from $y$ to $x$; endpoint compatibility gives $y\in D_{\bar a}$ and $\tau_{\bar a}(y)=x$. The same argument with $a$ and $\bar a$ exchanged proves both-sided inverse identities.
+\end{proof}
+
+\section{Inverse semigroup and legal-motion groupoid}
+\label{sec:partial-dynamics}
+
+Let $\mathcal I(\States)$ be the symmetric inverse monoid of all partial bijections between subsets of $\States$.
+
+\begin{theorem}[Inverse-semigroup dynamics \claimid{THM-INVERSE-SEMIGROUP-001}]
+\label{thm:inverse-semigroup}
+The partial bijections generated by $\{\tau_a:a\in\Turns\}$ and their inverses form an inverse subsemigroup
+\[
+S(\Atlas)\le\mathcal I(\States).
+\]
+\end{theorem}
+
+\begin{proof}
+Partial bijections are closed under composition and inversion. Every element generated by the turn maps has a unique inverse as a partial bijection, so the generated subsemigroup is inverse.
+\end{proof}
+
+This places state-dependent mechanisms in the established theory of partial actions and inverse semigroups \parencite{Exel1998,KellendonkLawson2004}.
+
+\begin{definition}[Legal-motion groupoid]
+\label{def:legal-motion-groupoid}
+The \emph{legal-motion groupoid} is the action groupoid of germs associated with the inverse-semigroup action of $S(\Atlas)$ on $\States$. Its objects are docked states; an arrow records a locally defined legal transformation at a source state, and inversion is path reversal. For a finite discrete state space, the generator-labeled one-skeleton is exactly the legal state graph.
+\end{definition}
+
+The inverse semigroup identifies move words that induce the same partial transformation. The execution path groupoid may retain the words themselves when benchmark provenance needs to distinguish two physically different routes with the same endpoint map.
+
+\section{Classical groups as a theorem, not an assumption}
+
+\begin{theorem}[Group reduction \claimid{THM-GROUP-REDUCTION-001}]
+\label{thm:group-reduction}
+If $D_a=\States$ for every primitive turn $a$, then every generator is a total permutation of $\States$, $S(\Atlas)$ is a group, and the generator-labeled state graph is a Schreier graph of that group action.
+\end{theorem}
+
+\begin{proof}
+A total partial bijection is an ordinary bijection. A semigroup generated by bijections and their inverses is a group. The labeled orbit graph of a group action with the chosen generators is its Schreier graph.
+\end{proof}
+
+Classical unbandaged Rubik mechanics live here. Bandages, locks, geometry-dependent blocks, and jumbling generally do not.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+  st/.style={circle,draw=polyink,fill=white,minimum size=9mm,font=\small},
+  legal/.style={-{Stealth[length=2mm]},thick,draw=polyblue},
+  partial/.style={-{Stealth[length=2mm]},thick,draw=polyred,dashed}
+]
+\node[st] (s0) at (0,0) {$x_0$};
+\node[st] (s1) at (2.2,1.1) {$x_1$};
+\node[st] (s2) at (4.4,0) {$x_2$};
+\node[st] (s3) at (2.2,-1.3) {$x_3$};
+\draw[legal,bend left=12] (s0) to node[above left] {$a$} (s1);
+\draw[legal,bend left=12] (s1) to node[above right] {$\bar a$} (s0);
+\draw[legal,bend left=12] (s1) to node[above right] {$b$} (s2);
+\draw[legal,bend left=12] (s2) to node[below right] {$\bar b$} (s1);
+\draw[legal,bend left=12] (s0) to node[below left] {$c$} (s3);
+\draw[legal,bend left=12] (s3) to node[below] {$\bar c$} (s0);
+\draw[partial] (s3) to[out=0,in=-90] node[right,text=polyred] {$b$ blocked} (s2);
+\node[align=center,text width=9cm] at (2.2,-2.35) {Different states have different generator domains. The graph is not regular, and forcing it into a total group action would encode illegal transitions.};
+\end{tikzpicture}
+\caption{A partial state graph. Dashed red denotes a proposed but undefined transition, not an edge to a magical ``invalid'' state.}
+\label{fig:partial-state-graph}
+\end{figure}
+
+\section{Exact dynamical invariants}
+
+Natural invariants include:
+\begin{itemize}
+  \item orbit decomposition of $\States$;
+  \item idempotent domains in $S(\Atlas)$;
+  \item isotropy groups at states and strata;
+  \item generator domains and their incidence;
+  \item connected legality strata and their adjacency;
+  \item labeled state-graph diameter, growth, bottlenecks, and automorphisms;
+  \item experiment-outcome partitions induced by partial action sequences.
+\end{itemize}
+These are exact structures. A learned embedding can be useful later, but it does not become the mechanism because a t-SNE plot looked persuasive.
+
+\chapter{Canonicality and the proof-carrying derivation architecture}
+\label{chap:canonicality}
+
+\section{Atlas isomorphism}
+
+\begin{definition}[Exact atlas isomorphism]
+\label{def:atlas-isomorphism}
+An isomorphism from $\Atlas$ to $\Atlas'$ consists of an orientation-preserving Euclidean isometry $\psi$, bijections of cut indices, chambers, pieces, and turn templates, and compatible maps of assembly and observation data such that:
+\begin{enumerate}
+  \item $\psi(B)=B'$;
+  \item cut signs are preserved after cut reindexing:
+  \[
+  \sgn\phi'_{\pi(i)}(\psi x)=\sgn\phi_i(x)\quad(x\in B);
+  \]
+  \item bond incidence and physical-piece membership are preserved;
+  \item assembly predicates are conjugated by $\psi$ and the piece relabeling;
+  \item each turn's anchor, gate, path, docking relation, and inverse are conjugated to the corresponding turn in $\Atlas'$;
+  \item declared observation data are preserved when the isomorphism is observation-sensitive.
+\end{enumerate}
+\end{definition}
+
+\begin{theorem}[Isomorphism invariance \claimid{THM-ISOMORPHISM-001}]
+\label{thm:isomorphism-invariance}
+An exact atlas isomorphism induces:
+\begin{enumerate}
+  \item an isomorphism of connected sign-component incidence posets;
+  \item congruences between corresponding physical pieces;
+  \item a homeomorphism of configuration and docked state spaces;
+  \item conjugacy of every primitive partial turn and of $S(\Atlas)$;
+  \item an isomorphism of legal-motion groupoids and generator-labeled state graphs;
+  \item identical benchmark labels after the declared relabeling, and observation-equivalent renders under correspondingly transformed cameras.
+\end{enumerate}
+\end{theorem}
+
+\begin{proof}
+The sign-preservation condition maps each sign set to the corresponding sign set; a homeomorphism maps connected components and closure incidence bijectively. Bond preservation carries chamber components to chamber components, and $\psi$ gives piece congruence. Conjugating placements by $\psi$ preserves nonpenetration and all transported assembly predicates, giving the state-space homeomorphism. Turn conjugacy maps each legal path and its four legality obligations to the corresponding legal path, hence $\tau'_{\pi(a)}=\Psi\tau_a\Psi^{-1}$ on the transported domain. The remaining statements follow functorially from conjugacy and deterministic rendering.
+\end{proof}
+
+\section{The exact derivation contract}
+
+The mathematical architecture has two synchronized branches:
+\[
+\Atlas\longmapsto
+\Strat\longmapsto
+\Pieces\longmapsto
+(\Conf,\States)\longmapsto
+\{\tau_a\}\longmapsto
+S(\Atlas),\mathcal G(\Atlas)\longmapsto
+\text{state graph},
+\]
+and
+\[
+(\Atlas,x)\longmapsto
+\text{exact transformed surfaces}\longmapsto
+\text{certified mesh}\longmapsto
+\text{observations}.
+\]
+The branches meet at the same state $x$. Scramble generation, planning, and evaluation consume the state graph and exact state; image generation consumes exact transformed surfaces. Neither may reconstruct its own pieces from approximate meshes.
+
+\section{Proof-carrying compiler outputs}
+
+A future compiler should return an object and a certificate bundle. At minimum:
+\begin{enumerate}
+  \item exact normalized coefficient data and sign-oracle provenance;
+  \item nonempty-stratum witnesses and sign certificates;
+  \item closure/facet incidence certificates;
+  \item piece-cover, disjoint-interior, and bond-component certificates;
+  \item gate extrema or quantified gate certificates;
+  \item bond-kernel vectors;
+  \item swept-collision proofs or explicit collision witnesses;
+  \item endpoint docking and reverse-turn certificates;
+  \item transition hashes derived from exact normalized state, never pixels;
+  \item mesh approximation certificates tied to exact strata.
+\end{enumerate}
+An independent verifier should consume the bundle without trusting the compiler's internal search procedure.
+
+\section{Serialization is a separate problem}
+
+Plane equations can be normalized up to positive scale; algebraic numbers can use canonical minimal-polynomial and isolating-interval encodings; finite incidence structures can be canonically labeled. Global atlas symmetry makes the composition nontrivial.
+
+\begin{conjecture}[Practical canonical serialization \claimid{CONJ-CANONICAL-SERIALIZATION-001}]
+\label{conj:canonical-serialization}
+For bounded-degree algebraic atlases with finite symmetry groups and generic incidence, there exists a practical exact canonical-labeling pipeline whose serialized output is invariant under rigid atlas isomorphism and whose runtime is polynomial in the exact output size on generic instances.
+\end{conjecture}
+
+No proof is offered. The mathematical isomorphism class is canonical now; a universally efficient byte string remains research.
+
+\section{Retired foundational abstractions}
+\label{sec:retired-abstractions}
+
+The earlier Slice-Action Code, restricted Walsh spectrum, and cut-action covariance may remain diagnostics on a finite compiled instance. They are not foundational because they compress away connected-component topology, physical piece geometry, path collision, and state-dependent domains. The Unified Legality Operator is replaced by the exact domain predicate and structured residual $\Lambda_x(a)$. The former notation survives only where it denotes a derived Boolean function, not the mechanism itself.
+
+
+\chapter{Exact algorithms and complexity contracts}
+\label{chap:algorithms}
+
+\section{Algorithmic philosophy}
+
+The atlas theory is deliberately broader than the first compiler. A conforming implementation should therefore have a complete exact semantics, fast specialized paths, and an independently checkable fallback. ``It rendered without exploding'' is a user-interface test, not a correctness proof.
+
+The principal algorithmic objects are finite whenever the requested docked component is finite, but their construction costs differ sharply:
+\begin{itemize}
+  \item affine arrangements in fixed dimension admit efficient exact combinatorial algorithms;
+  \item curved semialgebraic cuts are decidable through real algebraic geometry but can be expensive;
+  \item axial polyhedral collision has exploitable structure that generic quantifier elimination ignores;
+  \item exhaustive state graphs are necessarily output-sensitive because the graph itself may be enormous.
+\end{itemize}
+
+\section{Affine-polyhedral compilation}
+\label{sec:exact-algorithms}
+
+Let the body be a bounded polyhedron with $h$ supporting planes and let there be $m$ affine cuts. Build the arrangement of all $N=m+h$ planes globally, rather than recomputing every possible cell by independent triple-plane enumeration. Classical arrangement algorithms construct an arrangement of $N$ hyperplanes in fixed dimension $d$ in $O(N^d)$ time in their model, which is optimal in the worst case because the output can have that size \parencite{EdelsbrunnerORourkeSeidel1986}. In three dimensions the target bound is $O(N^3)$ plus exact coefficient costs and certificate output.
+
+A deterministic affine compiler can proceed as follows:
+\begin{enumerate}
+  \item normalize every plane equation over $\K$ while preserving orientation;
+  \item construct the global arrangement and its face-incidence structure;
+  \item retain cells lying in $B$ and attach ternary cut signs;
+  \item merge arrangement cells that belong to the same connected sign component when body boundaries introduce a refinement;
+  \item derive atomic chamber adjacency from shared two-dimensional strata;
+  \item apply the bond quotient and validate physical pieces;
+  \item derive boundary traces by \cref{thm:exact-trace-clipping};
+  \item compile turn gates and generate exact legality certificates.
+\end{enumerate}
+
+For a boundary face described by $k$ inequalities, one nonparallel cut trace is clipped in $O(k)$ exact comparisons once the line is known. All segment endpoints and lengths are algebraic whenever the input is algebraic.
+
+\section{General semialgebraic compilation}
+
+For polynomial or rational cut functions, a sign-invariant cylindrical algebraic decomposition or another certified semialgebraic cell decomposition refines all signs \parencite{Collins1975,ArnonCollinsMcCallum1984,BasuPollackRoy2006}. Connected-component reconstruction then produces the canonical stratification. A compatible triangulation supplies explicit simplices for rendering and topology checks without becoming canonical identity.
+
+The complete route is intentionally uncompromising:
+\[
+\text{formula}\longrightarrow\text{sign-invariant cells}\longrightarrow
+\text{adjacency}\longrightarrow\text{connected components}\longrightarrow
+\text{certificates}.
+\]
+Approximate surface extraction may accelerate visualization, but it cannot replace the sign and adjacency oracle used by mechanics.
+
+\section{Gate classification}
+
+For a convex polyhedral chamber and affine gate, exact linear optimization decides the sign range. With certified vertices, scanning the vertices costs $O(v_C)$ for chamber $C$. Without vertices, fixed-dimensional linear programming is available.
+
+For a general semialgebraic chamber $C$ and gate $\gamma$, the three outcomes are formulas:
+\begin{align*}
+\text{selected}&\iff \forall z\in\Int C,\ \gamma(z)>0,\\
+\text{stationary}&\iff \forall z\in\Int C,\ \gamma(z)<0,\\
+\text{straddling}&\iff \exists z_+,z_-\in\Int C:
+\gamma(z_+)>0>\gamma(z_-).
+\end{align*}
+Quantifier elimination is complete. Specialized monotonicity, convexity, and interval methods should discharge ordinary cases first.
+
+\section{Swept collision}
+
+A complete verifier may encode collision as an existential formula over time and body coordinates. A useful implementation should exploit more structure:
+\begin{itemize}
+  \item static separating planes preserved by axial motion;
+  \item convex decomposition and support functions;
+  \item exact continuous collision events between polyhedral features;
+  \item symmetry and repeated piece geometry;
+  \item interval subdivision with algebraic root isolation;
+  \item cached certificates transported by atlas automorphisms.
+\end{itemize}
+
+\begin{warningbox}[label={open:path-certificates}]
+\textbf{Open problem \claimid{OPEN-PATH-CERT-001}.}
+Develop a sound, complete, output-sensitive exact collision algorithm specialized to axial polyhedral turns, with explicit degeneracy handling and a small independently verifiable certificate. Generic CAD remains the completeness fallback, not the desired common path.
+\end{warningbox}
+
+\section{State-graph exploration}
+
+Given an exact transition oracle, breadth-first exploration of a reachable finite component is output-sensitive:
+\[
+O(|V_R|+|E_R|)
+\]
+transition-oracle calls and storage for the explored subgraph, excluding certificate sizes. Canonical state hashing must use exact normalized placements and declared symmetry quotients. A render digest is not a state hash; two occluded states can share pixels, a fact that cameras discovered long before benchmark designers did.
+
+For shortest paths in an unweighted graph, BFS is exact. Weighted physical costs require Dijkstra or A* with an admissible lower bound. If legality is partial, illegal generators are absent edges rather than transitions to a fabricated sink state.
+
+\section{Complexity ledger}
+\label{sec:complexity-honesty}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{0.25\textwidth}L{0.24\textwidth}Y}
+\toprule
+\textbf{Task} & \textbf{Exact target} & \textbf{Complexity statement}\\
+\midrule
+Affine arrangement in $\R^3$ & Global incidence complex & Classical $O(N^3)$ arrangement construction in fixed dimension, plus arithmetic and certificate cost.\\
+One affine trace on one face & Segment or emptiness certificate & $O(k)$ clipping comparisons for a $k$-inequality face after line construction.\\
+Bond quotient & Physical-piece components & $O(|\mathcal C|+|E_\beta|)$ graph traversal; selector check $O(|E_\beta|)$.\\
+Affine gate on convex chambers & Support or straddling witness & Linear in certified chamber vertices, or fixed-dimensional LP.\\
+General semialgebraic strata & Connected sign components & Decidable through exact real algebraic geometry; no blanket practical polynomial bound is claimed.\\
+General swept collision & Legal path or collision witness & Decidable by quantified semialgebraic formulas; generic worst case can inherit doubly-exponential phenomena.\\
+Reachable finite state graph & Nodes, legal labeled edges & Output-sensitive BFS in explored vertices and edges times transition-oracle cost.\\
+Canonical atlas serialization & Isomorphism-invariant bytes & Conjectural practical pipeline; symmetry-heavy worst cases unresolved.\\
+\bottomrule
+\end{tabularx}
+\caption{Complexity claims, with the optimism removed before it ferments.}
+\label{tab:complexity}
+\end{table}
+
+\section{Independent verification}
+
+The verifier should be smaller than the compiler and should check:
+\begin{enumerate}
+  \item exact coefficient encodings and normalized signs;
+  \item every chamber witness and every claimed empty sign pattern;
+  \item incidence consistency and Euler/topology checks where applicable;
+  \item piece cover, disjoint interiors, and bond connectivity;
+  \item gate support and bond kernel;
+  \item collision certificates or counterexamples;
+  \item endpoint state, inverse transition, and exact state hash;
+  \item mesh-to-stratum correspondence and approximation bounds.
+\end{enumerate}
+The research platform should be capable of rejecting its own compiler output. Otherwise ``independent verification'' is just the same bug wearing a second hat.
+
+\chapter{Two exact rational ghost-like cut atlases}
+\label{chap:examples}
+
+The examples in this chapter are exact cut bodies, not claims that cuts alone define complete commercial puzzles. Their purpose is to demonstrate rational mechanism frames, displaced carriers, connected chamber witnesses, exact trace geometry, and the separate addition of a legal turn template.
+
+Throughout, world coordinates are $(X,Y,Z)^T$ and mechanism coordinates are
+\[
+y=R^T(x-o).
+\]
+The columns of $R$ are the mechanism axes.
+
+\section{Rational Ghost Atlas A}
+\label{sec:rational-ghost-a}
+
+Let
+\[
+B_A=\left[-\frac85,\frac85\right]^3,
+\qquad
+o_A=\begin{pmatrix}\frac1{12}\\-\frac1{15}\\\frac1{20}\end{pmatrix},
+\]
+and
+\[
+R_A=
+\begin{pmatrix}
+\frac23&\frac13&\frac23\\
+\frac13&\frac23&-\frac23\\
+-\frac23&\frac23&\frac13
+\end{pmatrix}.
+\]
+A direct multiplication gives $R_A^TR_A=I$ and $\det R_A=1$. For each mechanism coordinate $y_j$, place cuts at $y_j=\pm\frac12$.
+
+\subsection{Primitive world equations}
+
+\begin{table}[htbp]
+\centering
+\begin{tabular}{ccl}
+\toprule
+Axis & Level & Primitive world-coordinate plane\\
+\midrule
+$1$ & $-\frac12$ & $4X+2Y-4Z=-3$\\
+$1$ & $+\frac12$ & $4X+2Y-4Z=3$\\
+$2$ & $-\frac12$ & $20X+40Y+40Z=-29$\\
+$2$ & $+\frac12$ & $20X+40Y+40Z=31$\\
+$3$ & $-\frac12$ & $40X-40Y+20Z=-23$\\
+$3$ & $+\frac12$ & $40X-40Y+20Z=37$\\
+\bottomrule
+\end{tabular}
+\caption{Exact cuts for Rational Ghost Atlas A.}
+\label{tab:ghost-a-planes}
+\end{table}
+
+\subsection{Twenty-seven exact chamber witnesses}
+
+For each coordinate choose
+\[
+y_j\in\left\{-\frac34,0,\frac34\right\},
+\]
+according to whether the desired strict sign interval is below, between, or above the two cuts. Set $x=o_A+R_Ay$. Every row of $R_A$ has absolute row sum $5/3$, so
+\[
+|X_k|\le \max_i|o_{A,i}|+\frac34\cdot\frac53
+\le \frac1{12}+\frac54=\frac43<\frac85.
+\]
+Thus all $3^3=27$ strict sign patterns have an explicit point inside $B_A$. By \cref{thm:affine-convex-sign-completeness}, they are exactly the atomic chambers.
+
+\subsection{Exact traces on the face \texorpdfstring{$X=8/5$}{X=8/5}}
+
+Use $(Y,Z)$ as coordinates on the face. Exact clipping gives the following segments.
+
+\begin{longtable}{L{0.12\textwidth}L{0.30\textwidth}L{0.30\textwidth}L{0.16\textwidth}}
+\toprule
+\textbf{Cut} & \textbf{Endpoint 1 $(Y,Z)$} & \textbf{Endpoint 2 $(Y,Z)$} & \textbf{Length}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Cut} & \textbf{Endpoint 1 $(Y,Z)$} & \textbf{Endpoint 2 $(Y,Z)$} & \textbf{Length}\\
+\midrule
+\endhead
+$1-$ & $(-\frac85,\frac{31}{20})$ & $(-\frac32,\frac85)$ & $\frac{\sqrt5}{20}$\\
+$1+$ & $(-\frac85,\frac1{20})$ & $(\frac32,\frac85)$ & $\frac{31\sqrt5}{20}$\\
+$2-$ & $(-\frac85,\frac3{40})$ & $(\frac3{40},-\frac85)$ & $\frac{67\sqrt2}{40}$\\
+$2+$ & $(-\frac85,\frac{63}{40})$ & $(\frac{63}{40},-\frac85)$ & $\frac{127\sqrt2}{40}$\\
+$3-$ & $(\frac{11}{8},-\frac85)$ & $(\frac85,-\frac{23}{20})$ & $\frac{9\sqrt5}{40}$\\
+$3+$ & $(-\frac18,-\frac85)$ & $(\frac{59}{40},\frac85)$ & $\frac{8\sqrt5}{5}$\\
+\bottomrule
+\caption{Exact trace segments for Rational Ghost Atlas A on $X=8/5$.}
+\label{tab:ghost-a-traces}
+\end{longtable}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=2.05cm,y=2.05cm]
+  \clip (-1.72,-1.72) rectangle (1.72,1.72);
+  \fill[polyblue!3] (-1.6,-1.6) rectangle (1.6,1.6);
+  \draw[very thick,polyink] (-1.6,-1.6) rectangle (1.6,1.6);
+  \draw[line width=1.25pt,polyred] (-1.60000000,1.55000000) -- (-1.50000000,1.60000000);
+  \draw[line width=1.25pt,polyred] (-1.60000000,0.05000000) -- (1.50000000,1.60000000);
+  \draw[line width=1.25pt,polyblue] (-1.60000000,0.07500000) -- (0.07500000,-1.60000000);
+  \draw[line width=1.25pt,polyblue] (-1.60000000,1.57500000) -- (1.57500000,-1.60000000);
+  \draw[line width=1.25pt,polyteal] (1.37500000,-1.60000000) -- (1.60000000,-1.15000000);
+  \draw[line width=1.25pt,polyteal] (-0.12500000,-1.60000000) -- (1.47500000,1.60000000);
+  \node[below] at (0,-1.67) {$Y$};
+  \node[left] at (-1.67,0) {$Z$};
+  \node[fill=white,inner sep=1pt,text=polyred] at (-1.22,1.48) {$1-$};
+  \node[fill=white,inner sep=1pt,text=polyred] at (0.8,1.22) {$1+$};
+  \node[fill=white,inner sep=1pt,text=polyblue] at (-0.8,-0.45) {$2-$};
+  \node[fill=white,inner sep=1pt,text=polyblue] at (0.45,0.15) {$2+$};
+  \node[fill=white,inner sep=1pt,text=polyteal] at (1.46,-1.32) {$3-$};
+  \node[fill=white,inner sep=1pt,text=polyteal] at (0.5,0.85) {$3+$};
+\end{tikzpicture}
+\caption{Solved-state cut traces of Rational Ghost Atlas A on the world face $X=8/5$. The short $1-$ and $3-$ traces are not numerical accidents; their exact lengths are in \cref{tab:ghost-a-traces}.}
+\label{fig:ghost-a-traces}
+\end{figure}
+\clearpage
+
+\begin{proposition}[Exact specimen A \claimid{EX-GHOST-A-001}]
+The data above define an affine-convex cut body with an exact rational orthogonal mechanism frame, exactly twenty-seven atomic chambers, and the six trace segments in \cref{tab:ghost-a-traces}.
+\end{proposition}
+
+\begin{proof}
+Orthogonality and determinant are direct rational matrix calculations. The witness construction proves all twenty-seven strict sign regions nonempty; affine convexity proves connectedness and exhaustiveness. The trace table follows from \cref{thm:exact-trace-clipping} by exact substitution into the square face inequalities.
+\end{proof}
+
+\section{Rational Ghost Atlas B}
+\label{sec:rational-ghost-b}
+
+Let
+\[
+B_B=
+\left[-\frac95,\frac95\right]
+\times\left[-\frac85,\frac85\right]
+\times\left[-\frac74,\frac74\right],
+\qquad
+o_B=
+\begin{pmatrix}-\frac1{18}\\\frac1{14}\\\frac1{21}\end{pmatrix},
+\]
+and
+\[
+R_B=
+\begin{pmatrix}
+\frac13&-\frac2{15}&\frac{14}{15}\\
+\frac23&\frac{11}{15}&-\frac2{15}\\
+-\frac23&\frac23&\frac13
+\end{pmatrix}.
+\]
+Again $R_B^TR_B=I$ and $\det R_B=1$. Use the asymmetric cut levels
+\[
+\begin{array}{c|cc}
+\text{mechanism axis}&\text{lower cut}&\text{upper cut}\\\hline
+1&-\frac25&\frac35\\
+2&-\frac12&\frac25\\
+3&-\frac35&\frac13.
+\end{array}
+\]
+
+\subsection{Primitive world equations}
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabular}{ccl}
+\toprule
+Axis & Level & Primitive world-coordinate plane\\
+\midrule
+$1$ & $-\frac25$ & $630X+1260Y-1260Z=-761$\\
+$1$ & $+\frac35$ & $630X+1260Y-1260Z=1129$\\
+$2$ & $-\frac12$ & $-126X+693Y+630Z=-386$\\
+$2$ & $+\frac25$ & $-252X+1386Y+1260Z=929$\\
+$3$ & $-\frac35$ & $882X-126Y+315Z=-610$\\
+$3$ & $+\frac13$ & $882X-126Y+315Z=272$\\
+\bottomrule
+\end{tabular}
+\caption{Exact cuts for Rational Ghost Atlas B.}
+\label{tab:ghost-b-planes}
+\end{table}
+
+\subsection{Twenty-seven exact chamber witnesses}
+
+Choose each mechanism coordinate from $\{-\frac45,0,\frac45\}$ according to its interval. The absolute row sums of $R_B$ are $7/5$, $23/15$, and $5/3$. Therefore
+\begin{align*}
+|X|&\le\frac1{18}+\frac45\cdot\frac75=\frac{529}{450}<\frac95,\\
+|Y|&\le\frac1{14}+\frac45\cdot\frac{23}{15}=\frac{1363}{1050}<\frac85,\\
+|Z|&\le\frac1{21}+\frac45\cdot\frac53=\frac{29}{21}<\frac74.
+\end{align*}
+All twenty-seven strict sign patterns are nonempty and hence are the atomic chambers.
+
+\subsection{Exact traces on the face \texorpdfstring{$Y=-8/5$}{Y=-8/5}}
+
+Use $(X,Z)$ as face coordinates.
+
+\begin{longtable}{L{0.12\textwidth}L{0.30\textwidth}L{0.30\textwidth}L{0.16\textwidth}}
+\toprule
+\textbf{Cut} & \textbf{Endpoint 1 $(X,Z)$} & \textbf{Endpoint 2 $(X,Z)$} & \textbf{Length}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Cut} & \textbf{Endpoint 1 $(X,Z)$} & \textbf{Endpoint 2 $(X,Z)$} & \textbf{Length}\\
+\midrule
+\endhead
+$1-$ & $(-\frac{95}{63},-\frac74)$ & $(\frac95,-\frac{121}{1260})$ & $\frac{521\sqrt5}{315}$\\
+$1+$ & $(\frac{94}{63},-\frac74)$ & $(\frac95,-\frac{2011}{1260})$ & $\frac{97\sqrt5}{630}$\\
+$2-$ & $(-\frac95,\frac{248}{315})$ & $(\frac95,\frac{2374}{1575})$ & $\frac{18\sqrt{26}}{25}$\\
+$2+$ & \multicolumn{2}{l}{No intersection with this face} & $0$\\
+$3-$ & $(-\frac{27257}{17640},\frac74)$ & $(-\frac{5207}{17640},-\frac74)$ & $\frac{\sqrt{221}}4$\\
+$3+$ & $(-\frac{9617}{17640},\frac74)$ & $(\frac{12433}{17640},-\frac74)$ & $\frac{\sqrt{221}}4$\\
+\bottomrule
+\caption{Exact trace segments for Rational Ghost Atlas B on $Y=-8/5$.}
+\label{tab:ghost-b-traces}
+\end{longtable}
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[x=1.75cm,y=1.75cm]
+  \clip (-1.94,-1.89) rectangle (1.94,1.89);
+  \fill[polyblue!3] (-1.8,-1.75) rectangle (1.8,1.75);
+  \draw[very thick,polyink] (-1.8,-1.75) rectangle (1.8,1.75);
+  \draw[line width=1.25pt,polyred] (-1.50793651,-1.75000000) -- (1.80000000,-0.09603175);
+  \draw[line width=1.25pt,polyred] (1.49206349,-1.75000000) -- (1.80000000,-1.59603175);
+  \draw[line width=1.25pt,polyblue] (-1.80000000,0.78730159) -- (1.80000000,1.50730159);
+  \draw[line width=1.25pt,polyteal] (-1.54518141,1.75000000) -- (-0.29518141,-1.75000000);
+  \draw[line width=1.25pt,polyteal] (-0.54518141,1.75000000) -- (0.70481859,-1.75000000);
+  \node[below] at (0,-1.82) {$X$};
+  \node[left] at (-1.88,0) {$Z$};
+  \node[fill=white,inner sep=1pt,text=polyred] at (-0.25,-0.82) {$1-$};
+  \node[fill=white,inner sep=1pt,text=polyred] at (1.62,-1.55) {$1+$};
+  \node[fill=white,inner sep=1pt,text=polyblue] at (0.5,1.35) {$2-$};
+  \node[fill=white,inner sep=1pt,text=polyteal] at (-1.05,0.05) {$3-$};
+  \node[fill=white,inner sep=1pt,text=polyteal] at (0.05,0.05) {$3+$};
+  \node[align=center,text=polygray] at (1.15,0.2) {$2+$ does not\\reach this face};
+\end{tikzpicture}
+\caption{Solved-state cut traces of Rational Ghost Atlas B on $Y=-8/5$. A carrier can be globally present and locally invisible on a chosen face.}
+\label{fig:ghost-b-traces}
+\end{figure}
+
+\begin{proposition}[Exact specimen B \claimid{EX-GHOST-B-001}]
+The data above define an affine-convex cut body with an exact rational orthogonal frame, exactly twenty-seven atomic chambers, the five listed face traces, and an exact empty trace for cut $2+$ on $Y=-8/5$.
+\end{proposition}
+
+\begin{proof}
+The frame identities and chamber witness bounds are exact rational calculations. Exact line clipping yields the five segments. For cut $2+$, the intersection line with $Y=-8/5$ violates the rectangular face bounds at both possible boundary crossings, so its clipping interval is empty.
+\end{proof}
+
+\section{Adding one exact turn without pretending the cuts chose it}
+
+For specimen A, let $u_1$ be the first column of $R_A$. Consider the gate
+\[
+\gamma(x)=u_1^T(x-o_A)-\frac12
+\]
+and a quarter-turn path about the axis $o_A+\R u_1$, parameterized by \cref{lem:half-angle-path}. Use no bonds and declare quarter-turn endpoints docked in an ideal pin-joint assembly.
+
+\begin{proposition}[Solved-state cap legality]
+At the solved state of specimen A, the positive outer-cap turn satisfies gate atomicity, bond closure, and swept nonpenetration between selected and stationary pieces.
+\end{proposition}
+
+\begin{proof}
+Every atomic chamber lies strictly in one of the three $u_1$ coordinate intervals, so the gate boundary is a union of chamber faces and gate atomicity holds. There are no bonds. Rotation about $u_1$ preserves the scalar $u_1^T(x-o_A)$, hence selected interiors remain in the half-space $>1/2$ and stationary interiors remain in the half-space $<1/2$ throughout the path. Their interiors cannot meet. Selected pieces move by one common rigid motion, so their mutual disjointness is preserved; stationary pieces do not move. Endpoint docking is supplied separately by the declared ideal joint.
+\end{proof}
+
+This proposition illustrates the division of labor. The cut identifies an exact gate that is legal for one declared joint. It does not prove that every apparent slice is a turn, nor that a commercial Ghost Cube has the same clearances. Those belong in $\mathcal J$ and $\Turns$.
+
+
+\chapter{From mechanism to benchmark}
+\label{chap:benchmark}
+
+\section{The state graph is derived, not declared}
+
+For a finite docked component $V\subseteq\States$ and primitive turn set $\Turns$, define the labeled graph
+\[
+G(\Atlas;V)=
+\bigl(V,E\bigr),
+\qquad
+(x,a,y)\in E
+\iff
+x\in D_a\text{ and }y=\tau_a(x).
+\]
+Every edge carries the four legality certificates from \cref{def:legal-turn}. A benchmark may withhold those certificates from the model while retaining them privately for evaluation.
+
+Planning is shortest-path or minimum-cost search on this graph or on a lazily generated exact subgraph. A plan is invalid if any proposed generator is outside its current domain, even when the token sequence would be valid on a visually similar ordinary cube.
+
+\section{Exact finite-memory scramble laws}
+
+A scramble process may depend on recent actions, controller state, or a no-immediate-inverse rule. Let $C$ be a finite controller-memory set. For each product state $(x,c)$, let a rational policy assign probability to legal action and next-memory pairs.
+
+\begin{theorem}[Product-automaton scramble law \claimid{THM-PRODUCT-AUTOMATON-001}]
+\label{thm:product-automaton-scramble}
+For a finite state graph and finite controller memory, the scramble process is a Markov chain on $V\times C$. Its length-$L$ distribution is an exact product of transition matrices. If all policy probabilities are rational, every finite-horizon state probability is rational.
+\end{theorem}
+
+\begin{proof}
+The pair $(x,c)$ contains all information needed to sample the next legal action and controller state, so it is Markov. Let $P_t$ be the product-state transition matrix at step $t$. From initial row distribution $\mu_0$, the distribution after $L$ steps is
+\[
+\mu_L=\mu_0P_1P_2\cdots P_L,
+\]
+or $\mu_0P^L$ in the homogeneous case. Matrix addition and multiplication preserve rationality.
+\end{proof}
+
+This retains the strongest part of the previous ledger's transfer-matrix formalism while grounding its states and transitions in the atlas.
+
+\section{Passive observations cannot identify every mechanism}
+
+\begin{theorem}[Boundary nonidentifiability \claimid{THM-BOUNDARY-NONID-001}]
+\label{thm:boundary-nonidentifiability}
+There exist two exact atlases with identical solved-state exterior body, boundary cut traces, and exterior appearance, but different internal chamber and mechanism structures. Therefore a passive observation of the exterior at one state cannot identify the atlas in general.
+\end{theorem}
+
+\begin{proof}
+Let $B=[-1,1]^3$. Atlas $A_0$ has no cut carriers and one physical piece. Atlas $A_1$ adds the internal spherical carrier
+\[
+X^2+Y^2+Z^2=\frac14,
+\]
+with the inner ball and outer shell unbonded. On $\partial B$, at least one coordinate has absolute value one, so $X^2+Y^2+Z^2\ge1$; the internal sphere has empty intersection with $\partial B$. Thus both atlases have the same exterior body and no boundary trace. Give their exterior surfaces the same appearance. Their chamber and piece counts differ, and $A_1$ may additionally assign a hidden internal joint to the inner piece. No one-state exterior observation distinguishes them.
+\end{proof}
+
+The theorem is an impossibility result, not an invitation to surrender. It says that active action-outcome queries, multiple states, tactile channels, or priors are mathematically necessary for universal identification.
+
+\section{Finite exact system identification}
+\label{sec:active-identification}
+
+Let $\mathcal H$ be a finite hypothesis set of atlases. An exact experiment $e$ may be an admissible action sequence, adaptive policy, camera intervention, or multimodal query. In the noiseless setting it induces an outcome map
+\[
+O_e:\mathcal H\to\mathcal Y_e.
+\]
+
+\begin{theorem}[Finite identifiability \claimid{THM-FINITE-ID-001}]
+\label{thm:finite-identifiability}
+A finite deterministic hypothesis class is exactly identifiable by a finite adaptive experiment tree if and only if every distinct pair $h,h'\in\mathcal H$ is separated by some admissible experiment $e$, meaning $O_e(h)\ne O_e(h')$. The optimal worst-case number of experiments equals the minimum depth of a separating decision tree with singleton leaves.
+\end{theorem}
+
+\begin{proof}
+Necessity is immediate: hypotheses with identical outcomes under every experiment reach the same leaf in every decision tree.
+
+For sufficiency, take any current candidate set $S$ with $|S|>1$ and choose two distinct hypotheses $h,h'\in S$. By assumption an experiment separates them, so its outcome partition splits $S$ into proper subsets. Recurse on every nonempty subset. Cardinality decreases on every branch, so the finite recursion ends at singleton leaves. The final statement is the definition of optimal worst-case decision-tree depth.
+\end{proof}
+
+For a prior $p(h)$, the expected entropy reduction of an experiment is
+\[
+\operatorname{IG}(e)=H(H)-\mathbb E_{Y_e}[H(H\mid Y_e)],
+\]
+a classical Bayesian experimental-design quantity going back to Lindley \parencite{Lindley1956}. PolyTwist may contribute exact outcome partitions and mechanism hypotheses; it does not get to rename expected information gain and claim discovery.
+
+\section{Benchmark task spine}
+
+A next-generation benchmark should organize tasks by which derived map is hidden, not by how many labels can fit in a catalog.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{0.19\textwidth}L{0.25\textwidth}Y}
+\toprule
+\textbf{Task family} & \textbf{Hidden object} & \textbf{Exact target}\\
+\midrule
+Geometric reconstruction & $B$, cut carriers, traces, incidence & Atlas-equivalence class or certified partial reconstruction; exact metric and topological errors.\\
+Piece induction & Bond quotient and physical solids & Chamber-to-piece partition, piece geometry, adjacency, seam set.\\
+Legality prediction & Turn domains $D_a$ & Legal mask plus gate, bond, path, and docking diagnosis.\\
+State tracking & Current placement class $x$ & Exact state or orbit representative under declared observational symmetries.\\
+Active identification & Hypothesis atlas $h$ & Experiment policy, posterior, separating depth, calibrated uncertainty.\\
+Planning & Labeled partial state graph & Legal plan, cost, optimality gap, certificate coverage.\\
+Counterfactual reasoning & Modified atlas component & Correctly recompiled downstream consequences rather than local feature edits.\\
+\bottomrule
+\end{tabularx}
+\caption{Task families derived from the atlas.}
+\label{tab:benchmark-spine}
+\end{table}
+
+\section{Evaluation without arbitrary feature vectors}
+
+Primary metrics should be tied to exact objects:
+\begin{itemize}
+  \item sign-component and incidence precision/recall under optimal atlas alignment;
+  \item exact or tolerance-certified trace endpoint and length error;
+  \item chamber-to-piece partition distance and seam-set error;
+  \item legality accuracy decomposed by the four proof obligations;
+  \item action-query complexity and decision-tree regret for identification;
+  \item plan validity, cost, and optimality gap;
+  \item calibration of posterior mass over atlas equivalence classes;
+  \item invariance under camera, appearance, and exact atlas isomorphisms.
+\end{itemize}
+
+Secondary learned representations are welcome. They are evaluated against these structures rather than promoted into definitions because a benchmark needed a single leaderboard number.
+
+\section{Public/private separation}
+
+A benchmark episode should be generated from a private atlas and state. The public projection may reveal images, action aliases, partial traces, or query access. The private target retains exact atlas data, certificates, state, legal domains, and reference plans. Leakage tests should verify that canonical IDs, source cut coefficients, hidden action mappings, and exact state hashes do not enter public artifacts.
+
+The evaluator recompiles or verifies targets from the private atlas. It should not trust a separately stored answer file when the answer is derivable from the canonical object.
+
+\chapter{Novelty boundary and prior art}
+\label{chap:novelty}
+
+\section{What is already established}
+\label{sec:novelty-boundary}
+
+The mathematical ingredients are not blank territory:
+\begin{itemize}
+  \item hyperplane arrangements and their face complexes are classical \parencite{Zaslavsky1975,EdelsbrunnerORourkeSeidel1986};
+  \item oriented matroids abstract arrangement signs and incidence \parencite{FolkmanLawrence1978};
+  \item semialgebraic decomposition and quantifier elimination are established \parencite{Collins1975,BasuPollackRoy2006};
+  \item configuration-space collision and exact motion planning are established \parencite{LozanoPerez1983,SchwartzSharir1983I,SchwartzSharir1983II};
+  \item partial actions and inverse semigroups are established \parencite{Exel1998,KellendonkLawson2004};
+  \item Rubik-type groups and algorithms are an extensive field, with asymptotic results far beyond benchmark folklore \parencite{DemaineEtAl2011}.
+\end{itemize}
+
+Software prior art is equally relevant. Twizzle/cubing.js PuzzleGeometry derives permutation, SVG, and 3D representations from symmetric flat cuts of Platonic solids, and its API exposes permutation and rendering outputs \parencite{CubingJSPuzzleGeometry2026,TwizzleExplorer2026}. Its first-party help explicitly states that bandaging and jumbling are unsupported in that model \parencite{TwizzleExplorer2026}. KPuzzle is a permutation-and-orientation execution representation \parencite{CubingJSKPuzzle2026}. Magic Puzzle Ultimate already lets users specify symmetry groups, axes, cutting planes, twists, and body boundaries, including higher-dimensional mechanisms \parencite{MagicPuzzleUltimate2026}.
+
+\begin{table}[htbp]
+\centering
+\small
+\begin{tabularx}{\textwidth}{L{0.20\textwidth}L{0.30\textwidth}Y}
+\toprule
+\textbf{Prior line} & \textbf{Established capability} & \textbf{Remaining PolyTwist target}\\
+\midrule
+Arrangement / oriented-matroid theory & Cut incidence and combinatorial sidedness & Body-truncated connected sign components, physical bonds, metric geometry, and motion legality in one object.\\
+PuzzleGeometry / Twizzle & Symmetric plane-cut puzzle generation, permutations, SVG/3D output & Arbitrary semialgebraic cuts, state-dependent path legality, bonds, jumbling, proof certificates, benchmark semantics.\\
+KPuzzle / ksolve formats & Efficient finite permutation and orientation execution & Geometric derivation of pieces, domains, and legal transitions.\\
+Magic Puzzle Ultimate & Broad user-defined axes, planes, twists, boundaries, higher dimensions & A formal exact semantics with theorems, independent verification, partial dynamics, and AI-evaluation derivation.\\
+Robot motion planning & Configuration-space obstacles and exact planning & Specialized cut-and-turn structure, docking, chamber gates, and puzzle action groupoids.\\
+Partial action theory & Algebra of partially defined transformations & Geometric derivation of those partial transformations from a physical atlas.\\
+\bottomrule
+\end{tabularx}
+\caption{The novelty boundary is an integration problem, not a contest to rename classical mathematics.}
+\label{tab:prior-art}
+\end{table}
+
+\section{Defensible contribution candidate}
+
+The plausible contribution is the exact synthesis:
+\begin{enumerate}
+  \item a canonical connected sign-component representation of arbitrary semialgebraic cuts;
+  \item a bond quotient that derives physical pieces and visible seams;
+  \item an exact configuration/docking space for the assembled mechanism;
+  \item state-indexed gate selection and swept-path legality;
+  \item inverse-semigroup and groupoid dynamics derived from reversible legal turns;
+  \item a proof-carrying compilation chain into geometry, rendering, state graphs, scrambles, planning, and active identification;
+  \item representation-invariant benchmark evaluation.
+\end{enumerate}
+
+This is a research direction, not a certified novelty verdict. A complete paper must continue searching patents, puzzle-design literature, mechanical CAD systems, robotics languages, general simulators, and unpublished community tools. The source registry records what has actually been checked.
+
+\section{What this monograph does claim}
+
+It claims the repository-specific definitions and theorems listed in \texttt{research/claims.json}, including the cut-underdetermination theorem, bond-kernel criterion, legality factorization, semialgebraic turn-domain theorem, legality stratification, partial-bijection dynamics, group reduction, isomorphism invariance, passive nonidentifiability, product-automaton scramble law, and finite identifiability theorem.
+
+It does not claim to have invented hyperplane arrangements, configuration spaces, expected information gain, inverse semigroups, plane-cut puzzle generation, or the general idea that a cube can be made unnecessarily difficult.
+
+\chapter{Research roadmap and open problems}
+\label{chap:roadmap}
+
+\section{Mathematics-first promotion gates}
+
+Implementation should remain frozen until the mathematical schema passes the following gates.
+
+\subsection*{Gate M1: exact atlas schema}
+\begin{itemize}
+  \item Formalize coefficient encodings, regular-closed bodies, cut functions, bonds, assembly constraints, turn templates, and observation data.
+  \item Specify exact isomorphism and noncanonical display metadata separately.
+  \item Provide at least cube, tetrahedral, dodecahedral, ghost-like, mirror-like, axis-like, bandaged, and jumbled examples on paper.
+\end{itemize}
+
+\subsection*{Gate M2: affine-polyhedral theorem package}
+\begin{itemize}
+  \item Global arrangement construction and exact trace clipping.
+  \item Piece and seam derivation with independent certificates.
+  \item Exact affine gates, bond closure, and quarter-turn path checks.
+  \item Proof that legacy cubic instances embed faithfully into the atlas.
+\end{itemize}
+
+\subsection*{Gate M3: partial dynamics}
+\begin{itemize}
+  \item Exact docking and reverse-template semantics.
+  \item Inverse-semigroup/groupoid export.
+  \item State hashing modulo declared piece and global symmetries.
+  \item Legal-mask strata and group-action reduction tests.
+\end{itemize}
+
+\subsection*{Gate M4: complete path legality}
+\begin{itemize}
+  \item Specialized polyhedral axial collision algorithm.
+  \item Quantifier-elimination fallback and certificate verifier.
+  \item Clearance, kerf, and tolerance semantics.
+  \item Jumble examples where another axis becomes legal only at an intermediate docking state.
+\end{itemize}
+
+\subsection*{Gate M5: observation and benchmark functor}
+\begin{itemize}
+  \item Certified mesh derivation from exact strata.
+  \item Public/private projections with leakage tests.
+  \item Active-identification hypotheses generated by exact atlas transformations.
+  \item Evaluation invariant under atlas isomorphism and observation nuisance factors.
+\end{itemize}
+
+\section{Open mathematical and algorithmic problems}
+
+\begin{warningbox}[label={open:reconstruction}]
+\textbf{Observation identifiability \claimid{OPEN-RECON-001}.}
+Characterize atlas equivalence classes identifiable from one image, passive multi-view images, legal-action queries, action videos, depth, tactile contacts, and combinations thereof. Prove impossibility and positive reconstruction results under explicit occlusion and appearance models.
+\end{warningbox}
+
+\subsection{Curved and nonconvex cuts}
+Develop practical connected-component and incidence algorithms for bounded-degree algebraic carriers, especially when one sign condition has multiple components or nontrivial topology. CAD is complete but may be excessive; arrangement-like incremental methods for tame surfaces could exploit the puzzle setting.
+
+\subsection{Tolerance and robust legality}
+Physical puzzles have kerf, bevels, compliance, backlash, and manufacturing tolerance. A robust atlas should replace exact contact by quantified uncertainty sets and define:
+\[
+\text{surely legal},\qquad
+\text{possibly legal},\qquad
+\text{surely illegal}.
+\]
+The resulting domains may be described by erosion/dilation or robust optimization, but no theorem is claimed yet.
+
+\subsection{Canonical serialization}
+Resolve \cref{conj:canonical-serialization}. Important cases include repeated congruent pieces, highly symmetric bodies, equivalent polynomial cut descriptions, and mechanisms whose observation decoration breaks only part of the mechanical symmetry.
+
+\subsection{Groupoid invariants and difficulty}
+Determine which exact invariants predict planning complexity, active-identification depth, or multimodal reasoning difficulty. Candidate structures include domain semilattices, isotropy, legality-stratum adjacency, orbit growth, and bottleneck profiles. Any empirical scalar must be motivated by a theorem or a controlled scientific question, not harvested by feature-vector trawling.
+
+\subsection{Mechanism reconstruction}
+Given images or meshes of a manufactured puzzle, infer a posterior over atlases rather than a single guessed permutation model. The boundary nonidentifiability theorem shows why hidden cuts and joints require priors or interventions.
+
+\section{Paper-level falsification criteria}
+
+The framework should be considered refuted or substantially incomplete if any of the following occurs:
+\begin{itemize}
+  \item a common cut-and-turn mechanism cannot be represented without an independent hand-coded transition table;
+  \item two atlas-isomorphic inputs yield nonconjugate compiled dynamics;
+  \item a legal move can pass the verifier while splitting a physical piece or colliding during the path;
+  \item rendering requires a piece partition not derivable from the atlas;
+  \item the proposed novelty collapses to an existing formalism after a complete literature comparison;
+  \item benchmark performance can be solved by exploiting serialization or renderer artifacts rather than recovering mechanism structure.
+\end{itemize}
+
+A research framework should publish the conditions under which it is wrong. Otherwise it is branding with equations.
+
+\chapter{Conclusion}
+
+The clean mathematical language for a cut-and-turn mechanism is not a single permutation group and not a bag of visual features. It is an exact stratified body with physical bonds, an assembled configuration space, and reversible partial motions. From that object, one obtains traces, pieces, legal domains, partial dynamics, state graphs, scrambles, plans, and observations.
+
+The central structural move is simple:
+\[
+\boxed{
+\text{cuts}\ \longrightarrow\ \text{connected strata}\ \longrightarrow\
+\text{pieces}\ \longrightarrow\ \text{configurations}\ \longrightarrow\
+\text{partial legal motions}
+}
+\]
+The rest is disciplined derivation. Hyperplane arrangements explain the affine combinatorics. Semialgebraic geometry guarantees finiteness and decidability. Configuration space makes swept legality precise. Inverse semigroups and groupoids express state-dependent moves without forcing them into a total group. Exact experiment partitions make active identification scientific rather than theatrical.
+
+PolyTwist can therefore become more than a simulator and more than a benchmark. It can become a proof-carrying language in which unfamiliar mechanisms are specified once and every downstream artifact is accountable to that specification. That is a considerably harder project than generating more cubes, which is usually how one notices it might be worth doing.
+
+\appendix
+
+\chapter{Notation and object map}
+
+\begin{longtable}{L{0.18\textwidth}L{0.72\textwidth}}
+\toprule
+\textbf{Symbol} & \textbf{Meaning}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Symbol} & \textbf{Meaning}\\
+\midrule
+\endhead
+$\K$ & Effective exact ordered coefficient domain, normally real algebraic numbers.\\
+$B$ & Solved-state regular-closed body.\\
+$\Phi=(\phi_i)$ & Ordered oriented semialgebraic cut functions.\\
+$S_i$ & Cut carrier $B\cap\phi_i^{-1}(0)$.\\
+$T_i$ & Raw boundary trace $S_i\cap\partial B$.\\
+$\Strat(B,\Phi)$ & Connected sign-component stratification with closure incidence.\\
+$\mathcal C$ & Atomic three-dimensional chambers.\\
+$\beta,G_\beta,D_\beta$ & Bond system, bond graph, and oriented incidence matrix.\\
+$\Pieces,Q_p$ & Physical-piece set and home solid of piece $p$.\\
+$\mathcal J$ & Exact assembly, anchor, joint, clearance, symmetry, and docking data.\\
+$\Conf(\Atlas)$ & Continuous admissible configuration space.\\
+$\States$ & Docked state space.\\
+$\Turns$ & Finite family of reversible turn templates.\\
+$F_a,\gamma_a,\rho_a,\Delta_a$ & Anchor, gate, rigid path, and docking predicate for turn $a$.\\
+$m_x(a)$ & Binary chamber support selected by turn $a$ at state $x$.\\
+$D_a$ & Exact legality domain of turn $a$.\\
+$\tau_a$ & Partial bijection induced by a legal turn.\\
+$S(\Atlas)$ & Inverse semigroup generated by legal partial turns.\\
+$\mathcal G(\Atlas)$ & Legal-motion action groupoid.\\
+$\mathcal O$ & Appearance and sensor data.\\
+\bottomrule
+\caption{Notation used in the monograph.}
+\end{longtable}
+
+\chapter{Claim and theorem index}
+
+\small
+\begin{longtable}{L{0.25\textwidth}L{0.15\textwidth}L{0.50\textwidth}}
+\toprule
+\textbf{Claim ID} & \textbf{Status} & \textbf{Location / content}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{Claim ID} & \textbf{Status} & \textbf{Location / content}\\
+\midrule
+\endhead
+THM-SIGN-FINITE-001 & Proved & \Cref{thm:sign-component-finiteness}: finite canonical stratification.\\
+THM-AFFINE-CONVEX-001 & Proved & \Cref{thm:affine-convex-sign-completeness}: strict signs suffice in the affine-convex case.\\
+THM-TRACE-CLIP-001 & Proved & \Cref{thm:exact-trace-clipping}: exact trace endpoints and lengths.\\
+THM-CUTS-UNDERDET-001 & Proved & \Cref{thm:cuts-underdetermine-dynamics}: cuts alone do not define moves.\\
+THM-BOND-001 & Proved & \Cref{thm:bond-kernel}: exact bond-closure criterion.\\
+THM-LEGALITY-FACTORIZATION-001 & Proved & \Cref{thm:legality-factorization}: four legality obligations.\\
+THM-DOMAIN-SEMI-001 & Proved & \Cref{thm:semialgebraic-turn-domain}: turn domains are semialgebraic.\\
+THM-LEGALITY-STRATA-001 & Proved & \Cref{thm:finite-legality-stratification}: finite constant-mask strata.\\
+THM-PARTIAL-BIJECTION-001 & Proved & \Cref{thm:turn-partial-bijection}: reversible turns are partial bijections.\\
+THM-INVERSE-SEMIGROUP-001 & Proved & \Cref{thm:inverse-semigroup}: generated inverse semigroup.\\
+THM-GROUP-REDUCTION-001 & Proved & \Cref{thm:group-reduction}: total case becomes group action.\\
+THM-ISOMORPHISM-001 & Proved & \Cref{thm:isomorphism-invariance}: representation invariance.\\
+THM-BOUNDARY-NONID-001 & Proved & \Cref{thm:boundary-nonidentifiability}: passive exterior nonidentifiability.\\
+THM-PRODUCT-AUTOMATON-001 & Proved & \Cref{thm:product-automaton-scramble}: exact scramble matrices.\\
+THM-FINITE-ID-001 & Proved & \Cref{thm:finite-identifiability}: finite experiment identifiability.\\
+EX-GHOST-A-001 & Proved example & \Cref{sec:rational-ghost-a}.\\
+EX-GHOST-B-001 & Proved example & \Cref{sec:rational-ghost-b}.\\
+CONJ-CANONICAL-SERIALIZATION-001 & Conjecture & \Cref{conj:canonical-serialization}.\\
+OPEN-PATH-CERT-001 & Open & Specialized exact axial collision certificates.\\
+OPEN-RECON-001 & Open & Passive and active atlas reconstruction.\\
+OPEN-CURVED-CUTS-001 & Open & Certified compilation for curved and nonconvex cut carriers.\\
+OPEN-TOLERANCE-001 & Open & Robust semantics for clearance, contact, and manufacturing tolerance.\\
+OPEN-GROUPOID-INVARIANTS-001 & Open & Exact groupoid invariants for planning and identification difficulty.\\
+\bottomrule
+\caption{Repository-specific claim map. The machine-readable source of truth is \texttt{research/claims.json}.}
+\end{longtable}
+\normalsize
+
+\chapter{Audit checklist for a future implementation}
+
+A future atlas implementation should not be called complete until it can answer each item with a certificate or a precise unsupported-status marker.
+
+\begin{enumerate}
+  \item Is every canonical coefficient exact, normalized, and sign-decidable?
+  \item Are cut carriers and orientations explicit?
+  \item Are connected sign components distinguished when one sign vector is disconnected?
+  \item Are trace components and all closure incidences exact?
+  \item Are physical pieces derived from chambers and bonds?
+  \item Are visible seams derived after the bond quotient?
+  \item Is the continuous configuration space distinct from the docked state space?
+  \item Does every turn provide an anchor, gate, exact path, docking relation, and reverse?
+  \item Can legality failures identify gate, bond, path, or docking causes separately?
+  \item Is swept collision checked for the whole path?
+  \item Are legal transitions partial bijections with verified inverses?
+  \item Does total legality reduce to the expected classical group action?
+  \item Are state hashes invariant under declared symmetries and independent of rendering?
+  \item Are meshes and pixels traceable to exact surfaces and states?
+  \item Are scrambles distributions on legal paths rather than unverified token strings?
+  \item Are benchmark labels re-derived or independently verified from the atlas?
+  \item Are external sources linked to specific claims in the source registry?
+  \item Are conjectures, evidence, and proved claims visibly separated?
+\end{enumerate}
+
+\backmatter
+\printbibliography[heading=bibintoc,title={References}]
+
+\end{document}

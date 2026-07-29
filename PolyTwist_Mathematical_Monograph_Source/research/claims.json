@@ -1,0 +1,585 @@
+{
+  "$schema": "polytwist.claim-ledger.v1",
+  "generatedAt": "2026-07-29",
+  "canonicalAuditBase": "a970c65ab367b98ea380d48919c449bb63fa8638",
+  "statusVocabulary": {
+    "established": "Previously established mathematics, cited to external literature.",
+    "prior-art": "Capability or limitation documented by an earlier software system.",
+    "repository-audit": "Direct observation about the canonical repository at the audit commit.",
+    "definition": "Repository-specific mathematical definition; not asserted as prior art or theorem.",
+    "proved": "Theorem proved in the PolyTwist monograph from stated assumptions.",
+    "proved-example": "Exact example claim proved by symbolic algebra or explicit witnesses in the monograph.",
+    "computational-evidence": "Deterministic experiment or computation, not promoted to theorem.",
+    "conjecture": "Plausible statement without a proof.",
+    "open": "Explicitly unresolved research or algorithm-design problem."
+  },
+  "claims": [
+    {
+      "id": "EST-SA-001",
+      "status": "established",
+      "statement": "Semialgebraic sets are closed under Boolean operations, projection, closure, and taking connected components; each semialgebraic set has finitely many connected components.",
+      "sources": [
+        "SRC-RAG-BASU-POLLACK-ROY-2006",
+        "SRC-RAG-BOCHNAK-COSTE-ROY-1998"
+      ],
+      "monographLocations": [
+        "sec:semialgebraic-substrate"
+      ]
+    },
+    {
+      "id": "EST-SA-TRI-001",
+      "status": "established",
+      "statement": "Finite semialgebraic families admit compatible finite semialgebraic triangulations or cell decompositions.",
+      "sources": [
+        "SRC-RAG-BOCHNAK-COSTE-ROY-1998"
+      ],
+      "monographLocations": [
+        "sec:canonical-stratification"
+      ]
+    },
+    {
+      "id": "EST-SA-TRIV-001",
+      "status": "established",
+      "statement": "Semialgebraic mappings admit finite local-triviality decompositions of the target.",
+      "sources": [
+        "SRC-SA-HARDT-1980"
+      ],
+      "monographLocations": [
+        "sec:legality-stratification"
+      ]
+    },
+    {
+      "id": "EST-ARR-001",
+      "status": "established",
+      "statement": "Finite affine hyperplane arrangements partition Euclidean space into a finite face complex whose face counts are controlled combinatorially.",
+      "sources": [
+        "SRC-ARR-ZASLAVSKY-1975"
+      ],
+      "monographLocations": [
+        "sec:affine-specialization"
+      ]
+    },
+    {
+      "id": "EST-OM-001",
+      "status": "established",
+      "statement": "The sign vectors of an affine hyperplane arrangement are the covectors of a realizable oriented matroid after homogenization; oriented matroids retain combinatorial but not metric information.",
+      "sources": [
+        "SRC-OM-FOLKMAN-LAWRENCE-1978"
+      ],
+      "monographLocations": [
+        "sec:oriented-matroid-shadow"
+      ]
+    },
+    {
+      "id": "EST-ALG-ARR-001",
+      "status": "established",
+      "statement": "An arrangement of n hyperplanes in fixed dimension d can be constructed in optimal O(n^d) time in the classical model used by the cited arrangement algorithm.",
+      "sources": [
+        "SRC-ARR-EDELSBRUNNER-OROURKE-SEIDEL-1986"
+      ],
+      "monographLocations": [
+        "sec:exact-algorithms"
+      ]
+    },
+    {
+      "id": "EST-QE-001",
+      "status": "established",
+      "statement": "First-order formulas over real closed fields admit quantifier elimination; cylindrical algebraic decomposition is one constructive route.",
+      "sources": [
+        "SRC-RAG-BASU-POLLACK-ROY-2006",
+        "SRC-CAD-COLLINS-1975"
+      ],
+      "monographLocations": [
+        "sec:semialgebraic-substrate",
+        "sec:path-legality"
+      ]
+    },
+    {
+      "id": "EST-CAD-001",
+      "status": "established",
+      "statement": "Cylindrical algebraic decomposition constructs sign-invariant connected cells and can provide adjacency information through later refinements.",
+      "sources": [
+        "SRC-CAD-COLLINS-1975",
+        "SRC-CAD-ARNON-COLLINS-MCCALLUM-1984"
+      ],
+      "monographLocations": [
+        "sec:exact-algorithms"
+      ]
+    },
+    {
+      "id": "EST-QE-LB-001",
+      "status": "established",
+      "statement": "Real quantifier elimination and CAD have doubly-exponential worst-case lower-bound phenomena in the general variable-count regime.",
+      "sources": [
+        "SRC-QE-DAVENPORT-HEINTZ-1988"
+      ],
+      "monographLocations": [
+        "sec:complexity-honesty"
+      ]
+    },
+    {
+      "id": "EST-CSPACE-001",
+      "status": "established",
+      "statement": "Rigid-body placement and collision constraints can be represented as regions and obstacles in configuration space.",
+      "sources": [
+        "SRC-MOTION-LOZANO-PEREZ-1983"
+      ],
+      "monographLocations": [
+        "sec:configuration-space"
+      ]
+    },
+    {
+      "id": "EST-MOTION-001",
+      "status": "established",
+      "statement": "Exact motion planning can be formulated through connectivity and topology of semialgebraic configuration spaces.",
+      "sources": [
+        "SRC-MOTION-SCHWARTZ-SHARIR-I-1983",
+        "SRC-MOTION-SCHWARTZ-SHARIR-II-1983"
+      ],
+      "monographLocations": [
+        "sec:path-legality"
+      ]
+    },
+    {
+      "id": "EST-PARTIAL-001",
+      "status": "established",
+      "statement": "Partial bijections and partial group actions are canonically related to inverse semigroup actions.",
+      "sources": [
+        "SRC-PARTIAL-EXEL-1998"
+      ],
+      "monographLocations": [
+        "sec:partial-dynamics"
+      ]
+    },
+    {
+      "id": "EST-PARTIAL-002",
+      "status": "established",
+      "statement": "Partial actions admit universal globalization results under the hypotheses developed in the cited work.",
+      "sources": [
+        "SRC-PARTIAL-KELLENDONK-LAWSON-2004"
+      ],
+      "monographLocations": [
+        "sec:partial-dynamics"
+      ]
+    },
+    {
+      "id": "EST-INFO-001",
+      "status": "established",
+      "statement": "Expected reduction in posterior entropy is a classical measure of information supplied by an experiment.",
+      "sources": [
+        "SRC-INFO-LINDLEY-1956"
+      ],
+      "monographLocations": [
+        "sec:active-identification"
+      ]
+    },
+    {
+      "id": "EST-RUBIK-ALG-001",
+      "status": "established",
+      "statement": "Classical Rubik-type puzzle families already possess substantial group-theoretic and algorithmic complexity results; PolyTwist does not claim novelty for that baseline.",
+      "sources": [
+        "SRC-RUBIK-DEMAINE-ETAL-2011"
+      ],
+      "monographLocations": [
+        "sec:novelty-boundary"
+      ]
+    },
+    {
+      "id": "PRIOR-PG-001",
+      "status": "prior-art",
+      "statement": "Twizzle/cubing.js PuzzleGeometry derives permutation, SVG, and 3D representations from symmetric flat cuts of Platonic solids.",
+      "sources": [
+        "SRC-PRIOR-CUBING-PG-2026",
+        "SRC-PRIOR-TWIZZLE-2026"
+      ],
+      "monographLocations": [
+        "sec:novelty-boundary"
+      ]
+    },
+    {
+      "id": "PRIOR-PG-LIMIT-001",
+      "status": "prior-art",
+      "statement": "Twizzle's first-party documentation states that its PuzzleGeometry model does not support bandaging or jumbling.",
+      "sources": [
+        "SRC-PRIOR-TWIZZLE-2026"
+      ],
+      "monographLocations": [
+        "sec:novelty-boundary"
+      ]
+    },
+    {
+      "id": "PRIOR-KP-001",
+      "status": "prior-art",
+      "statement": "KPuzzle is a permutation-and-orientation execution representation rather than a complete geometric mechanism definition.",
+      "sources": [
+        "SRC-PRIOR-KPUZZLE-2026"
+      ],
+      "monographLocations": [
+        "sec:novelty-boundary"
+      ]
+    },
+    {
+      "id": "PRIOR-MPU-001",
+      "status": "prior-art",
+      "statement": "Magic Puzzle Ultimate already permits user-defined symmetry groups, axes, cutting planes, twists, and body boundaries, including higher-dimensional puzzles.",
+      "sources": [
+        "SRC-PRIOR-MPU-2026"
+      ],
+      "monographLocations": [
+        "sec:novelty-boundary"
+      ]
+    },
+    {
+      "id": "AUDIT-REPO-001",
+      "status": "repository-audit",
+      "statement": "At the audit commit, the compiler is restricted to cubic logical sizes 2 through 9, three orthogonal coordinate families in one transformed frame, convex half-space cells, and quarter-turn generators.",
+      "sources": [
+        "SRC-REPO-POLYTWIST-2026"
+      ],
+      "monographLocations": [
+        "sec:repository-audit"
+      ]
+    },
+    {
+      "id": "AUDIT-REPO-002",
+      "status": "repository-audit",
+      "statement": "At the audit commit, state-dependent legality is implemented only through exact logical layer selection and rigid bandage closure, not swept geometric collision.",
+      "sources": [
+        "SRC-REPO-POLYTWIST-2026"
+      ],
+      "monographLocations": [
+        "sec:repository-audit"
+      ]
+    },
+    {
+      "id": "AUDIT-REPO-003",
+      "status": "repository-audit",
+      "statement": "The existing research ledger already separates established, provisional, and open claims, but its Slice-Action Code and Unified Legality Operator remain provisional and do not define a general mechanism.",
+      "sources": [
+        "SRC-REPO-POLYTWIST-2026"
+      ],
+      "monographLocations": [
+        "sec:repository-audit",
+        "sec:retired-abstractions"
+      ]
+    },
+    {
+      "id": "DEF-SKA-001",
+      "status": "definition",
+      "statement": "A Stratified Kinematic Atlas is the exact tuple (K; B, Phi, beta, J, T, O) introduced in the monograph.",
+      "sources": [],
+      "monographLocations": [
+        "def:ska"
+      ]
+    },
+    {
+      "id": "DEF-SIGNCOMP-001",
+      "status": "definition",
+      "statement": "The canonical cut stratification uses connected components of every ternary sign condition, not sign vectors alone.",
+      "sources": [],
+      "monographLocations": [
+        "def:sign-component-stratification"
+      ]
+    },
+    {
+      "id": "DEF-TRACE-001",
+      "status": "definition",
+      "statement": "A visible mechanical seam is the boundary trace of a cut carrier after quotienting away interfaces whose adjacent chambers belong to the same bonded physical piece.",
+      "sources": [],
+      "monographLocations": [
+        "def:visible-seam"
+      ]
+    },
+    {
+      "id": "DEF-PIECE-001",
+      "status": "definition",
+      "statement": "Physical pieces are admissible bond components of atomic chambers, represented as regular closures of their chamber unions.",
+      "sources": [],
+      "monographLocations": [
+        "def:physical-piece"
+      ]
+    },
+    {
+      "id": "DEF-CONF-001",
+      "status": "definition",
+      "statement": "The continuous configuration space is the quotient of exact rigid placements satisfying nonpenetration, anchor, joint, and clearance constraints; docked states form a distinguished subset.",
+      "sources": [],
+      "monographLocations": [
+        "def:configuration-space"
+      ]
+    },
+    {
+      "id": "DEF-TURN-001",
+      "status": "definition",
+      "statement": "A turn template consists of a state-indexed anchor frame, an exact gate, a semialgebraic rigid-motion path, and a docking predicate.",
+      "sources": [],
+      "monographLocations": [
+        "def:turn-template"
+      ]
+    },
+    {
+      "id": "DEF-LEGALITY-001",
+      "status": "definition",
+      "statement": "A turn is legal exactly when gate atomicity, bond closure, swept-path admissibility, and endpoint docking all hold.",
+      "sources": [],
+      "monographLocations": [
+        "def:legal-turn"
+      ]
+    },
+    {
+      "id": "DEF-ACTION-GROUPOID-001",
+      "status": "definition",
+      "statement": "The legal-motion structure is the inverse semigroup generated by reversible partial turn maps together with its associated action groupoid on docked states.",
+      "sources": [],
+      "dependencies": [
+        "DEF-TURN-001",
+        "DEF-LEGALITY-001"
+      ],
+      "monographLocations": [
+        "def:legal-motion-groupoid"
+      ]
+    },
+    {
+      "id": "DEF-ATLAS-ISO-001",
+      "status": "definition",
+      "statement": "An exact atlas isomorphism is an orientation-preserving rigid equivalence with compatible relabelings that preserve body, oriented cuts, bonds, assembly data, turn templates, and declared observations.",
+      "sources": [],
+      "dependencies": [
+        "DEF-SKA-001"
+      ],
+      "monographLocations": [
+        "def:atlas-isomorphism"
+      ]
+    },
+    {
+      "id": "THM-SIGN-FINITE-001",
+      "status": "proved",
+      "statement": "The connected sign-component stratification is finite under the monograph's semialgebraic regularity assumptions.",
+      "sources": [],
+      "dependencies": [
+        "EST-SA-001",
+        "DEF-SIGNCOMP-001"
+      ],
+      "monographLocations": [
+        "thm:sign-component-finiteness"
+      ]
+    },
+    {
+      "id": "THM-AFFINE-CONVEX-001",
+      "status": "proved",
+      "statement": "For a convex body cut by affine hyperplanes, every nonempty strict sign region is convex and connected, so strict sign vectors index atomic chambers without a component suffix.",
+      "sources": [],
+      "dependencies": [
+        "DEF-SIGNCOMP-001"
+      ],
+      "monographLocations": [
+        "thm:affine-convex-sign-completeness"
+      ]
+    },
+    {
+      "id": "THM-TRACE-CLIP-001",
+      "status": "proved",
+      "statement": "For an affine cut and a polyhedral boundary face, the trace segment, endpoints, length, orientation, and incidence are obtained by one exact line computation followed by interval clipping against the face inequalities.",
+      "sources": [],
+      "monographLocations": [
+        "thm:exact-trace-clipping"
+      ]
+    },
+    {
+      "id": "THM-CUTS-UNDERDET-001",
+      "status": "proved",
+      "statement": "The same body and cut stratification can support nonisomorphic legal-motion systems; therefore cuts alone cannot be the canonical puzzle definition.",
+      "sources": [],
+      "monographLocations": [
+        "thm:cuts-underdetermine-dynamics"
+      ]
+    },
+    {
+      "id": "THM-BOND-001",
+      "status": "proved",
+      "statement": "A binary chamber selector respects every bond exactly when its support vector lies in the kernel of the oriented incidence matrix of the bond graph.",
+      "sources": [],
+      "monographLocations": [
+        "thm:bond-kernel"
+      ]
+    },
+    {
+      "id": "THM-LEGALITY-FACTORIZATION-001",
+      "status": "proved",
+      "statement": "Under the atlas definitions, legal turn execution factors into four independent proof obligations: gate, bond, path, and docking.",
+      "sources": [],
+      "monographLocations": [
+        "thm:legality-factorization"
+      ]
+    },
+    {
+      "id": "THM-DOMAIN-SEMI-001",
+      "status": "proved",
+      "statement": "When all atlas data and motion paths are semialgebraic, each turn domain is semialgebraic.",
+      "sources": [],
+      "dependencies": [
+        "EST-QE-001",
+        "DEF-TURN-001",
+        "DEF-LEGALITY-001"
+      ],
+      "monographLocations": [
+        "thm:semialgebraic-turn-domain"
+      ]
+    },
+    {
+      "id": "THM-PARTIAL-BIJECTION-001",
+      "status": "proved",
+      "statement": "A reversible turn template induces a partial bijection of docked state space, with inverse induced by the reversed path.",
+      "sources": [],
+      "monographLocations": [
+        "thm:turn-partial-bijection"
+      ]
+    },
+    {
+      "id": "THM-INVERSE-SEMIGROUP-001",
+      "status": "proved",
+      "statement": "The partial bijections generated by reversible turn templates form an inverse subsemigroup of the symmetric inverse monoid on docked states.",
+      "sources": [],
+      "dependencies": [
+        "EST-PARTIAL-001",
+        "THM-PARTIAL-BIJECTION-001"
+      ],
+      "monographLocations": [
+        "thm:inverse-semigroup"
+      ]
+    },
+    {
+      "id": "THM-GROUP-REDUCTION-001",
+      "status": "proved",
+      "statement": "If every primitive turn is legal at every docked state, the inverse-semigroup dynamics reduce to an ordinary group action and the labeled state graph becomes a Schreier graph.",
+      "sources": [],
+      "monographLocations": [
+        "thm:group-reduction"
+      ]
+    },
+    {
+      "id": "THM-LEGALITY-STRATA-001",
+      "status": "proved",
+      "statement": "A finite semialgebraic turn family induces a finite connected semialgebraic stratification of docked state space on which the legal action mask is constant.",
+      "sources": [],
+      "dependencies": [
+        "EST-SA-001",
+        "THM-DOMAIN-SEMI-001"
+      ],
+      "monographLocations": [
+        "thm:finite-legality-stratification"
+      ]
+    },
+    {
+      "id": "THM-ISOMORPHISM-001",
+      "status": "proved",
+      "statement": "An exact atlas isomorphism induces isomorphic cut incidence, congruent physical pieces, conjugate partial actions, and isomorphic labeled state graphs.",
+      "sources": [],
+      "monographLocations": [
+        "thm:isomorphism-invariance"
+      ]
+    },
+    {
+      "id": "THM-BOUNDARY-NONID-001",
+      "status": "proved",
+      "statement": "Boundary cut traces at one state do not identify an internal mechanism: an interior closed cut can change chamber and action structure while leaving every boundary trace unchanged.",
+      "sources": [],
+      "monographLocations": [
+        "thm:boundary-nonidentifiability"
+      ]
+    },
+    {
+      "id": "THM-PRODUCT-AUTOMATON-001",
+      "status": "proved",
+      "statement": "A finite state graph with a finite-memory scramble policy is represented exactly by a product automaton; finite-horizon laws are matrix products and rational policies produce rational probabilities.",
+      "sources": [],
+      "monographLocations": [
+        "thm:product-automaton-scramble"
+      ]
+    },
+    {
+      "id": "THM-FINITE-ID-001",
+      "status": "proved",
+      "statement": "A finite hypothesis class is exactly identifiable by finite experiments iff every pair of hypotheses is separated by at least one admissible experiment outcome; optimal worst-case identification depth equals the minimum separating decision-tree depth.",
+      "sources": [],
+      "monographLocations": [
+        "thm:finite-identifiability"
+      ]
+    },
+    {
+      "id": "EX-GHOST-A-001",
+      "status": "proved-example",
+      "statement": "Rational Ghost Atlas A has an exact orthogonal mechanism frame, twenty-seven witnessed strict chambers, and six explicitly clipped traces on the selected boundary face.",
+      "sources": [],
+      "monographLocations": [
+        "sec:rational-ghost-a"
+      ]
+    },
+    {
+      "id": "EX-GHOST-B-001",
+      "status": "proved-example",
+      "statement": "Rational Ghost Atlas B has an exact orthogonal mechanism frame, twenty-seven witnessed strict chambers, and five explicitly clipped traces on the selected boundary face, with one carrier invisible on that face.",
+      "sources": [],
+      "monographLocations": [
+        "sec:rational-ghost-b"
+      ]
+    },
+    {
+      "id": "CONJ-CANONICAL-SERIALIZATION-001",
+      "status": "conjecture",
+      "statement": "For bounded-degree algebraic atlases with finite symmetry groups, there exists a practical exact canonical-labeling pipeline whose output is stable under rigid atlas isomorphism and polynomial in output size for generic instances.",
+      "sources": [],
+      "monographLocations": [
+        "conj:canonical-serialization"
+      ]
+    },
+    {
+      "id": "OPEN-PATH-CERT-001",
+      "status": "open",
+      "statement": "Develop output-sensitive exact collision certificates specialized to axial polyhedral turns, avoiding generic CAD on ordinary puzzle instances while retaining a quantifier-elimination fallback.",
+      "sources": [],
+      "monographLocations": [
+        "open:path-certificates"
+      ]
+    },
+    {
+      "id": "OPEN-RECON-001",
+      "status": "open",
+      "statement": "Characterize which atlas equivalence classes are identifiable from passive multi-view images, from legal-action queries, and from active visual interaction under occlusion and unknown appearance.",
+      "sources": [],
+      "monographLocations": [
+        "open:reconstruction"
+      ]
+    },
+    {
+      "id": "OPEN-CURVED-CUTS-001",
+      "status": "open",
+      "statement": "Develop practical proof-carrying connected-component and incidence compilation for curved and nonconvex bounded-degree semialgebraic cut carriers.",
+      "sources": [],
+      "monographLocations": [
+        "chap:roadmap"
+      ]
+    },
+    {
+      "id": "OPEN-TOLERANCE-001",
+      "status": "open",
+      "statement": "Define robust exact semantics for kerf, clearance, compliance, contact, and manufacturing tolerance, together with a sound robust-legality theorem.",
+      "sources": [],
+      "monographLocations": [
+        "chap:roadmap"
+      ]
+    },
+    {
+      "id": "OPEN-GROUPOID-INVARIANTS-001",
+      "status": "open",
+      "statement": "Determine which exact invariants of the legal-motion groupoid predict planning and active-identification difficulty without degenerating into arbitrary benchmark feature engineering.",
+      "sources": [],
+      "dependencies": [
+        "DEF-ACTION-GROUPOID-001"
+      ],
+      "monographLocations": [
+        "chap:roadmap"
+      ]
+    }
+  ]
+}
