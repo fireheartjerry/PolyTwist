@@ -484,6 +484,46 @@ export function clipExactPolyhedron(polyhedron, planeInput) {
 }
 
 /**
+ * Intersects one polygonal face with a plane using exact edge predicates.
+ * A transverse intersection has two points; a coincident face returns its
+ * complete canonical vertex cycle.
+ *
+ * @param {ExactPolyhedron} polyhedron
+ * @param {number} faceIndex
+ * @param {RationalPlaneInput|NormalizedPlane} planeInput
+ * @returns {ExactPoint[]}
+ */
+export function intersectExactFaceWithPlane(polyhedron, faceIndex, planeInput) {
+  const face = polyhedron.faces[faceIndex];
+  if (!face) throw new Error(`Unknown face index ${faceIndex}.`);
+  const plane = 'integerCoefficients' in planeInput ? planeInput : normalizePlane(planeInput);
+  const points = face.vertexIndices.map((index) => polyhedron.vertices[index]);
+  if (points.every((point) => signRational(evaluateExactPlane(plane, point)) === 0)) {
+    return points;
+  }
+
+  /** @type {ExactPoint[]} */
+  const intersections = [];
+  for (let index = 0; index < points.length; index += 1) {
+    const current = points[index];
+    const next = points[(index + 1) % points.length];
+    const currentDistance = evaluateExactPlane(plane, current);
+    const nextDistance = evaluateExactPlane(plane, next);
+    const currentSign = signRational(currentDistance);
+    const nextSign = signRational(nextDistance);
+    if (currentSign === 0) intersections.push(current);
+    if (currentSign * nextSign < 0) {
+      const parameter = divideRational(
+        currentDistance,
+        subtractRational(currentDistance, nextDistance),
+      );
+      intersections.push(addPoint(current, scalePoint(subtractPoint(next, current), parameter)));
+    }
+  }
+  return uniqueSortedPoints(intersections);
+}
+
+/**
  * Independently checks local exact B-rep invariants without rebuilding the hull.
  * @param {ExactPolyhedron} polyhedron
  */

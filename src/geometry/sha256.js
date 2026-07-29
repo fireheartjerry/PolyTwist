@@ -93,6 +93,11 @@ function canonicalize(value) {
 }
 
 /** @param {unknown} value */
+export function canonicalStringify(value) {
+  return JSON.stringify(canonicalize(value));
+}
+
+/** @param {unknown} value */
 export function canonicalSha256(value) {
-  return sha256(JSON.stringify(canonicalize(value)));
+  return sha256(canonicalStringify(value));
 }

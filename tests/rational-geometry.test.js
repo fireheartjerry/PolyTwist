@@ -17,7 +17,7 @@ import {
   intersectExactHalfspaces,
   validateExactPolyhedron,
 } from '../src/geometry/exact-polyhedron.js';
-import { canonicalSha256, sha256 } from '../src/geometry/sha256.js';
+import { canonicalSha256, canonicalStringify, sha256 } from '../src/geometry/sha256.js';
 
 const cubePlanes = [
   { id: 'x+', normal: [1, 0, 0], constant: 1 },
@@ -81,6 +81,10 @@ test('SHA-256 and canonical object hashing are deterministic', () => {
   );
   assert.notEqual(canonicalSha256({ a: 1 }), canonicalSha256({ a: 2 }));
   assert.throws(() => canonicalSha256({ invalid: Number.POSITIVE_INFINITY }), /finite/i);
+  assert.equal(
+    canonicalStringify({ z: 2n, a: { y: -0, x: 'exact' } }),
+    '{"a":{"x":"exact","y":0},"z":"2n"}',
+  );
 });
 
 test('exact half-space intersection reconstructs a closed canonical cube', () => {
