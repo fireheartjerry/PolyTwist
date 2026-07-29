@@ -8,7 +8,7 @@
 
 **Tech Stack:** JavaScript ES modules, JSDoc/TypeScript checking, `BigInt` rational arithmetic, Node test runner, existing deterministic render/research/API stack.
 
-**Execution status (2026-07-29):** Tasks 1–5 implemented and committed through the canonical compiler, legacy adapter, renderer/research integration, schema, API, and documentation. Final release verification remains the only open task.
+**Execution status (2026-07-29):** Complete. Tasks 1–5 and final release verification were implemented and committed through the canonical compiler, legacy adapter, renderer/research integration, schema, API, documentation, and clean-state audit.
 
 ---
 
