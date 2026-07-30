@@ -1,0 +1,62 @@
+{
+  "$id": "https://kinescope.dev/schema/response-cache-entry.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Validated raw-response cache entry",
+  "type": "object",
+  "required": [
+    "schema",
+    "valid",
+    "requestDigest",
+    "provider",
+    "rawResponse",
+    "usage",
+    "parseDigest",
+    "cacheDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.response-cache-entry.v1"
+    },
+    "valid": {
+      "const": true
+    },
+    "requestDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "rawResponse": {
+      "type": "string"
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "costUsd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "responseMetadata": {
+      "type": "object"
+    },
+    "parseDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "cacheDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

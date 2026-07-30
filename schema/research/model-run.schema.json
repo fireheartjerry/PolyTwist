@@ -1,0 +1,49 @@
+{
+  "$id": "https://kinescope.dev/schema/model-run.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Complete provider-agnostic model run",
+  "type": "object",
+  "required": [
+    "schema",
+    "manifest",
+    "itemRecords",
+    "transcripts",
+    "parseRecords",
+    "predictions",
+    "cacheEntries",
+    "runDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.model-run.v1"
+    },
+    "manifest": {
+      "type": "object"
+    },
+    "itemRecords": {
+      "type": "array"
+    },
+    "transcripts": {
+      "type": "array"
+    },
+    "parseRecords": {
+      "type": "array"
+    },
+    "predictions": {
+      "type": "array"
+    },
+    "evaluation": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "cacheEntries": {
+      "type": "array"
+    },
+    "runDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

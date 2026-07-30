@@ -4,21 +4,56 @@
   "title": "Experimental run manifest",
   "type": "object",
   "required": [
+    "schema",
     "runId",
-    "suiteDigest",
-    "model",
-    "environment",
-    "startedAt"
+    "suiteId",
+    "provider",
+    "status",
+    "startedAt",
+    "completedAt",
+    "counts",
+    "usage"
   ],
   "properties": {
+    "schema": {
+      "const": "kinescope.run-manifest.v1"
+    },
     "runId": {
       "type": "string"
     },
-    "suiteDigest": {
-      "type": "string"
+    "suiteId": {
+      "type": [
+        "string",
+        "null"
+      ]
     },
-    "model": {
+    "suiteDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "completed",
+        "completed-with-item-failures",
+        "completed-with-evaluation-error"
+      ]
+    },
+    "provider": {
       "type": "object"
+    },
+    "contamination": {
+      "type": "object"
+    },
+    "prompt": {
+      "type": "object"
+    },
+    "execution": {
+      "type": "object"
+    },
+    "seed": {
+      "type": "string"
     },
     "environment": {
       "type": "object"
@@ -28,26 +63,41 @@
       "format": "date-time"
     },
     "completedAt": {
-      "type": [
-        "string",
-        "null"
-      ],
+      "type": "string",
       "format": "date-time"
     },
-    "seeds": {
+    "counts": {
       "type": "object"
     },
-    "software": {
+    "usage": {
+      "type": "object",
+      "properties": {
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "costUsd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "budget": {
       "type": "object"
     },
-    "hardware": {
-      "type": "object"
+    "evaluationError": {
+      "type": [
+        "object",
+        "null"
+      ]
     },
-    "costs": {
-      "type": "object"
-    },
-    "artifacts": {
-      "type": "array"
+    "manifestDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
     }
   }
 }

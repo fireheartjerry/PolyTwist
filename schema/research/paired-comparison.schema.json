@@ -1,0 +1,66 @@
+{
+  "$id": "https://kinescope.dev/schema/paired-comparison.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Item-paired comparison of two evaluation reports",
+  "type": "object",
+  "required": [
+    "schema",
+    "labelA",
+    "labelB",
+    "sharedItems",
+    "wins",
+    "ties",
+    "losses",
+    "meanDeltaInterval",
+    "pairs",
+    "comparisonDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.paired-comparison.v1"
+    },
+    "labelA": {
+      "type": "string"
+    },
+    "labelB": {
+      "type": "string"
+    },
+    "sharedItems": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "wins": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "ties": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "losses": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "meanDelta": {
+      "type": [
+        "number",
+        "null"
+      ]
+    },
+    "meanDeltaInterval": {
+      "type": "object"
+    },
+    "twoSidedSignTestP": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 1
+    },
+    "pairs": {
+      "type": "array"
+    },
+    "comparisonDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

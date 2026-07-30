@@ -1,0 +1,89 @@
+{
+  "$id": "https://kinescope.dev/schema/raw-transcript.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Immutable provider attempt transcript",
+  "type": "object",
+  "required": [
+    "schema",
+    "runId",
+    "itemId",
+    "taskId",
+    "split",
+    "attempt",
+    "requestDigest",
+    "provider",
+    "request",
+    "status",
+    "startedAt",
+    "completedAt",
+    "latencyMs",
+    "transcriptDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.raw-transcript.v1"
+    },
+    "runId": {
+      "type": "string"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "taskId": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "requestDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "provider": {
+      "type": "object"
+    },
+    "request": {
+      "type": "object"
+    },
+    "response": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "error": {
+      "type": [
+        "object",
+        "null"
+      ]
+    },
+    "status": {
+      "enum": [
+        "ok",
+        "cache-hit",
+        "provider-error",
+        "timeout"
+      ]
+    },
+    "startedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "latencyMs": {
+      "type": "number",
+      "minimum": 0
+    },
+    "transcriptDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

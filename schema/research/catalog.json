@@ -57,6 +57,46 @@
       "name": "run-manifest",
       "id": "https://kinescope.dev/schema/run-manifest.schema.json",
       "title": "Experimental run manifest"
+    },
+    {
+      "name": "model-request",
+      "id": "https://kinescope.dev/schema/model-request.schema.json",
+      "title": "Public model request"
+    },
+    {
+      "name": "raw-transcript",
+      "id": "https://kinescope.dev/schema/raw-transcript.schema.json",
+      "title": "Immutable provider attempt transcript"
+    },
+    {
+      "name": "parse-record",
+      "id": "https://kinescope.dev/schema/parse-record.schema.json",
+      "title": "Strict model-response parse record"
+    },
+    {
+      "name": "run-item",
+      "id": "https://kinescope.dev/schema/run-item.schema.json",
+      "title": "Terminal item record for one model run"
+    },
+    {
+      "name": "response-cache-entry",
+      "id": "https://kinescope.dev/schema/response-cache-entry.schema.json",
+      "title": "Validated raw-response cache entry"
+    },
+    {
+      "name": "model-run",
+      "id": "https://kinescope.dev/schema/model-run.schema.json",
+      "title": "Complete provider-agnostic model run"
+    },
+    {
+      "name": "evaluation-analysis",
+      "id": "https://kinescope.dev/schema/evaluation-analysis.schema.json",
+      "title": "Bootstrap analysis of one evaluation report"
+    },
+    {
+      "name": "paired-comparison",
+      "id": "https://kinescope.dev/schema/paired-comparison.schema.json",
+      "title": "Item-paired comparison of two evaluation reports"
     }
   ]
 }

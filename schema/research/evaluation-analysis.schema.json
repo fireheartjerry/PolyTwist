@@ -1,0 +1,49 @@
+{
+  "$id": "https://kinescope.dev/schema/evaluation-analysis.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Bootstrap analysis of one evaluation report",
+  "type": "object",
+  "required": [
+    "schema",
+    "suiteId",
+    "evaluationDigest",
+    "configuration",
+    "overall",
+    "byTask",
+    "bySplit",
+    "analysisDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.evaluation-analysis.v1"
+    },
+    "suiteId": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "evaluationDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "configuration": {
+      "type": "object"
+    },
+    "overall": {
+      "type": "object"
+    },
+    "byTask": {
+      "type": "object"
+    },
+    "bySplit": {
+      "type": "object"
+    },
+    "analysisDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

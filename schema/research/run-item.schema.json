@@ -1,0 +1,83 @@
+{
+  "$id": "https://kinescope.dev/schema/run-item.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Terminal item record for one model run",
+  "type": "object",
+  "required": [
+    "schema",
+    "runId",
+    "itemId",
+    "taskId",
+    "split",
+    "requestDigest",
+    "status",
+    "attempts",
+    "itemRecordDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.run-item.v1"
+    },
+    "runId": {
+      "type": "string"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "taskId": {
+      "type": "string"
+    },
+    "split": {
+      "type": "string"
+    },
+    "requestDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "failed",
+        "budget-exhausted",
+        "cache-hit",
+        "resumed"
+      ]
+    },
+    "attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "usage": {
+      "type": "object",
+      "properties": {
+        "inputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "outputTokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "costUsd": {
+          "type": "number",
+          "minimum": 0
+        }
+      }
+    },
+    "failure": {
+      "type": "object"
+    },
+    "predictionDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "completedAt": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "itemRecordDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}

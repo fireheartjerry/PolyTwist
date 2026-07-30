@@ -1,0 +1,66 @@
+{
+  "$id": "https://kinescope.dev/schema/parse-record.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Strict model-response parse record",
+  "type": "object",
+  "required": [
+    "schema",
+    "itemId",
+    "attempt",
+    "parserMode",
+    "rawDigest",
+    "valid",
+    "errors",
+    "warnings",
+    "parsed",
+    "parseDigest"
+  ],
+  "properties": {
+    "schema": {
+      "const": "kinescope.parse-record.v1"
+    },
+    "itemId": {
+      "type": "string"
+    },
+    "attempt": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "parserMode": {
+      "enum": [
+        "strict-json",
+        "single-json-fence"
+      ]
+    },
+    "requestDigest": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "rawDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    },
+    "valid": {
+      "type": "boolean"
+    },
+    "errors": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "warnings": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parsed": {},
+    "parseDigest": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+1-[0-9a-f]{32}$"
+    }
+  }
+}
