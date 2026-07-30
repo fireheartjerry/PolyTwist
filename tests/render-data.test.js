@@ -4,48 +4,37 @@ import assert from 'node:assert/strict';
 import { compilePuzzle } from '../src/core/puzzle-compiler.js';
 import { PuzzleEngine } from '../src/core/puzzle-engine.js';
 import { bandagedRelayPreset, ghostPreset } from '../src/core/presets.js';
-import { frameAxis, logicalRotationToWorld } from '../src/core/frame.js';
 import { buildPieceMeshData, faceIdColor, machineIdColor } from '../src/render/mesh-data.js';
-import { axisAngle3, mat4AroundOrigin, mat4Multiply } from '../src/render/mat4.js';
-import { certifyIdealRigidDisplay } from '../src/render/rigid-display-certificate.js';
+import {
+  certifyIdealRigidDisplay,
+  deriveRigidModelMatrices,
+} from '../src/render/rigid-display-certificate.js';
 
 const byteKey = (color) => color.map((channel) => Math.round(channel * 255)).join(',');
-
-function modelMatrices(puzzle, engine, preview = null, progress = 0) {
-  const matrices = new Map();
-  const activeIds = new Set(preview?.selectedIds ?? []);
-  const animation = preview
-    ? mat4AroundOrigin(
-      axisAngle3(frameAxis(puzzle.frame, preview.axis), preview.angleRadians * progress),
-      puzzle.frame.origin,
-    )
-    : null;
-  for (const piece of puzzle.pieces) {
-    if (!piece.renderable) continue;
-    const exact = mat4AroundOrigin(
-      logicalRotationToWorld(puzzle.frame, engine.getPieceTransform(piece.id)),
-      puzzle.frame.origin,
-    );
-    matrices.set(piece.id, animation && activeIds.has(piece.id) ? mat4Multiply(animation, exact) : exact);
-  }
-  return matrices;
-}
 
 test('ideal-rigid certificate validates rest, animation, and a committed turn', () => {
   const puzzle = compilePuzzle(ghostPreset());
   const engine = new PuzzleEngine(puzzle);
-  const before = certifyIdealRigidDisplay(puzzle, engine.transforms, modelMatrices(puzzle, engine));
+  const before = certifyIdealRigidDisplay(
+    puzzle,
+    engine.transforms,
+    deriveRigidModelMatrices(puzzle, engine.transforms),
+  );
   assert.equal(before.valid, true);
 
   const preview = engine.previewMove('R');
-  const moving = modelMatrices(puzzle, engine, preview, 0.37);
+  const moving = deriveRigidModelMatrices(puzzle, engine.transforms, preview, 0.37);
   assert.equal(certifyIdealRigidDisplay(puzzle, engine.transforms, moving, preview).valid, true);
 
   engine.commitPreview(preview);
-  const after = certifyIdealRigidDisplay(puzzle, engine.transforms, modelMatrices(puzzle, engine));
+  const after = certifyIdealRigidDisplay(
+    puzzle,
+    engine.transforms,
+    deriveRigidModelMatrices(puzzle, engine.transforms),
+  );
   assert.equal(after.geometryHash, before.geometryHash);
 
-  const corrupted = new Map([...modelMatrices(puzzle, engine)].map(
+  const corrupted = new Map([...deriveRigidModelMatrices(puzzle, engine.transforms)].map(
     ([pieceId, matrix]) => [pieceId, new Float32Array(matrix)],
   ));
   const visible = puzzle.pieces.find((piece) => piece.renderable);

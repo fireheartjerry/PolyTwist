@@ -103,5 +103,7 @@ export async function createZip(entries) {
   footer.view.setUint32(16, offset, true);
   footer.view.setUint16(20, 0, true);
 
-  return new Blob([...localParts, ...centralParts, footer.array], { type: 'application/zip' });
+  const blobParts = [...localParts, ...centralParts, footer.array]
+    .map((part) => Uint8Array.from(part).buffer);
+  return new Blob(blobParts, { type: 'application/zip' });
 }

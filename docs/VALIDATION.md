@@ -11,7 +11,7 @@ npm run build
 npm run browser:smoke
 ```
 
-The deterministic Node suite contains **63 tests**. The Phase 1 additions are intentionally consolidated into six high-signal proof fixtures. They cover:
+The deterministic Node suite contains **64 tests**. The Phase 1 additions are intentionally consolidated into six high-signal proof fixtures. They cover:
 
 - exact rational parsing, arithmetic, large-coefficient numeric projection, and primitive plane normalization;
 - dependency-free standard-vector SHA-256 and canonical serialization;
@@ -47,6 +47,36 @@ The deterministic Node suite contains **63 tests**. The Phase 1 additions are in
 - REST health, exact transition, binary render behavior, and Vercel adapter response preservation.
 
 The JSDoc-annotated source is configured for `tsc -p tsconfig.check.json --noEmit`; TypeScript must be installed in the execution environment. The static builder emits a self-contained browser application at `dist/index.html`.
+
+## Ideal-rigid display closure experiment
+
+Run:
+
+```bash
+npm run research:validate-rigid-display -- \
+  --output research/experiments/ideal-rigid-display-phase1.json
+```
+
+The deterministic protocol covers all catalog artifacts, ordinary cubes from
+2×2×2 through 9×9×9, and four seeded procedural artifacts. For each artifact
+it visits 13 exact states, probes every legal primitive move at animation
+fractions `0, 0.125, 0.25, 0.5, 0.75, 0.875, 1`, certifies the committed
+state, applies the inverse, and checks the canonical geometry hash.
+
+The Phase 1 closure report
+`polytwist.ideal-rigid-display-experiment.v1` records:
+
+- 18 artifacts and 234 exact states;
+- 9,660 animated rigid-display certificates;
+- 1,380 committed-turn certificates;
+- 1,380 exact inverse restorations;
+- 24 blocked bandaged-action observations;
+- zero failures;
+- digest `ideal-rigid-display-experiment1-5fd5a1a7c60ea92fe971c8d252f44804`.
+
+The report is finite deterministic evidence. It is not promoted into a
+general swept-volume, manufacturing-clearance, tolerance, or hidden-core
+certificate.
 
 ## Compiler inspection
 

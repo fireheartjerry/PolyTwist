@@ -14,6 +14,8 @@ KineScope 0.3 is a broad research substrate. It is not a claim that every manufa
 - renderer projection from canonical faces, compile-once meshes, and rigid-transform-only state updates;
 - evaluator-private ideal-rigid display certificates over exact state and
   actual render matrices, with explicit physical-claim boundaries;
+- reproducible ideal-rigid closure experiments across 2×2×2–9×9×9 controls,
+  shape mods, bandaging, and seeded procedural artifacts;
 - exact Rational Ghost Atlas A regression with 27 cells and six proved selected-face traces;
 
 - exact cubic `2×2×2` through `9×9×9` logical mechanisms;

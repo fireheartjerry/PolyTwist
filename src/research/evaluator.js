@@ -6,6 +6,15 @@ import { canonicalEqual, stableDigest } from './canonical.js';
 import { mean } from './statistics.js';
 import { ENGINE_VERSION } from '../version.js';
 
+/**
+ * @typedef {{
+ *   suiteId:string,
+ *   suiteDigest?:string,
+ *   public:{items:any[]},
+ *   private:{targets:any[],episodes:any[]}
+ * }} EvaluationSuite
+ */
+
 /** @param {unknown} value */
 function normalizeScalar(value) {
   if (typeof value === 'string') return value.trim().toLowerCase();
@@ -194,7 +203,7 @@ function calibration(confidences, correctness, bins = 10) {
 
 /**
  * Scores predictions against the evaluator-private target partition of a suite.
- * @param {object} suite
+ * @param {EvaluationSuite} suite
  * @param {{itemId:string,answer:unknown,confidence?:number,latencyMs?:number,inputTokens?:number,outputTokens?:number,costUsd?:number,metadata?:Record<string,unknown>}[]} predictions
  * @param {{strictCoverage?:boolean}} [options]
  */

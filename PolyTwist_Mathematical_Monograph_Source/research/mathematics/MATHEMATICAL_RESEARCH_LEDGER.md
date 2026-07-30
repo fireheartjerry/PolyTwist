@@ -387,7 +387,10 @@ At implementation milestone `3062274`, the software implements a disciplined but
 - deterministic rendering, benchmark generation, and analysis derived from the compiled geometry and engine;
 - evaluator-private ideal-rigid display certificates over exact state and
   actual render matrices, with renderer clearances explicitly marked
-  noncanonical.
+  noncanonical;
+- deterministic ideal-rigid closure evidence across 18 artifacts, 234 exact
+  states, 9,660 sampled animations, 1,380 committed turns, and 1,380 exact
+  inverse restorations.
 
 It does **not** implement the general atlas, curved or general semialgebraic cut carriers, noncubic dynamics, exact swept collision, general joints, jumbling, or the complete proof-carrying dynamics compiler described here.
 

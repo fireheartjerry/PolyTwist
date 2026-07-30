@@ -8,7 +8,14 @@ import {
 } from '../core/mat3i.js';
 import { frameAxis, logicalRotationToWorld } from '../core/frame.js';
 import { verifyAffineGeometry } from '../geometry/affine-verifier.js';
-import { mat4AroundOrigin, transformDirection, transformPoint } from './mat4.js';
+import {
+  axisAngle3,
+  easeInOutCubic,
+  mat4AroundOrigin,
+  mat4Multiply,
+  transformDirection,
+  transformPoint,
+} from './mat4.js';
 import { DISPLAY_OUTER_FACE_LIFT, DISPLAY_PIECE_SCALE } from './mesh-data.js';
 
 /** @typedef {import('../core/puzzle-compiler.js').CompiledPuzzle} CompiledPuzzle */
@@ -75,7 +82,10 @@ function determinant3(matrix) {
 
 /** @param {ArrayLike<number>} matrix */
 function isRigidAffineMatrix(matrix) {
-  if (matrix.length !== 16 || [...matrix].some((value) => !Number.isFinite(Number(value)))) return false;
+  if (matrix.length !== 16) return false;
+  for (let index = 0; index < matrix.length; index += 1) {
+    if (!Number.isFinite(Number(matrix[index]))) return false;
+  }
   if (!near(Number(matrix[3]), 0) || !near(Number(matrix[7]), 0)
     || !near(Number(matrix[11]), 0) || !near(Number(matrix[15]), 1)) return false;
   const rotation = rotationFromMat4(matrix);
@@ -106,23 +116,49 @@ function preservesAxis(rotation, axis) {
 }
 
 /**
- * Derives the static renderer matrices for an exact docked state.
+ * Derives the renderer matrices for an exact state and optional active turn.
  *
  * @param {CompiledPuzzle} puzzle
  * @param {Map<string,Mat3i>} transforms
+ * @param {MovePreview|null} [activeMove]
+ * @param {number} [progress]
  */
-export function deriveExactRigidModelMatrices(puzzle, transforms) {
+export function deriveRigidModelMatrices(
+  puzzle,
+  transforms,
+  activeMove = null,
+  progress = 0,
+) {
   const matrices = new Map();
+  const activeIds = new Set(activeMove?.selectedIds ?? []);
+  const animation = activeMove
+    ? mat4AroundOrigin(
+      axisAngle3(
+        frameAxis(puzzle.frame, activeMove.axis),
+        activeMove.angleRadians * easeInOutCubic(progress),
+      ),
+      puzzle.frame.origin,
+    )
+    : null;
   for (const piece of puzzle.pieces) {
     if (!piece.renderable) continue;
     const transform = transforms.get(piece.id);
     if (!transform) continue;
-    matrices.set(piece.id, mat4AroundOrigin(
+    const exact = mat4AroundOrigin(
       logicalRotationToWorld(puzzle.frame, transform),
       puzzle.frame.origin,
-    ));
+    );
+    matrices.set(
+      piece.id,
+      animation && activeIds.has(piece.id) ? mat4Multiply(animation, exact) : exact,
+    );
   }
   return matrices;
+}
+
+/** @param {CompiledPuzzle} puzzle @param {Map<string,Mat3i>} transforms */
+export function deriveExactRigidModelMatrices(puzzle, transforms) {
+  return deriveRigidModelMatrices(puzzle, transforms);
 }
 
 /**
@@ -169,6 +205,7 @@ export function certifyIdealRigidDisplay(
   let activeLayerSelection = true;
   let activeAxisPreserved = true;
   let activeCommonRotation = true;
+  let activeAxialCoordinatesPreserved = true;
   const activeIds = new Set(activeMove?.selectedIds ?? []);
   let referenceDelta = null;
 
@@ -226,8 +263,31 @@ export function certifyIdealRigidDisplay(
       activeCommonRotation = false;
       errors.push(`animated matrix for ${piece.id} does not share the layer rotation`);
     }
+    for (const vertex of piece.polyhedron.vertices) {
+      const before = transformPoint(base, vertex);
+      const during = transformPoint(matrix, vertex);
+      const beforeAxial = (
+        (before.x - puzzle.frame.origin.x) * axis.x
+        + (before.y - puzzle.frame.origin.y) * axis.y
+        + (before.z - puzzle.frame.origin.z) * axis.z
+      );
+      const duringAxial = (
+        (during.x - puzzle.frame.origin.x) * axis.x
+        + (during.y - puzzle.frame.origin.y) * axis.y
+        + (during.z - puzzle.frame.origin.z) * axis.z
+      );
+      if (!near(beforeAxial, duringAxial)) {
+        activeAxialCoordinatesPreserved = false;
+        errors.push(`animated vertex of ${piece.id} leaves its axial layer slab`);
+        break;
+      }
+    }
   }
 
+  const presentationParametersValid = DISPLAY_PIECE_SCALE > 0
+    && DISPLAY_PIECE_SCALE <= 1
+    && Number.isFinite(DISPLAY_OUTER_FACE_LIFT)
+    && DISPLAY_OUTER_FACE_LIFT >= 0;
   const checks = {
     canonicalGeometryVerified: geometryVerification.valid,
     exactOrientationsProper,
@@ -238,6 +298,8 @@ export function certifyIdealRigidDisplay(
     activeLayerSelection,
     activeAxisPreserved,
     activeCommonRotation,
+    activeAxialCoordinatesPreserved,
+    presentationParametersValid,
   };
   return {
     schema: 'polytwist.ideal-rigid-display-certificate.v1',

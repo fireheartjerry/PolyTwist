@@ -81,7 +81,11 @@ At implementation milestone `3062274`, the exact affine compiler reproduces `EX-
 
 The Phase 1 ideal-rigid display certificate additionally checks proper exact
 orientations, bijective logical occupancy, actual rigid render matrices, a
-common mechanism pivot, and the declared active layer axis. This is
+common mechanism pivot, the declared active layer axis, and per-vertex
+axial-coordinate invariance. The deterministic closure experiment exercises
+those checks across 18 artifacts, 234 exact states, 9,660 animation samples,
+1,380 committed turns, and 1,380 exact inverse restorations under report
+digest `ideal-rigid-display-experiment1-5fd5a1a7c60ea92fe971c8d252f44804`. This is
 implementation evidence only. It neither promotes nor resolves
 `OPEN-PATH-CERT-001` or `OPEN-TOLERANCE-001`.
 

@@ -128,7 +128,7 @@ function pixelsToPngBlob(pixels, width, height) {
       reject(new Error('2D canvas unavailable while encoding PNG.'));
       return;
     }
-    context.putImageData(new ImageData(pixels, width, height), 0, 0);
+    context.putImageData(new ImageData(Uint8ClampedArray.from(pixels), width, height), 0, 0);
     canvas.toBlob((blob) => {
       if (blob) resolve(blob);
       else reject(new Error('Browser failed to encode PNG.'));

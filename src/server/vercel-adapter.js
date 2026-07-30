@@ -20,7 +20,7 @@ export function createVercelHandler(apiHandler = handleApiRequest) {
         for await (const chunk of request) chunks.push(Buffer.from(chunk));
       }
 
-      const body = chunks.length > 0 ? Buffer.concat(chunks) : undefined;
+      const body = chunks.length > 0 ? Uint8Array.from(Buffer.concat(chunks)).buffer : undefined;
       const fetchRequest = new Request(url, {
         method,
         headers: request.headers,

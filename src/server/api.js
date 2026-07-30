@@ -295,7 +295,7 @@ async function execute(route, body, url) {
 
   if (route === '/evaluate') {
     if (!body.suite || !Array.isArray(body.predictions)) throw Object.assign(new Error('evaluate requires suite and predictions.'), { status: 400, code: 'KineScope_MISSING_EVALUATION_INPUT' });
-    return evaluatePredictions(body.suite, body.predictions, { strictCoverage: body.strictCoverage === true });
+    return evaluatePredictions(/** @type {any} */ (body.suite), body.predictions, { strictCoverage: body.strictCoverage === true });
   }
 
   if (route === '/render') {

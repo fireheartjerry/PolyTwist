@@ -20,6 +20,7 @@
     "research:graph": "node scripts/research-graph.mjs",
     "research:suite": "node scripts/research-suite.mjs",
     "research:evaluate": "node scripts/research-evaluate.mjs",
+    "research:validate-rigid-display": "node scripts/validate-rigid-display.mjs",
     "spec-suite": "node scripts/generate-suite.mjs",
     "research:schemas": "node scripts/materialize-schemas.mjs"
   },

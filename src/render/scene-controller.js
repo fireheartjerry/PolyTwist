@@ -6,12 +6,13 @@ import { v3 } from '../core/vec3.js';
 import { createPreset } from '../core/presets.js';
 import { parseMoveToken, PuzzleEngine } from '../core/puzzle-engine.js';
 import { createZip } from '../core/zip.js';
-import { frameAxis, logicalRotationToWorld } from '../core/frame.js';
 import { hashSeed } from '../core/rng.js';
 import { OrbitCamera } from './camera.js';
-import { axisAngle3, easeInOutCubic, mat4AroundOrigin, mat4Multiply } from './mat4.js';
 import { TwistyRenderer } from './webgl-renderer.js';
-import { certifyIdealRigidDisplay } from './rigid-display-certificate.js';
+import {
+  certifyIdealRigidDisplay,
+  deriveRigidModelMatrices,
+} from './rigid-display-certificate.js';
 import { ENGINE_VERSION } from '../version.js';
 
 /** @typedef {import('../core/puzzle-compiler.js').PuzzleSpec} PuzzleSpec */
@@ -206,27 +207,12 @@ export class SceneController {
 
   /** @param {number} progress */
   computeModelMatrices(progress) {
-    /** @type {Map<string,Float32Array>} */
-    const matrices = new Map();
-    let animatedTurn = null;
-    let activeIds = null;
-    if (this.active) {
-      const eased = easeInOutCubic(progress);
-      const axis = frameAxis(this.puzzle.frame, this.active.preview.axis);
-      const rotation = axisAngle3(axis, this.active.preview.angleRadians * eased);
-      animatedTurn = mat4AroundOrigin(rotation, this.puzzle.frame.origin);
-      activeIds = new Set(this.active.preview.selectedIds);
-    }
-
-    for (const piece of this.puzzle.pieces) {
-      if (!piece.renderable) continue;
-      const exact = this.engine.getPieceTransform(piece.id);
-      const worldRotation = logicalRotationToWorld(this.puzzle.frame, exact);
-      let model = mat4AroundOrigin(worldRotation, this.puzzle.frame.origin);
-      if (animatedTurn && activeIds?.has(piece.id)) model = mat4Multiply(animatedTurn, model);
-      matrices.set(piece.id, model);
-    }
-    return matrices;
+    return deriveRigidModelMatrices(
+      this.puzzle,
+      this.engine.transforms,
+      this.active?.preview ?? null,
+      progress,
+    );
   }
 
   computeHighlights() {

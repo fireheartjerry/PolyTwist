@@ -20,7 +20,11 @@ At milestone base `3062274`, the affine-convex specialization of the Stratified 
 - exact reproduction of Rational Ghost Atlas A's 27 chambers and six selected-face traces;
 - evaluator-private ideal-rigid display certificates checking proper exact
   orientations, bijective occupancy, rigid render matrices, a common pivot,
-  and the declared active layer axis.
+  the declared active layer axis, and per-vertex axial-coordinate invariance;
+- deterministic closure evidence across 18 artifacts, 234 exact states, 9,660
+  sampled animations, 1,380 committed turns, and 1,380 exact inverse
+  restorations, recorded under digest
+  `ideal-rigid-display-experiment1-5fd5a1a7c60ea92fe971c8d252f44804`.
 
 This is implementation evidence for existing theorems and example `EX-GHOST-A-001`, not a new theorem or novelty claim. Legacy Euler-frame presets cross a declared `rationalized-numerical` source boundary before exact predicates begin.
 

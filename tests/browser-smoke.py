@@ -114,30 +114,30 @@ def main() -> None:
         page.on("console", lambda message: console.append(f"{message.type}: {message.text}"))
         page.on("pageerror", lambda error: console.append(f"PAGEERROR: {error}"))
         page.set_content(inline_application(), wait_until="load", timeout=30_000)
-        page.wait_for_function("window.__LATENT_MECHANICS_READY__ === true", timeout=30_000)
+        page.wait_for_function("window.__KINESCOPE_READY__ === true", timeout=30_000)
         page.wait_for_timeout(800)
 
         report["gpu"] = page.locator("#rendererValue").inner_text()
-        report["checks"]["ready"] = page.evaluate("window.__LATENT_MECHANICS_READY__")
+        report["checks"]["ready"] = page.evaluate("window.__KINESCOPE_READY__")
         report["checks"]["compatibilityAliases"] = page.evaluate(
             """() => ({
               legacyReady: window.__TWISTYWORLD_READY__ === true,
-              evaluatorSame: window.twistyWorld === window.latentMechanicsLab,
-              agentSame: window.twistyAgent === window.latentMechanicsAgent,
+              evaluatorSame: window.twistyWorld === window.kinescope,
+              agentSame: window.twistyAgent === window.kineScopeAgent,
             })"""
         )
-        report["checks"]["initialPuzzle"] = page.evaluate("window.latentMechanicsLab.getSnapshot().puzzle.name")
+        report["checks"]["initialPuzzle"] = page.evaluate("window.kinescope.getSnapshot().puzzle.name")
         report["checks"]["agentSurface"] = page.evaluate(
             """() => ({
-              keys: Object.keys(window.latentMechanicsAgent).sort(),
-              leakedGroundTruth: typeof window.latentMechanicsAgent.getGroundTruth !== 'undefined',
-              observation: window.latentMechanicsAgent.observe(),
+              keys: Object.keys(window.kineScopeAgent).sort(),
+              leakedGroundTruth: typeof window.kineScopeAgent.getGroundTruth !== 'undefined',
+              observation: window.kineScopeAgent.observe(),
             })"""
         )
         report["checks"]["agentReceipt"] = page.evaluate(
             """async () => {
-              const before = window.latentMechanicsAgent.observe().stateId;
-              const receipt = await window.latentMechanicsAgent.act('A0', { animated: false });
+              const before = window.kineScopeAgent.observe().stateId;
+              const receipt = await window.kineScopeAgent.act('A0', { animated: false });
               return {
                 before,
                 receipt,
@@ -147,21 +147,21 @@ def main() -> None:
               };
             }"""
         )
-        page.evaluate("window.latentMechanicsLab.reset()")
+        page.evaluate("window.kinescope.reset()")
         page.screenshot(path=str(OUTPUT / "studio-ui.png"), full_page=True)
 
-        page.evaluate("window.latentMechanicsLab.apply('R', { animated: false })")
-        report["checks"]["rMovePerturbsState"] = not page.evaluate("window.latentMechanicsLab.getState().solved")
+        page.evaluate("window.kinescope.apply('R', { animated: false })")
+        report["checks"]["rMovePerturbsState"] = not page.evaluate("window.kinescope.getState().solved")
         normal_capture = page.evaluate(
             """async () => {
-              const blob = await window.latentMechanicsLab.capture('normal', { width: 256, height: 256 });
+              const blob = await window.kinescope.capture('normal', { width: 256, height: 256 });
               return { size: blob.size, type: blob.type };
             }"""
         )
         report["checks"]["normalCapture"] = normal_capture
         episode = page.evaluate(
             """async () => {
-              const blob = await window.latentMechanicsLab.exportBundle({
+              const blob = await window.kinescope.exportBundle({
                 width: 256,
                 height: 256,
                 includeStudio: false,
@@ -191,24 +191,25 @@ def main() -> None:
             "puzzleId": private_episode["puzzleSpec"]["id"],
             "hasExactState": "state" in private_episode and "hash" in private_episode["state"],
             "hasDynamics": "dynamics" in private_episode,
+            "idealRigidDisplayValid": private_episode["idealRigidDisplay"]["valid"],
         }
         report["checks"]["episodeBundle"] = episode
 
-        page.evaluate("window.latentMechanicsLab.setPreset('ghost-4')")
-        four_snapshot = page.evaluate("window.latentMechanicsLab.getSnapshot()")
+        page.evaluate("window.kinescope.setPreset('ghost-4')")
+        four_snapshot = page.evaluate("window.kinescope.getSnapshot()")
         report["checks"]["ghost4"] = {
             "logicalPieces": four_snapshot["puzzle"]["stats"]["logicalPieces"],
             "renderablePieces": four_snapshot["puzzle"]["stats"]["renderablePieces"],
             "topologyWarnings": four_snapshot["puzzle"]["stats"]["topologyWarnings"],
         }
-        page.evaluate("window.latentMechanicsLab.applySequence(['R', 'U'], { animated: false })")
-        page.evaluate("window.latentMechanicsLab.setObservationMode('piece')")
+        page.evaluate("window.kinescope.applySequence(['R', 'U'], { animated: false })")
+        page.evaluate("window.kinescope.setObservationMode('piece')")
         page.wait_for_timeout(150)
         page.screenshot(path=str(OUTPUT / "ghost4-piece-ui.png"), full_page=True)
 
-        page.evaluate("window.latentMechanicsLab.setPreset('bandaged-relay-3')")
-        page.evaluate("window.latentMechanicsLab.setMechanicsWithheld(true)")
-        hidden_bandaged = page.evaluate("window.latentMechanicsAgent.observe()")
+        page.evaluate("window.kinescope.setPreset('bandaged-relay-3')")
+        page.evaluate("window.kinescope.setMechanicsWithheld(true)")
+        hidden_bandaged = page.evaluate("window.kineScopeAgent.observe()")
         hidden_buttons = page.evaluate(
             """() => ({
               disabled: document.querySelectorAll('.move-button:disabled').length,
@@ -217,9 +218,9 @@ def main() -> None:
         )
         hidden_blocked = page.evaluate(
             """async () => {
-              const before = window.latentMechanicsAgent.observe().stateId;
+              const before = window.kineScopeAgent.observe().stateId;
               try {
-                await window.latentMechanicsAgent.act('A2', { animated: false });
+                await window.kineScopeAgent.act('A2', { animated: false });
                 return { accepted: true };
               } catch (error) {
                 return {
@@ -227,33 +228,33 @@ def main() -> None:
                   code: error.code,
                   message: error.message,
                   hasViolatedBandages: 'violatedBandages' in error,
-                  unchanged: before === window.latentMechanicsAgent.observe().stateId,
+                  unchanged: before === window.kineScopeAgent.observe().stateId,
                 };
               }
             }"""
         )
-        page.evaluate("window.latentMechanicsLab.setMechanicsWithheld(false)")
-        disclosed_bandaged = page.evaluate("window.latentMechanicsAgent.observe()")
-        bandaged = page.evaluate("window.latentMechanicsLab.getSnapshot()")
+        page.evaluate("window.kinescope.setMechanicsWithheld(false)")
+        disclosed_bandaged = page.evaluate("window.kineScopeAgent.observe()")
+        bandaged = page.evaluate("window.kinescope.getSnapshot()")
         blocked_attempt = page.evaluate(
             """async () => {
-              const before = window.latentMechanicsLab.getState().hash;
+              const before = window.kinescope.getState().hash;
               try {
-                await window.latentMechanicsLab.apply('U', { animated: false });
+                await window.kinescope.apply('U', { animated: false });
                 return { accepted: true };
               } catch (error) {
                 return {
                   accepted: false,
                   code: error.code,
-                  unchanged: before === window.latentMechanicsLab.getState().hash,
+                  unchanged: before === window.kinescope.getState().hash,
                 };
               }
             }"""
         )
-        dynamics = page.evaluate("window.latentMechanicsLab.analyzeDynamics({ maxOrder: 8 })")
-        before_view = page.evaluate("window.latentMechanicsAgent.observe().camera")
+        dynamics = page.evaluate("window.kinescope.analyzeDynamics({ maxOrder: 8 })")
+        before_view = page.evaluate("window.kineScopeAgent.observe().camera")
         after_view = page.evaluate(
-            "window.latentMechanicsAgent.requestView({ yawDelta: 0.25, pitchDelta: -0.1, distanceScale: 0.95 })"
+            "window.kineScopeAgent.requestView({ yawDelta: 0.25, pitchDelta: -0.1, distanceScale: 0.95 })"
         )
         report["checks"]["bandaged"] = {
             "bandageCount": bandaged["puzzle"]["stats"]["bandageCount"],
@@ -273,13 +274,13 @@ def main() -> None:
         }
         page.wait_for_timeout(150)
         page.screenshot(path=str(OUTPUT / "bandaged-ui.png"), full_page=True)
-        page.evaluate("window.latentMechanicsAgent.act('R', { animated: false })")
+        page.evaluate("window.kineScopeAgent.act('R', { animated: false })")
         report["checks"]["bandaged"]["uUnlockedAfterR"] = page.evaluate(
-            "window.latentMechanicsAgent.observe().legalActionMask.U"
+            "window.kineScopeAgent.observe().legalActionMask.U"
         )
 
-        page.evaluate("window.latentMechanicsLab.setPreset('alien', 'browser-validation-seed')")
-        alien = page.evaluate("window.latentMechanicsLab.getSnapshot()")
+        page.evaluate("window.kinescope.setPreset('alien', 'browser-validation-seed')")
+        alien = page.evaluate("window.kinescope.getSnapshot()")
         report["checks"]["alien"] = {
             "name": alien["puzzle"]["name"],
             "warnings": alien["puzzle"]["stats"]["topologyWarnings"],
@@ -317,7 +318,7 @@ def main() -> None:
     assert initial_agent_observation["puzzle"]["name"] == "Unfamiliar Artifact"
     assert "p-" not in initial_agent_observation["stateId"]
     assert report["checks"]["agentReceipt"]["keys"] == ["accepted", "action", "schema", "stateId"]
-    assert report["checks"]["agentReceipt"]["receipt"]["schema"] == "latent-mechanics.agent-transition.v1"
+    assert report["checks"]["agentReceipt"]["receipt"]["schema"] == "kinescope.agent-transition.v1"
     assert report["checks"]["agentReceipt"]["receipt"]["accepted"] is True
     assert report["checks"]["agentReceipt"]["receipt"]["action"] == "A0"
     assert report["checks"]["agentReceipt"]["receipt"]["stateId"] != report["checks"]["agentReceipt"]["before"]
@@ -338,6 +339,7 @@ def main() -> None:
         "puzzleId": "ghost-3",
         "hasExactState": True,
         "hasDynamics": True,
+        "idealRigidDisplayValid": True,
     }
     assert report["checks"]["ghost4"] == {
         "logicalPieces": 64,
@@ -357,7 +359,7 @@ def main() -> None:
     }
     assert bandaged["blockedAttempt"] == {
         "accepted": False,
-        "code": "LML_ILLEGAL_MOVE",
+        "code": "KineScope_ILLEGAL_MOVE",
         "unchanged": True,
     }
     assert bandaged["dynamicsActions"] == 6
@@ -369,7 +371,7 @@ def main() -> None:
     assert bandaged["hiddenButtons"] == {"disabled": 0, "markedBlocked": 0}
     assert bandaged["hiddenBlockedAttempt"] == {
         "accepted": False,
-        "code": "LML_ACTION_REJECTED",
+        "code": "KineScope_ACTION_REJECTED",
         "message": "Action A2 is unavailable in the current state.",
         "hasViolatedBandages": False,
         "unchanged": True,

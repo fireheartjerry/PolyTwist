@@ -44,7 +44,8 @@ Puzzle states contain only exact signed-permutation piece transforms. Scrambling
 The evaluator-facing `polytwist.ideal-rigid-display-certificate.v1` report
 checks the canonical geometry, exact proper rotations, bijective logical
 occupancy, actual render matrices, common mechanism pivot, and declared active
-layer axis. Renderer clearance is disclosed as a noncanonical `0.962`
+layer axis. It directly checks that every animated visible vertex preserves
+its coordinate along that axis. Renderer clearance is disclosed as a noncanonical `0.962`
 centroid contraction with a `0.006` outer-face lift. Neither value affects
 mechanics, legality, canonical geometry, or hashes.
 
@@ -60,9 +61,16 @@ Focused fixtures cover:
 - provenance and exposed-surface rules;
 - corrupted vertex, provenance, and digest rejection;
 - Rational Ghost Atlas A: 27 cells, six traces on `X=8/5`, and the exact short-trace endpoints;
-- all built-in Classic, Ghost, Mirror, Axis, bandaged, and procedural presets.
+- all built-in Classic, Ghost, Mirror, Axis, bandaged, and procedural presets;
+- the reproducible ideal-rigid closure matrix over 18 artifacts, 234 states,
+  9,660 animation samples, 1,380 committed turns, and 1,380 inverse
+  restorations.
 
 The artifact schema is `schema/affine-geometry.schema.json`. `POST /api/v1/compile` returns hashes, counts, diagnostics, and verifier output by default; set `includeCanonicalGeometry: true` to include the full canonical serialization.
+
+The closure report and schema are
+`research/experiments/ideal-rigid-display-phase1.json` and
+`schema/research/ideal-rigid-display-experiment.schema.json`.
 
 ## Known boundary
 

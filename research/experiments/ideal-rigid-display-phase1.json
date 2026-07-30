@@ -1,0 +1,1256 @@
+{
+  "schema": "polytwist.ideal-rigid-display-experiment.v1",
+  "certificationSchema": "polytwist.ideal-rigid-display-certificate.v1",
+  "valid": true,
+  "protocol": {
+    "seed": "ideal-rigid-phase1",
+    "stateCount": 13,
+    "progressSamples": [
+      0,
+      0.125,
+      0.25,
+      0.5,
+      0.75,
+      0.875,
+      1
+    ],
+    "artifactIds": [
+      "ghost-2",
+      "classic-2",
+      "ghost-3",
+      "ghost-4",
+      "axis-3",
+      "bandaged-relay-3",
+      "mirror-prism-3",
+      "classic-3",
+      "classic-4",
+      "classic-5",
+      "classic-6",
+      "classic-7",
+      "classic-8",
+      "classic-9",
+      "alien-a",
+      "alien-b",
+      "alien-c",
+      "alien-d"
+    ],
+    "assertions": [
+      "canonical affine artifact independently verifies",
+      "docked exact state certifies",
+      "every observed legal primitive move certifies at every animation sample",
+      "active vertices preserve mechanism-axis coordinate",
+      "committed turn certifies",
+      "move followed by inverse restores the exact state",
+      "canonical geometry hash is invariant under state and animation",
+      "every primitive action is observed legal at least once",
+      "bandaged artifacts expose at least one blocked action"
+    ]
+  },
+  "summary": {
+    "artifactCount": 18,
+    "stateCount": 234,
+    "dockedCertificates": 234,
+    "legalMoveChecks": 1380,
+    "blockedMoveObservations": 24,
+    "animationCertificates": 9660,
+    "committedTurnCertificates": 1380,
+    "inverseRestorations": 1380
+  },
+  "failures": [],
+  "artifacts": [
+    {
+      "artifactId": "ghost-2",
+      "puzzleId": "ghost-2",
+      "family": "tilted-frame-shapemod",
+      "geometryHash": "9afcfc0bb1b9a398fa5e810bf13018e79153a059eb37b93007b28aa5df75b6c4",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 8,
+      "renderablePieces": 8,
+      "bandageCount": 0,
+      "scramble": [
+        "D'",
+        "B'",
+        "D'",
+        "R",
+        "B'",
+        "U",
+        "B'",
+        "D'",
+        "R'",
+        "B",
+        "U2",
+        "L2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-0c1c57ad3b6909b2cb8c15781f3457ff"
+    },
+    {
+      "artifactId": "classic-2",
+      "puzzleId": "classic-2",
+      "family": "orthogonal-cube",
+      "geometryHash": "53e69b070d97a6aafe913b588ac9e6a93f9823c6aad58f4c95b4d091d8e2c0c1",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 8,
+      "renderablePieces": 8,
+      "bandageCount": 0,
+      "scramble": [
+        "F'",
+        "L'",
+        "U2",
+        "R",
+        "B'",
+        "L'",
+        "B'",
+        "L'",
+        "U2",
+        "F",
+        "L",
+        "D'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-10c01e5ae1f0e004c6ee52bfea1ab87b"
+    },
+    {
+      "artifactId": "ghost-3",
+      "puzzleId": "ghost-3",
+      "family": "tilted-frame-shapemod",
+      "geometryHash": "205f4ebf27028e32b2aa77326d34b85c7c7e96670bc33ab9ea3cf3db1552afbe",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "L2",
+        "D'",
+        "B'",
+        "U'",
+        "B2",
+        "U2",
+        "R",
+        "B2",
+        "D",
+        "R'",
+        "F'",
+        "D'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-252c5ace300ec02a773ab859677f08e4"
+    },
+    {
+      "artifactId": "ghost-4",
+      "puzzleId": "ghost-4",
+      "family": "tilted-frame-shapemod",
+      "geometryHash": "c229c2451067454729711a7835f7157c5439b440d8bfb548aa85704828e5027e",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 64,
+      "renderablePieces": 56,
+      "bandageCount": 0,
+      "scramble": [
+        "F2",
+        "L'",
+        "F",
+        "U2",
+        "B",
+        "U",
+        "B2",
+        "L2",
+        "F'",
+        "U",
+        "B",
+        "U"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-f5e8c6b9e4463ebe5442b13990257673"
+    },
+    {
+      "artifactId": "axis-3",
+      "puzzleId": "axis-3",
+      "family": "diagonal-axis-shapemod",
+      "geometryHash": "c4a00ee7ad58835f34fc2136d01a91a40c8662163a41c5e8c732296438deaa75",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "R",
+        "D",
+        "F2",
+        "U'",
+        "L'",
+        "F",
+        "U'",
+        "B2",
+        "R2",
+        "B",
+        "D'",
+        "F'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-c89d0f855208ff2e899434ca6335d856"
+    },
+    {
+      "artifactId": "bandaged-relay-3",
+      "puzzleId": "bandaged-relay-3",
+      "family": "state-dependent-bandaged-shapemod",
+      "geometryHash": "175f86e7dc264ff0821ee475d103c8afa150da8158d215a19ea3a31f00722a09",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 2,
+      "scramble": [
+        "F2",
+        "R",
+        "U'",
+        "F'",
+        "D",
+        "R",
+        "U'",
+        "B",
+        "R2",
+        "D'",
+        "L",
+        "B'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 11,
+          "blocked": 2,
+          "animationCertificates": 77
+        },
+        "L": {
+          "legal": 8,
+          "blocked": 5,
+          "animationCertificates": 56
+        },
+        "U": {
+          "legal": 9,
+          "blocked": 4,
+          "animationCertificates": 63
+        },
+        "D": {
+          "legal": 7,
+          "blocked": 6,
+          "animationCertificates": 49
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 6,
+          "blocked": 7,
+          "animationCertificates": 42
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 54,
+        "blockedMoveObservations": 24,
+        "animationCertificates": 378,
+        "committedTurnCertificates": 54,
+        "inverseRestorations": 54
+      },
+      "finalStateFingerprint": "lml1-dc6d46f670581ff82eaac73053bfcfaf"
+    },
+    {
+      "artifactId": "mirror-prism-3",
+      "puzzleId": "mirror-prism-3",
+      "family": "anisotropic-hull-shapemod",
+      "geometryHash": "89bff6c26c35c6b8ef3898cfc0964ebddeb8c19fcd07c2d5c09595640b128b50",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "F2",
+        "D'",
+        "L",
+        "D",
+        "R",
+        "B2",
+        "U'",
+        "R'",
+        "B",
+        "L",
+        "D'",
+        "L"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-1a6477d9dda5a726408a8190c5221392"
+    },
+    {
+      "artifactId": "classic-3",
+      "puzzleId": "classic-3",
+      "family": "orthogonal-cube",
+      "geometryHash": "1c360beae6199f10527ea77573f9c071ae7d8cb5bd5867ebfd60dec2b29a758d",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "R'",
+        "D",
+        "R'",
+        "B",
+        "D",
+        "B2",
+        "D'",
+        "L2",
+        "F2",
+        "U'",
+        "R",
+        "U2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-e895896172431b84f814c8d0f410bbb8"
+    },
+    {
+      "artifactId": "classic-4",
+      "puzzleId": "classic-4",
+      "family": "orthogonal-cube",
+      "geometryHash": "77841ffb226f93c2b28fbf39dab80ca77922ec43e1c49c025b6fd84f85ca5391",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 64,
+      "renderablePieces": 56,
+      "bandageCount": 0,
+      "scramble": [
+        "U",
+        "F2",
+        "U",
+        "F2",
+        "L2",
+        "B",
+        "D2",
+        "L'",
+        "U",
+        "F",
+        "D2",
+        "F'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-912a4e5055c72363c7ee9ff6e591575d"
+    },
+    {
+      "artifactId": "classic-5",
+      "puzzleId": "classic-5",
+      "family": "orthogonal-cube",
+      "geometryHash": "6db6dd3d1b1e20d2124e6dcff89c49e7d66bc48c6e8da1be5084425950eac09f",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 125,
+      "renderablePieces": 98,
+      "bandageCount": 0,
+      "scramble": [
+        "B'",
+        "R2",
+        "U",
+        "B2",
+        "U2",
+        "B'",
+        "D2",
+        "F2",
+        "L",
+        "F",
+        "R",
+        "B"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-50d12ae7a5f024ca44ccd23a151f2398"
+    },
+    {
+      "artifactId": "classic-6",
+      "puzzleId": "classic-6",
+      "family": "orthogonal-cube",
+      "geometryHash": "29a4795b34f839a3d7878409f3f1df3cfbaef80324e1086725d85a6ab337de52",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 216,
+      "renderablePieces": 152,
+      "bandageCount": 0,
+      "scramble": [
+        "R'",
+        "F",
+        "D'",
+        "F",
+        "R",
+        "U'",
+        "L2",
+        "D",
+        "L",
+        "U2",
+        "R",
+        "F2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-03846a8ce9f11bf9fa68f222d829bb90"
+    },
+    {
+      "artifactId": "classic-7",
+      "puzzleId": "classic-7",
+      "family": "orthogonal-cube",
+      "geometryHash": "3b0dc2a3c678ca2dc7a3827d11ad44aa5cd401d600eb3098653deab3fc7c5494",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 343,
+      "renderablePieces": 218,
+      "bandageCount": 0,
+      "scramble": [
+        "R",
+        "U2",
+        "L2",
+        "D2",
+        "L",
+        "B'",
+        "R2",
+        "F2",
+        "U'",
+        "R'",
+        "D",
+        "R2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-8d1686ecb713304ba4a8d8f8bd2c8d7e"
+    },
+    {
+      "artifactId": "classic-8",
+      "puzzleId": "classic-8",
+      "family": "orthogonal-cube",
+      "geometryHash": "9d1fe06fb3056397ce4a31414e3c19f2e6ddb7af9a9dbb2d057369c7f3d3311a",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 512,
+      "renderablePieces": 296,
+      "bandageCount": 0,
+      "scramble": [
+        "R",
+        "B2",
+        "U'",
+        "B2",
+        "R2",
+        "F2",
+        "D",
+        "F'",
+        "R2",
+        "D2",
+        "L2",
+        "D2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-dc94fd41395c888d2ab7bbeb8f57a3ef"
+    },
+    {
+      "artifactId": "classic-9",
+      "puzzleId": "classic-9",
+      "family": "orthogonal-cube",
+      "geometryHash": "a8cc93db822007c6e0cab4ba5ea094a1fe08008e9bb44b1bf48c694ec981f645",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 729,
+      "renderablePieces": 386,
+      "bandageCount": 0,
+      "scramble": [
+        "B'",
+        "D2",
+        "R",
+        "U",
+        "R'",
+        "D2",
+        "B2",
+        "R",
+        "U'",
+        "F2",
+        "L'",
+        "U2"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-7fd893f129b9a8e485e78185cd11b275"
+    },
+    {
+      "artifactId": "alien-a",
+      "puzzleId": "alien-ideal-rigid-phase1_a",
+      "family": "procedural-unseen-mechanics",
+      "geometryHash": "f967a78c3734b1a55863f887e7f23619b603788f962f5dc0171c7117f5b5fe40",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "U'",
+        "F",
+        "U",
+        "B'",
+        "D'",
+        "B2",
+        "R2",
+        "D2",
+        "F2",
+        "L'",
+        "U'",
+        "B"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-66839e0f5084fd2a264a24c8d336b46b"
+    },
+    {
+      "artifactId": "alien-b",
+      "puzzleId": "alien-ideal-rigid-phase1_b",
+      "family": "procedural-unseen-mechanics",
+      "geometryHash": "3ee5fc8f614a16cc868a9632e3fe3d71b6e9e71317a40bda9b0c1921ef6d1935",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "D2",
+        "B2",
+        "L2",
+        "B'",
+        "D'",
+        "R'",
+        "F",
+        "D'",
+        "R2",
+        "D'",
+        "F2",
+        "L"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-4bb290a66a4b43975d46794e59ddc81e"
+    },
+    {
+      "artifactId": "alien-c",
+      "puzzleId": "alien-ideal-rigid-phase1_c",
+      "family": "procedural-unseen-mechanics",
+      "geometryHash": "68aae2a02d65c5a2726d468e4a965b4d17683ce85ed391d8a64ad62f0802a31d",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "L2",
+        "B2",
+        "L'",
+        "D'",
+        "R'",
+        "D2",
+        "B2",
+        "L2",
+        "F",
+        "L'",
+        "F'",
+        "R'"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-7e049daab50b9bc44dcfc941a287fa4c"
+    },
+    {
+      "artifactId": "alien-d",
+      "puzzleId": "alien-ideal-rigid-phase1_d",
+      "family": "procedural-unseen-mechanics",
+      "geometryHash": "95822ce2af709f89db0491bb98ea0e2edbadc5a51dffe1bdc998b6374016fb2e",
+      "sourceExactness": "rationalized-numerical",
+      "logicalPieces": 27,
+      "renderablePieces": 26,
+      "bandageCount": 0,
+      "scramble": [
+        "R2",
+        "U'",
+        "B",
+        "L2",
+        "F'",
+        "D2",
+        "B",
+        "L2",
+        "B2",
+        "R'",
+        "B'",
+        "D"
+      ],
+      "actionCoverage": {
+        "R": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "L": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "U": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "D": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "F": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        },
+        "B": {
+          "legal": 13,
+          "blocked": 0,
+          "animationCertificates": 91
+        }
+      },
+      "counts": {
+        "stateCount": 13,
+        "dockedCertificates": 13,
+        "legalMoveChecks": 78,
+        "blockedMoveObservations": 0,
+        "animationCertificates": 546,
+        "committedTurnCertificates": 78,
+        "inverseRestorations": 78
+      },
+      "finalStateFingerprint": "lml1-9b49e3dcdd960721ca7e883e3d47929d"
+    }
+  ],
+  "limitations": [
+    "finite deterministic state and animation sampling",
+    "not a general swept-volume collision certificate",
+    "not a manufacturing tolerance or hidden-core experiment"
+  ],
+  "reportDigest": "ideal-rigid-display-experiment1-5fd5a1a7c60ea92fe971c8d252f44804"
+}

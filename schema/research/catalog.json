@@ -39,6 +39,11 @@
       "title": "Evaluation report"
     },
     {
+      "name": "ideal-rigid-display-experiment",
+      "id": "https://polytwist.dev/schema/ideal-rigid-display-experiment.schema.json",
+      "title": "PolyTwist ideal-rigid display closure experiment"
+    },
+    {
       "name": "state-graph",
       "id": "https://kinescope.dev/schema/state-graph.schema.json",
       "title": "Bounded exact state graph"

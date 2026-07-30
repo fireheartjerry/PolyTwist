@@ -90,6 +90,12 @@ renderer-only piece contraction and outer-face lift as noncanonical
 presentation parameters. It deliberately makes no manufacturing-tolerance,
 hidden-core, or general swept-collision claim.
 
+`src/research/rigid-display-experiment.js` runs the deterministic closure
+matrix against the same production matrix derivation and certificate. Its
+versioned report covers catalog presets, ordinary cubes through 9×9×9,
+procedural artifacts, bandaged legality, sampled animations, committed turns,
+inverse restoration, and geometry-hash invariance.
+
 ## Research data flow
 
 ```mermaid
