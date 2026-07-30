@@ -10,3 +10,20 @@ export { enumerateCubeMechanicsHypotheses, applyMechanicsHypothesis, rankMechani
 export { inverseActionToken, createOpaqueActionMap, createOpaquePieceMap, generateResearchEpisode } from './episode.js';
 export { generateResearchSuite, suiteAsJsonl } from './dataset.js';
 export { evaluatePredictions } from './evaluator.js';
+export { DEFAULT_PROMPT_VERSION, PROMPT_TEMPLATES, assertPublicBenchmarkItem, renderBenchmarkPrompt } from './prompt-templates.js';
+export { RESPONSE_PARSER_MODES, parseModelResponse, predictionFromParseRecord } from './model-response.js';
+export {
+  ProviderError,
+  createFunctionProvider,
+  createMockProvider,
+  createDryRunProvider,
+  createSyntheticOracleProvider,
+  createOpenAICompatibleProvider,
+} from './provider-adapters.js';
+export { runModelExperiment } from './experiment-runner.js';
+export {
+  bootstrapMeanInterval,
+  twoSidedSignTest,
+  summarizeEvaluationWithIntervals,
+  compareEvaluationsPaired,
+} from './experiment-analysis.js';

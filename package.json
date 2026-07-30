@@ -20,6 +20,9 @@
     "research:graph": "node scripts/research-graph.mjs",
     "research:suite": "node scripts/research-suite.mjs",
     "research:evaluate": "node scripts/research-evaluate.mjs",
+    "research:run-models": "node scripts/research-run-models.mjs",
+    "research:compare-models": "node scripts/research-compare-models.mjs",
+    "research:estimate-cost": "node scripts/research-estimate-cost.mjs",
     "research:validate-rigid-display": "node scripts/validate-rigid-display.mjs",
     "spec-suite": "node scripts/generate-suite.mjs",
     "research:schemas": "node scripts/materialize-schemas.mjs"
